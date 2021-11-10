@@ -1,9 +1,79 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+body {
+  background-color:wheat;
+  margin: 0;
+}
+
 header {
   background-color: burlywood;
-  margin-top: -25px;
-  margin-left: -7px;
-  margin-right: -7px;
+  margin: 0;
+  padding: 1%;
+  margin-bottom: 1em;
+
 }
+
+header h1 {
+  font-size: 3em;
+  text-align: center;
+}
+
+#login {
+  display: inline-block;
+  background-color: burlywood;
+  width: 15em;
+  position: absolute;
+  left:50%;
+  top:50%;
+  transform: translate(-50%, -50%);
+  border-radius: 1em;
+}
+#login .title {
+  line-height: 3em;
+  background: wheat;
+  font-weight: 100;
+  font-size: 1.2em;
+  border-radius: 1em 1em 0em 0em;
+  text-align: center;
+}
+#login form {
+  padding: 1em 2em 3em 2em;
+}
+#login form .field {
+  position: relative;
+  height: 2em;
+  width:100%;
+  margin-top: 1.6em;
+}
+#login form .field input {
+  height: 100%;
+  width: 100%;
+  padding-left: 1em;
+  border-radius: 1em;
+  border: 1px solid brown;
+}
+#login form .field label {
+  position: relative;
+  padding-left: 1em;
+  top: -3.2em;
+}
+#login form .field input[type="submit"] {
+  background: wheat;
+  font-size: 1.1em;
+  font-weight: 400;
+  position:relative;
+  top: 0.6em;
+  padding-left: 0;
+  cursor: pointer;
+}
+
+
+
 
 .board {
   display:flex;

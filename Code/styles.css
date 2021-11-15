@@ -24,7 +24,7 @@ header h1 {
 }
 
 #login {
-  display: inline-block;
+  display: none;
   background-color: burlywood;
   width: 15em;
   position: absolute;

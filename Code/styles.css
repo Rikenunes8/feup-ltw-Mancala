@@ -12,51 +12,88 @@ body {
 
 header {
   background-color: burlywood;
+  height: 7em;
   margin: 0;
   padding: 1%;
   margin-bottom: 1em;
-
 }
 
-header h1 {
+h1 {
+  line-height: 2em;
   font-size: 3em;
   text-align: center;
+
 }
 
-#login {
+.logged {
+  display: inherit;
+}
+.not-logged {
+  display: none;
+}
+
+
+.window {
   display: inline-block;
   background-color: burlywood;
-  width: 20vw;
   min-width: 12em;
-  position: absolute;
+  position: fixed;
   left:50%;
   top:50%;
   transform: translate(-50%, -50%);
-  border-radius: 1em;
+  border-radius: 20px;
+  border: 1px solid brown;
 }
-#login .title {
+
+.window .title {
   line-height: 3em;
   background: wheat;
   font-weight: 100;
   font-size: 1.2em;
-  border-radius: 1em 1em 0em 0em;
+  border-radius: 20px 20px 0em 0em;
   text-align: center;
 }
-#login form {
+.window form {
   padding: 1em 2em 3em 2em;
+}
+.window form .field input {
+  padding-left: 1em;
+  border-radius: 20px;
+  border: 1px solid brown;
+}
+.window form .field {
+  height: 2em;
+}
+
+#settings {
+  display: none;
+  left: 20vw;
+  max-width: 30vw;
+}
+#settings form .field input {
+  line-height: 2em;
+  max-width: 5vw;
+}
+/*Não funciona*/ 
+table tr:nth-child(2){
+  padding-left: 5em;
+}
+
+
+
+#login {
+  display: none;
+  max-width: 20vw;
+  min-width: 12em;
 }
 #login form .field {
   position: relative;
-  height: 2em;
   width:100%;
   margin-top: 1.6em;
 }
 #login form .field input {
   height: 100%;
   width: 100%;
-  padding-left: 1em;
-  border-radius: 1em;
-  border: 1px solid brown;
 }
 #login form .field label {
   position: relative;
@@ -72,12 +109,19 @@ header h1 {
   padding-left: 0;
   cursor: pointer;
 }
-.btns-left {
+
+
+.btns-center {
   position: absolute;
+  left: 50%;
+  transform: translate(-50%);
+}
+.btns-left {
+  position: fixed;
   left: 2vw;
 }
 .btns-right {
-  position: absolute;
+  position: fixed;
   right: 2vw;
 }
 
@@ -86,14 +130,17 @@ button {
   border-width: 0px;
   display: block;
   line-height: 3vw;
+  cursor: pointer;
 }
 
 .buttons button img{
-  max-width: 4vw;
+  max-width: 3.5vw;
 }
 
 
 .board {
+  position: relative;
+  top: 30vh;
   display:flex;
   background-color:SaddleBrown;
   max-width:70vw;

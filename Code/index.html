@@ -12,18 +12,26 @@
     </header>
     <section>
       <div class="buttons">
+        <div class="btns-center">
+          <button class="not-logged" id="btn-login">
+            <img src="../Icons/login.png">
+          </button>
+          <button class="logged" id="btn-logout">
+            <img src="../Icons/logout.png">
+          </button>
+        </div>
         <div class="btns-left">
-          <button id="btn-settings">
+          <button class="logged" id="btn-settings">
             <img src="../Icons/gear.png">
+          </button>
+          <button class="logged" id="btn-ranking">
+            <img src="../Icons/ranking.png">
           </button>
           <button id="btn-help">
             <img src="../Icons/idea.png">
           </button>
-          <button id="btn-ranking">
-            <img src="../Icons/ranking.png">
-          </button>
         </div>
-        <div class="btns-right">
+        <div class="btns-right logged">
           <button id="btn-start">
             <img src="../Icons/start.png">
           </button>
@@ -58,8 +66,8 @@
             <div class="pot" id="ptr"></div>        
         </div>
       </div>
-      <div class="window">
-        <div id=login>
+      <div class="windows">
+        <div class="window" id=login>
           <div class="title">Login Form</div>
           <form>
             <div class="field">
@@ -75,13 +83,40 @@
             </div>
           </form>
         </div>
-        <div id="help">
-
-        </div>
-        <div id="settings">
-
+        <div class="window" id="settings">
+          <div class="title">Settings</div>
+          <form>
+            <table>
+              <tr class="field">
+                <td><label>Game mode</label></td>
+                <td>
+                  <input name="game-mode" type="radio">
+                  <input name="game-mode" type="radio">
+                </td>
+              </tr>
+              <tr class="field">
+                <td><label>AI Level</label></td>
+                <td><input type="radio"></td>
+              </tr>
+              <tr class="field">
+                <td><label>Cavities per player</label></td>
+                <td><input type="number"></td>
+              </tr>
+              <tr class="field">
+                <td><label>Seeds per cavity</label></td>
+                <td><input type="number"></td>
+              </tr>
+              <tr class="field">
+                <td><label>Play first</label></td>
+                <td><input type="checkbox"></td>
+              </tr>
+            </table>  
+          </form>
         </div>
         <div id="ranking">
+          
+        </div>
+        <div id="help">
 
         </div>
 

@@ -66,7 +66,7 @@ h1 {
 }
 
 #settings {
-  display: none;
+  display: inline-block;
   left: 20vw;
   max-width: 30vw;
 }
@@ -75,14 +75,14 @@ h1 {
   max-width: 5vw;
 }
 /*Não funciona*/ 
-table tr:nth-child(2){
-  padding-left: 5em;
+table tr td:nth-child(2){
+  padding-left: 2em;
 }
 
 
 
 #login {
-  display: none;
+  display: inline-block;
   max-width: 20vw;
   min-width: 12em;
 }
@@ -167,6 +167,13 @@ button {
   flex-grow:1;
 }
 
+
+
+.n-seeds {
+  position:relative;
+  left: 3.5vw;
+  flex-grow:1;
+}
 .pot {
   position:relative;
   background-color:rgba(255, 255, 255, 0.1);

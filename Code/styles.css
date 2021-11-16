@@ -24,9 +24,10 @@ header h1 {
 }
 
 #login {
-  display: none;
+  display: inline-block;
   background-color: burlywood;
-  width: 15em;
+  width: 20vw;
+  min-width: 12em;
   position: absolute;
   left:50%;
   top:50%;
@@ -71,15 +72,32 @@ header h1 {
   padding-left: 0;
   cursor: pointer;
 }
+.btns-left {
+  position: absolute;
+  left: 2vw;
+}
+.btns-right {
+  position: absolute;
+  right: 2vw;
+}
 
+button {
+  background-color: rgba(255, 255, 255, 0.0);
+  border-width: 0px;
+  display: block;
+  line-height: 3vw;
+}
 
+.buttons button img{
+  max-width: 4vw;
+}
 
 
 .board {
   display:flex;
   background-color:SaddleBrown;
-  width:90%;
-  height:20em;
+  max-width:70vw;
+  height:30vw;
   border-radius:3em;
   padding:2%;
   margin:auto;

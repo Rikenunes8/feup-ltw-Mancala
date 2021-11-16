@@ -8,25 +8,30 @@
   </head>
   <body>
     <header>
-      <div id=login>
-        <div class="title">Login Form</div>
-        <form>
-          <div class="field">
-            <input type="text">
-            <label>Username</label>
-          </div>
-          <div class="field">
-            <input type="password">
-            <label>Password</label>
-          </div>
-          <div class="field">
-            <input type="submit" value="Login">
-          </div>
-        </form>
-      </div>
       <h1>Mancala</h1>
     </header>
     <section>
+      <div class="buttons">
+        <div class="btns-left">
+          <button id="btn-settings">
+            <img src="../Icons/gear.png">
+          </button>
+          <button id="btn-help">
+            <img src="../Icons/idea.png">
+          </button>
+          <button id="btn-ranking">
+            <img src="../Icons/ranking.png">
+          </button>
+        </div>
+        <div class="btns-right">
+          <button id="btn-start">
+            <img src="../Icons/start.png">
+          </button>
+          <button id="btn-stop">
+            <img src="../Icons/stop.png">
+          </button>
+        </div>
+      </div>
       <div class="board">
         <div class="section sidesection">
             <div class="pot" id="ptl"></div> 
@@ -52,6 +57,34 @@
         <div class="section sidesection">
             <div class="pot" id="ptr"></div>        
         </div>
+      </div>
+      <div class="window">
+        <div id=login>
+          <div class="title">Login Form</div>
+          <form>
+            <div class="field">
+              <input type="text">
+              <label>Username</label>
+            </div>
+            <div class="field">
+              <input type="password">
+              <label>Password</label>
+            </div>
+            <div class="field">
+              <input type="submit" value="Login">
+            </div>
+          </form>
+        </div>
+        <div id="help">
+
+        </div>
+        <div id="settings">
+
+        </div>
+        <div id="ranking">
+
+        </div>
+
       </div>
     </section>
     <footer>

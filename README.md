@@ -1,7 +1,15 @@
-# LTW - Mancala é fixe
+# LTW - Mancala
 
-##TO DO:
+## TO DO:
 - Editar tabuleiro 
-  - Apagar caixas anteriores
-  - Mudar cores
-  - Criar bolinhas
+  - Criar sementes
+  - Colocar o numero de sementes ao lado de cada cavidade
+  - Colocar o numero de sementes dos armazens
+- Criar janelas
+  - Instruções
+  - Classificações
+- Adicionar identificador ao lado do botão de logout
+- Bugs para resolver
+  - Fechar janela quando se abre outra
+  - Fechar janelas quando se faz logout
+- Logica do jogo

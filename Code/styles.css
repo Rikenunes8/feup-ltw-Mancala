@@ -26,15 +26,15 @@ h1 {
 }
 
 .logged {
-  display: inherit;
+  display: none;
 }
 .not-logged {
-  display: none;
+  display: inline-block;
 }
 
 
 .window {
-  display: inline-block;
+  display: none;
   background-color: burlywood;
   min-width: 12em;
   position: fixed;
@@ -65,42 +65,42 @@ h1 {
   height: 2em;
 }
 
-#settings {
-  display: inline-block;
-  left: 20vw;
+
+/* Settings Window */
+
+#settings-window {
   max-width: 30vw;
 }
-#settings form .field input {
+#settings-window form .field input {
   line-height: 2em;
   max-width: 5vw;
 }
-/*Não funciona*/ 
 table tr td:nth-child(2){
   padding-left: 2em;
 }
 
 
+/* Login Window */
 
-#login {
-  display: inline-block;
+#login-window {
   max-width: 20vw;
   min-width: 12em;
 }
-#login form .field {
+#login-window form .field {
   position: relative;
   width:100%;
   margin-top: 1.6em;
 }
-#login form .field input {
+#login-window form .field input {
   height: 100%;
   width: 100%;
 }
-#login form .field label {
+#login-window form .field label {
   position: relative;
   padding-left: 1em;
   top: -3.2em;
 }
-#login form .field input[type="submit"] {
+#login-window form .field input[type="submit"] {
   background: wheat;
   font-size: 1.1em;
   font-weight: 400;
@@ -129,7 +129,8 @@ button {
   background-color: rgba(255, 255, 255, 0.0);
   border-width: 0px;
   display: block;
-  line-height: 3vw;
+  padding: 1em 1em 1em 1em;
+  border-radius: 3em;
   cursor: pointer;
 }
 
@@ -140,7 +141,7 @@ button {
 
 .board {
   position: relative;
-  top: 30vh;
+  top: 20vh;
   display:flex;
   background-color:SaddleBrown;
   max-width:70vw;

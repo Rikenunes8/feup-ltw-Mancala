@@ -5,6 +5,7 @@
     <title>Mancala</title>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="styles.css" type="text/css">
+    <script src="buttons.js"></script>
   </head>
   <body>
     <header>
@@ -13,15 +14,15 @@
     <section>
       <div class="buttons">
         <div class="btns-center">
-          <button class="not-logged" id="btn-login">
+          <button class="not-logged" id="btn-login" onclick="showWindow('btn-login','login-window')">
             <img src="../Icons/login.png">
           </button>
-          <button class="logged" id="btn-logout">
+          <button class="logged" id="btn-logout" onclick="makeLogout()">
             <img src="../Icons/logout.png">
           </button>
         </div>
         <div class="btns-left">
-          <button class="logged" id="btn-settings">
+          <button class="logged" id="btn-settings" onclick="showWindow('btn-settings','settings-window')">
             <img src="../Icons/gear.png">
           </button>
           <button class="logged" id="btn-ranking">
@@ -40,6 +41,7 @@
           </button>
         </div>
       </div>
+
       <div class="board">
         <div class="section sidesection">
             <div class="pot"></div> 
@@ -74,10 +76,12 @@
             <div class="pot"></div>        
         </div>
       </div>
+
       <div class="windows">
-        <div class="window" id=login>
+
+        <div class="window" id=login-window>
           <div class="title">Login Form</div>
-          <form>
+          <form onsubmit="makeLogin(); return false;">
             <div class="field">
               <input type="text">
               <label>Username</label>
@@ -86,12 +90,13 @@
               <input type="password">
               <label>Password</label>
             </div>
-            <div class="field">
+            <div class="field" id="submit-login">
               <input type="submit" value="Login">
             </div>
           </form>
         </div>
-        <div class="window" id="settings">
+
+        <div class="window" id="settings-window">
           <div class="title">Settings</div>
           <form>
             <table>
@@ -121,15 +126,18 @@
             </table>  
           </form>
         </div>
+
         <div id="ranking">
           
         </div>
+
         <div id="help">
 
         </div>
 
       </div>
     </section>
+
     <footer>
       <!--<p>
         Desenvolvido por:

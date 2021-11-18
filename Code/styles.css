@@ -12,14 +12,13 @@ body {
 
 header {
   background-color: burlywood;
-  height: 7em;
+  height: 6em;
   margin: 0;
   padding: 1%;
   margin-bottom: 1em;
 }
 
 h1 {
-  line-height: 2em;
   font-size: 3em;
   text-align: center;
 

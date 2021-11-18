@@ -15,29 +15,29 @@
       <div class="buttons">
         <div class="btns-center">
           <button class="not-logged" id="btn-login" onclick="showWindow('btn-login','login-window')">
-            <img src="../Icons/login.png">
+            <img src="../Icons/login.png" alt="Login btn">
           </button>
           <button class="logged" id="btn-logout" onclick="makeLogout()">
-            <img src="../Icons/logout.png">
+            <img src="../Icons/logout.png" alt="Logout btn">
           </button>
         </div>
         <div class="btns-left">
           <button class="logged" id="btn-settings" onclick="showWindow('btn-settings','settings-window')">
-            <img src="../Icons/gear.png">
+            <img src="../Icons/gear.png" alt="Settings btn">
           </button>
-          <button class="logged" id="btn-ranking">
-            <img src="../Icons/ranking.png">
+          <button class="logged" id="btn-ranking" onclick="showWindow('btn-ranking','ranking-window')">
+            <img src="../Icons/ranking.png" alt="Ranking btn">
           </button>
-          <button id="btn-help">
-            <img src="../Icons/idea.png">
+          <button id="btn-help" onclick="showWindow('btn-help','help-window')">
+            <img src="../Icons/idea.png" alt="Help btn">
           </button>
         </div>
         <div class="btns-right logged">
           <button id="btn-start">
-            <img src="../Icons/start.png">
+            <img src="../Icons/start.png" alt="Start btn">
           </button>
           <button id="btn-stop">
-            <img src="../Icons/stop.png">
+            <img src="../Icons/stop.png" alt="Stop btn">
           </button>
         </div>
       </div>
@@ -103,7 +103,7 @@
               <tr class="field">
                 <td><label>Game mode</label></td>
                 <td>
-                  <input name="game-mode" type="radio">
+                  <input name="game-mode" type="radio" checked>
                   <input name="game-mode" type="radio">
                 </td>
               </tr>
@@ -113,25 +113,25 @@
               </tr>
               <tr class="field">
                 <td><label>Cavities per player</label></td>
-                <td><input type="number"></td>
+                <td><input type="number" value=6></td>
               </tr>
               <tr class="field">
                 <td><label>Seeds per cavity</label></td>
-                <td><input type="number"></td>
+                <td><input type="number" value=4></td>
               </tr>
               <tr class="field">
                 <td><label>Play first</label></td>
-                <td><input type="checkbox"></td>
+                <td><input type="checkbox" checked></td>
               </tr>
             </table>  
           </form>
         </div>
 
-        <div id="ranking">
+        <div class="window" id="ranking-window">
           
         </div>
 
-        <div id="help">
+        <div class="window" id="help-window">
 
         </div>
 

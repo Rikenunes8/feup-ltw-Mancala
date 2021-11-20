@@ -1,12 +1,11 @@
 * {
   margin: 0;
-  padding: 0;
   box-sizing: border-box;
-  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-family: Georgia, "Times New Roman", Times, serif;
 }
 
 body {
-  background-color:wheat;
+  background-color: wheat;
   margin: 0;
 }
 
@@ -21,7 +20,6 @@ header {
 h1 {
   font-size: 3em;
   text-align: center;
-
 }
 
 .logged {
@@ -31,14 +29,13 @@ h1 {
   display: inline-block;
 }
 
-
 .window {
   display: none;
   background-color: burlywood;
   min-width: 12em;
   position: fixed;
-  left:50%;
-  top:50%;
+  left: 50%;
+  top: 50%;
   transform: translate(-50%, -50%);
   border-radius: 20px;
   border: 1px solid brown;
@@ -64,7 +61,6 @@ h1 {
   height: 2em;
 }
 
-
 /* Settings Window */
 
 #settings-window {
@@ -74,10 +70,9 @@ h1 {
   line-height: 2em;
   max-width: 5vw;
 }
-table tr td:nth-child(2){
+table tr td:nth-child(2) {
   padding-left: 2em;
 }
-
 
 /* Login Window */
 
@@ -87,7 +82,7 @@ table tr td:nth-child(2){
 }
 #login-window form .field {
   position: relative;
-  width:100%;
+  width: 100%;
   margin-top: 1.6em;
 }
 #login-window form .field input {
@@ -103,12 +98,11 @@ table tr td:nth-child(2){
   background: wheat;
   font-size: 1.1em;
   font-weight: 400;
-  position:relative;
+  position: relative;
   top: 0.6em;
   padding-left: 0;
   cursor: pointer;
 }
-
 
 .btns-center {
   position: absolute;
@@ -125,7 +119,7 @@ table tr td:nth-child(2){
 }
 
 button {
-  background-color: rgba(255, 255, 255, 0.0);
+  background-color: rgba(255, 255, 255, 0);
   border-width: 0px;
   display: block;
   padding: 1em 1em 1em 1em;
@@ -133,51 +127,48 @@ button {
   cursor: pointer;
 }
 
-.buttons button img{
+.buttons button img {
   max-width: 3.5vw;
 }
-
 
 .board {
   position: relative;
   top: 20vh;
-  display:flex;
-  background-color:SaddleBrown;
-  max-width:70vw;
-  height:30vw;
-  border-radius:3em;
-  padding:2%;
-  margin:auto;
+  display: flex;
+  background-color: SaddleBrown;
+  max-width: 70vw;
+  height: 30vw;
+  border-radius: 3em;
+  padding: 2%;
+  margin: auto;
   justify-content: flex-start;
 }
 
 .sidesection {
-  display:flex;
-  flex-grow:1;
+  display: flex;
+  flex-grow: 1;
 }
 
 .midsection {
-  display:flex;
-  flex-direction:column;
-  flex-grow:6;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 6;
 }
 
 .midrow {
-  display:flex;
-  flex-grow:1;
+  display: flex;
+  flex-grow: 1;
 }
-
-
 
 .n-seeds {
-  position:relative;
+  position: relative;
   left: 3.5vw;
-  flex-grow:1;
+  flex-grow: 1;
 }
 .pot {
-  position:relative;
-  background-color:rgba(255, 255, 255, 0.1);
-  flex-grow:1;
-  margin:5px;
-  border-radius:3em;
+  position: relative;
+  background-color: rgba(255, 255, 255, 0.1);
+  flex-grow: 1;
+  margin: 5px;
+  border-radius: 3em;
 }

@@ -6,7 +6,7 @@
   - Colocar o numero de sementes ao lado de cada cavidade
   - Colocar o numero de sementes dos armazens
 - Criar janelas
-  - Instruções
+  - Instruções **(Alterar instruções para o modo de jogar do PC, não com as mãos num tabuleiro)**
   - Classificações (fazer depender de um script de sorting (https://freefrontend.com/css-tables/#tables))
 - Adicionar identificador ao lado do botão de logout
 - Bugs para resolver

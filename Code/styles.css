@@ -33,40 +33,41 @@ h1 {
   display: none;
   background-color: burlywood;
   min-width: 12em;
-  position: fixed;
+  position: absolute;
   left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
+  top: 30vh;
+  transform: translate(-50%, 0);
   border-radius: 20px;
   border: 1px solid brown;
 }
 
-.window .title {
-  line-height: 3em;
+.window .window-title {
+  line-height: 2em;
   background: wheat;
   font-weight: 100;
-  font-size: 1.2em;
+  font-size: 2em;
   border-radius: 20px 20px 0em 0em;
   text-align: center;
 }
-.window form {
+.window .window-content {
   padding: 1em 2em 3em 2em;
 }
-.window form .field input {
+.window .window-content .field input {
   padding-left: 1em;
   border-radius: 20px;
   border: 1px solid brown;
 }
-.window form .field {
+.window .window-content .field {
   height: 2em;
 }
 
 /* Settings Window */
-
 #settings-window {
   max-width: 30vw;
+  min-width: 20em;
+
 }
-#settings-window form .field input {
+#settings-window .window-content .field input {
   line-height: 2em;
   max-width: 5vw;
 }
@@ -74,8 +75,21 @@ table tr td:nth-child(2) {
   padding-left: 2em;
 }
 
-/* Login Window */
+/* Help Window */
+#help-window {
+  max-width: 30vw;
+  min-width: 20em;
+}
 
+/* Ranking Window */
+#ranking-window {
+  max-width: 60vw;
+  min-width: 30em;
+}
+
+
+
+/* Login Window */
 #login-window {
   max-width: 20vw;
   min-width: 12em;
@@ -104,6 +118,9 @@ table tr td:nth-child(2) {
   cursor: pointer;
 }
 
+
+
+
 .btns-center {
   position: absolute;
   left: 50%;
@@ -130,6 +147,8 @@ button {
 .buttons button img {
   max-width: 3.5vw;
 }
+
+
 
 .board {
   position: relative;
@@ -173,9 +192,12 @@ button {
   border-radius: 3em;
 }
 
+
+
+
 /*Styles for a table*/
 .container {
-  max-width: 1000px;
+  min-width: 30em;
   margin-right: auto;
   margin-left: auto;
   display: flex;
@@ -186,13 +208,12 @@ button {
 
 .table {
   width: 100%;
-  border-radius: 20px;
-  border: 1px solid #000000;
 }
 
 .table-header {
   display: flex;
   width: 100%;
+  font-weight: 600;
 }
 
 .table-row {

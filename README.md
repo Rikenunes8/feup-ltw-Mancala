@@ -7,7 +7,7 @@
   - Colocar o numero de sementes dos armazens
 - Criar janelas
   - Instruções
-  - Classificações
+  - Classificações (fazer depender de um script de sorting)
 - Adicionar identificador ao lado do botão de logout
 - Bugs para resolver
   - Fechar janela quando se abre outra

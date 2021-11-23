@@ -65,7 +65,6 @@ h1 {
 #settings-window {
   max-width: 30vw;
   min-width: 20em;
-
 }
 #settings-window .window-content .field input {
   line-height: 2em;
@@ -86,8 +85,6 @@ table tr td:nth-child(2) {
   max-width: 60vw;
   min-width: 30em;
 }
-
-
 
 /* Login Window */
 #login-window {
@@ -118,9 +115,6 @@ table tr td:nth-child(2) {
   cursor: pointer;
 }
 
-
-
-
 .btns-center {
   position: absolute;
   left: 50%;
@@ -147,8 +141,6 @@ button {
 .buttons button img {
   max-width: 3.5vw;
 }
-
-
 
 .board {
   position: relative;
@@ -184,6 +176,14 @@ button {
   left: 3.5vw;
   flex-grow: 1;
 }
+
+.seeds {
+  background-color: #51bd1f;
+  width: 50px;
+  height: 50px;
+  border-radius: 40px 10px;
+}
+
 .pot {
   position: relative;
   background-color: rgba(255, 255, 255, 0.1);
@@ -191,9 +191,6 @@ button {
   margin: 5px;
   border-radius: 3em;
 }
-
-
-
 
 /*Styles for a table*/
 .container {

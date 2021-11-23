@@ -77,7 +77,7 @@ table tr td:nth-child(2) {
 
 /* Help Window */
 #help-window {
-  max-width: 30vw;
+  max-width: 50vw;
   min-width: 20em;
 }
 
@@ -121,10 +121,10 @@ table tr td:nth-child(2) {
 
 
 
-.btns-center {
+.btns-log {
   position: absolute;
-  left: 50%;
-  transform: translate(-50%);
+  right: 2vw;
+  top: 1em;
 }
 .btns-left {
   position: fixed;

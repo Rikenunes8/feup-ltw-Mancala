@@ -94,27 +94,31 @@ table tr td:nth-child(2) {
   max-width: 20vw;
   min-width: 12em;
 }
-#login-window form .field {
+#login-window .window-content .field {
   position: relative;
   width: 100%;
   margin-top: 1.6em;
 }
-#login-window form .field input {
+#login-window .window-content .field input {
   height: 100%;
   width: 100%;
 }
-#login-window form .field label {
+#login-window .window-content .field label {
   position: relative;
   padding-left: 1em;
   top: -3.2em;
 }
-#login-window form .field input[type="submit"] {
+#login-window .window-content .field button {
+  position: relative;
+  height: 100%;
+  width: 100%;
   background: wheat;
+  padding: 0 0 0 0;
   font-size: 1.1em;
   font-weight: 400;
-  position: relative;
   top: 0.6em;
-  padding-left: 0;
+  margin: auto;
+  margin-top: 1.6em;
   cursor: pointer;
 }
 

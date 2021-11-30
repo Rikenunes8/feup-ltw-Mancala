@@ -14,21 +14,22 @@
     <section>
       <div class="buttons">
         <div class="btns-log">
-          <button class="not-logged" id="btn-login" onclick="showWindow('btn-login','login-window')">
+          <button class="not-logged" id="btn-login">
             <img src="../Icons/login.png" alt="Login btn">
           </button>
-          <button class="logged" id="btn-logout" onclick="makeLogout()">
+          <div class="logged" id="btn-logout-username"></div>
+          <button class="logged" id="btn-logout">
             <img src="../Icons/logout.png" alt="Logout btn">
           </button>
         </div>
         <div class="btns-left">
-          <button class="logged" id="btn-settings" onclick="showWindow('btn-settings','settings-window')">
+          <button class="logged" id="btn-settings">
             <img src="../Icons/gear.png" alt="Settings btn">
           </button>
-          <button class="logged" id="btn-ranking" onclick="showWindow('btn-ranking','ranking-window')">
+          <button class="logged" id="btn-ranking">
             <img src="../Icons/ranking.png" alt="Ranking btn">
           </button>
-          <button id="btn-help" onclick="showWindow('btn-help','help-window')">
+          <button id="btn-help">
             <img src="../Icons/idea.png" alt="Help btn">
           </button>
         </div>
@@ -81,7 +82,7 @@
 
         <div class="window" id=login-window>
           <div class="window-title">Login Form</div>
-          <form class="window-content" onsubmit="makeLogin(); return false;">
+          <div class="window-content">
             <div class="field">
               <input type="text">
               <label>Username</label>
@@ -91,9 +92,9 @@
               <label>Password</label>
             </div>
             <div class="field" id="submit-login">
-              <input type="submit" value="Login">
+              <button>Login</button>
             </div>
-          </form>
+          </div>
         </div>
 
         <div class="window" id="settings-window">

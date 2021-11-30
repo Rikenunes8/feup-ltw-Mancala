@@ -6,6 +6,7 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="styles.css" type="text/css">
     <script src="buttons.js"></script>
+    <script src = "seed_pos.js"></script>
   </head>
   <body>
     <header>
@@ -49,14 +50,6 @@
         </div>
         <div class="section midsection">
           <div class="midrow topmid">
-            <div class="pot">
-              <!--<div class = "seeds"></div>-->
-            </div>
-            <div class="pot"></div>
-            <div class="pot"></div>
-            <div class="pot"></div>
-            <div class="pot"></div>
-            <div class="pot"></div>
           </div>
           <div class="midrow midmid">
             <div class="n-seeds">4</div>
@@ -67,12 +60,6 @@
             <div class="n-seeds">4</div>
           </div>
           <div class="midrow botmid">
-            <div class="pot"></div>
-            <div class="pot"></div>
-            <div class="pot"></div>
-            <div class="pot"></div>
-            <div class="pot"></div>
-            <div class="pot"></div>
           </div>
         </div>
         <div class="section sidesection">
@@ -114,11 +101,11 @@
                 <td><label>AI Level</label></td>
                 <td><input type="radio"></td>
               </tr>
-              <tr class="field">
+              <tr class="field" id = "n_p">
                 <td><label>Cavities per player</label></td>
                 <td><input type="number" value=6></td>
               </tr>
-              <tr class="field">
+              <tr class="field" id = "n_s">
                 <td><label>Seeds per cavity</label></td>
                 <td><input type="number" value=4></td>
               </tr>

@@ -14,8 +14,3 @@ class Game {
     this.pits2 = [4,4,4,4,4,4];
   }
 }
-
-
-window.onload = function() {
-
-}

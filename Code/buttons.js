@@ -1,4 +1,5 @@
 window.onload = function() {
+  console.log("hjdsafdks");
   const logout = document.querySelector("#btn-logout");
   logout.addEventListener("click", function() {makeLogout();});
   const login = document.querySelector("#btn-login");
@@ -50,6 +51,7 @@ function makeLogout() {
 }
 
 function showHideWindow(button, window) {
+  console.log("fjdsafdks");
   const btn = document.querySelector(button);
   const win = document.querySelector(window);
   let show = getComputedStyle(win).display == "none";

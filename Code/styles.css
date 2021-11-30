@@ -178,8 +178,8 @@ button {
 
 .n-seeds {
   position: relative;
-  left: 3.5vw;
   flex-grow: 1;
+  text-align: center;
 }
 
 .seeds {

@@ -51,6 +51,7 @@ h1 {
 }
 .window .window-content {
   padding: 1em 2em 3em 2em;
+  overflow: auto;
 }
 .window .window-content .field input {
   padding-left: 1em;
@@ -123,7 +124,7 @@ table tr td:nth-child(2) {
 .btns-log {
   position: absolute;
   right: 2vw;
-  top: 1em;
+  top: 2vh;
 }
 .btns-left {
   position: fixed;
@@ -147,39 +148,56 @@ button {
   max-width: 3.5vw;
 }
 
-.board {
-  position: relative;
-  top: 20vh;
-  display: flex;
-  background-color: SaddleBrown;
-  max-width: 70vw;
-  height: 30vw;
-  border-radius: 3em;
-  padding: 2%;
+#board {
+  display: grid;
+  grid-template-columns: 1fr 6fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  grid-gap: 20px;
+  grid-template-areas: "sp2 zp2 sp1"
+                       "sp2 zp1 sp1";
+  background: SaddleBrown;
+  width: 70vw;
+  height: 50vh;
+  min-height: 350px;
   margin: auto;
-  justify-content: flex-start;
+  padding: 2vw;
+  border-radius: 20px;
+}
+.hole {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
 }
 
-.sidesection {
+#storage-p2 {
+  grid-area: sp2;
+}
+#storage-p1 {
+  grid-area: sp1;
+}
+#zone-p2 {
+  grid-area: zp2;
+}
+#zone-p1 {
+  grid-area: zp1;
+}
+
+.pits-container {
   display: flex;
-  flex-grow: 1;
 }
 
-.midsection {
-  display: flex;
-  flex-direction: column;
-  flex-grow: 6;
-}
-
-.midrow {
-  display: flex;
-  flex-grow: 1;
-}
-
-.n-seeds {
-  position: relative;
-  flex-grow: 1;
+.pits {
+  width: 100%;
   text-align: center;
+  margin: 0 1vw 0 1vw;
+}
+
+.pit {
+  width: 100%;
+  height: 80%;
+}
+.score {
+  height: 20%; 
+  font-size: 1.3em;
 }
 
 .seeds {
@@ -187,14 +205,6 @@ button {
   width: 50px;
   height: 50px;
   border-radius: 40px 10px;
-}
-
-.pot {
-  position: relative;
-  background-color: rgba(255, 255, 255, 0.1);
-  flex-grow: 1;
-  margin: 5px;
-  border-radius: 3em;
 }
 
 /*Styles for a table*/

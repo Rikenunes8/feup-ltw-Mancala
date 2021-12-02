@@ -185,7 +185,7 @@ button {
   display: flex;
 }
 
-.pits {
+.pit-info {
   width: 100%;
   text-align: center;
   margin: 0 1vw 0 1vw;
@@ -195,8 +195,23 @@ button {
   width: 100%;
   height: 80%;
 }
-.score {
+.store {
+  width: 100%;
+  height: 100%;
+  display: inline-block;
+}
+
+.store-info .score {
+  display: inline-block;
+  position: absolute;
+  min-height: 350px;
+  height: 48vh;
+  text-align: center;
+}
+.pit-info .score {
   height: 20%; 
+}
+.score {
   font-size: 1.3em;
 }
 

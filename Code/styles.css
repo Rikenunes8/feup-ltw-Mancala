@@ -202,12 +202,19 @@ button {
 }
 
 .store-info .score {
-  display: inline-block;
+  display: inline-flex;
   position: absolute;
-  min-height: 350px;
+  min-height: calc(350px - 5vh);
   height: 48vh;
-  text-align: center;
+  align-items: center;
 }
+#store-p1 .score {
+  padding-right: 5vw;
+}
+#store-p2 .score {
+  padding-left: 1.5vw;
+}
+
 .pit-info .score {
   height: 20%; 
 }

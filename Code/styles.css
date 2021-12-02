@@ -168,10 +168,10 @@ button {
   border-radius: 20px;
 }
 
-#storage-p2 {
+#store-p2 {
   grid-area: sp2;
 }
-#storage-p1 {
+#store-p1 {
   grid-area: sp1;
 }
 #zone-p2 {

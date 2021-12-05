@@ -69,133 +69,85 @@ class Game {
 }
 
 
-function updateBoard(game) {
-  const zoneP1 = document.querySelector("#zone-p1");
-  const zoneP2 = document.querySelector("#zone-p2");
-  const storeP1 = document.querySelector("#store-p1");
-  const storeP2 = document.querySelector("#store-p2");
+function drawSeeds(hole, n) {
+  for (let j = 0; j < n; j++) {
+    let seed = document.createElement('div');
+    seed.setAttribute('class', 'seeds');
+    //semi-random drawing routine
+    hole.appendChild(seed);
+  }
+}
 
-  zoneP1.innerHTML = "";
-  zoneP2.innerHTML = "";
-  storeP1.innerHTML = "";
-  storeP2.innerHTML = "";
+function drawStore(game, player) {
+  const store = document.createElement('div');
+  store.setAttribute('class', 'store-info');
+  store.setAttribute('id', 'store-p'+player);
 
-  console.log(zoneP2);
-  
-  //draw routine for player 2 (reverse)
-
-  let store = document.createElement('div');
-  store.setAttribute('class', 'store hole');
+  let storeHole = document.createElement('div');
   let storeScore = document.createElement('div');
+  storeHole.setAttribute('class', 'store hole');
   storeScore.setAttribute('class', 'score');
-
-  for (let j = 0; j < game.players[1].store; j++)
-  {
-      let seed = document.createElement('div');
-      seed.setAttribute('class', 'seeds');
-      //semi-random drawing routine
-      store.appendChild(seed);
-  }
-
-  storeP2.appendChild(store);
-  storeP2.appendChild(storeScore);
-
-
-  for(let i = 0; i < game.num_pits; i++)
-  {   
-      console.log("HERE!");
-      let pitInfo = document.createElement('div');
-      pitInfo.setAttribute('class', 'pit-info');
-
-      let pit = document.createElement('div');
-      pit.setAttribute('class', 'pit hole');
-
-      let pitScore = document.createElement('div');
-      pitScore.setAttribute('class', 'score');
-      
-      for (let j = 0; j < game.players[1].pits[game.num_pits - i - 1]; j++)
-      {
-          let seed = document.createElement('div');
-          seed.setAttribute('class', 'seeds');
-          //semi-random drawing routine
-          pit.appendChild(seed);
-      }
-
-      pitInfo.appendChild(pitScore);
-      pitInfo.appendChild(pit);
-      console.log(pitInfo);
-      zoneP2.appendChild(pitInfo);
-  }
-
-  console.log(zoneP2);
+  storeScore.innerHTML = game.players[player-1].store;
+  drawSeeds(storeHole, game.players[player-1].store)
   
-  //draw routine for player 1
-
-  storeScore = document.createElement('div');
-  storeScore.setAttribute('class', 'score');
-  store = document.createElement('div');
-  store.setAttribute('class', 'store hole');
-
-  for (let j = 0; j < game.players[0].store; j++)
-  {
-      let seed = document.createElement('div');
-      seed.setAttribute('class', 'seeds');
-      //semi-random drawing routine
-      store.appendChild(seed);
+  if (player == 1) {
+    store.appendChild(storeScore);
+    store.appendChild(storeHole);
+  }
+  else {
+    store.appendChild(storeHole);
+    store.appendChild(storeScore);
   }
 
-  storeP1.appendChild(storeScore);
-  storeP1.appendChild(store);
-  
-  for(let i = 0; i < game.num_pits; i++)
-  {
-      let pitInfo = document.createElement('div');
-      pitInfo.setAttribute('class', 'pit-info');
+  return store;
+}
 
-      let pit = document.createElement('div');
-      pit.setAttribute('class', 'pit hole');
+function drawPits(game, player) {
+  const zone = document.createElement('div');
+  zone.setAttribute('class', 'pits-container');
+  zone.setAttribute('id', 'zone-p'+player);
+  for(let i = 0; i < game.num_pits; i++) {
+    let pitInfo = document.createElement('div');
+    let pitHole = document.createElement('div');
+    let pitScore = document.createElement('div');
+    pitInfo.setAttribute('class', 'pit-info');
+    pitHole.setAttribute('class', 'pit hole');
+    pitScore.setAttribute('class', 'score');
+    if (player == 1) {
+      pitHole.addEventListener("click", function() {game.playAuto(i); drawBoard(game);});
+      index = i;
+    }
+    else {
+      index = game.num_pits - i - 1;
+    }
+    pitScore.innerHTML = game.players[player-1].pits[index];
+    drawSeeds(pitHole, game.players[player-1].pits[index])
 
-      let pitScore = document.createElement('div');
-      pitScore.setAttribute('class', 'score');
-      
-      for (let j = 0; j < game.players[0].pits[i]; j++)
-      {
-          let seed = document.createElement('div');
-          seed.setAttribute('class', 'seeds');
-          //semi-random drawing routine
-          pit.appendChild(seed);
-      }
-      pitInfo.appendChild(pit);
+    if (player == 1) {
       pitInfo.appendChild(pitScore);
-      zoneP1.appendChild(pitInfo);
-      
+      pitInfo.appendChild(pitHole);
+    }
+    else {
+      pitInfo.appendChild(pitHole);
+      pitInfo.appendChild(pitScore);
+    }
+    
+    zone.appendChild(pitInfo);
   }
+  return zone;
+}
 
-  const nSeedsP1 = zoneP1.querySelectorAll(".pit-info .score");
-  const nSeedsP2 = zoneP2.querySelectorAll(".pit-info .score");
-  const scoreP1 = storeP1.querySelector(".score");
-  const scoreP2 = storeP2.querySelector(".score");
-
-  for (let pit = 0; pit < nSeedsP1.length; pit++) {
-    nSeedsP1[pit].innerHTML = game.players[0].pits[pit];
+function drawBoard(game) {
+  const board = document.querySelector("#board");
+  board.innerHTML = "";
+  
+  for (let i = 2; i > 0; i--) {
+    board.appendChild(drawStore(game, i));
+    board.appendChild(drawPits(game, i));
   }
-  for (let pit = 0; pit < nSeedsP2.length; pit++) {
-    nSeedsP2[pit].innerHTML = game.players[1].pits[nSeedsP2.length-1-pit];
-  }
-
-  scoreP1.innerHTML = game.players[0].store;
-  scoreP2.innerHTML = game.players[1].store;
-
-  const cavities_p1 = document.querySelectorAll("#zone-p1 .pit-info .pit");
-  let len = cavities_p1.length;
-  for (let c = 0; c < len; c++) {
-    cavities_p1[c].addEventListener("click", function() {game.playAuto(c); updateBoard(game);});
-  }
-
 }
 
 window.addEventListener("load", function() {
   const game = new Game();
-  updateBoard(game);
-  
+  drawBoard(game);
 });

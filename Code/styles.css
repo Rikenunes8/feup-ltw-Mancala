@@ -152,8 +152,9 @@ button {
   grid-template-columns: 1fr 6fr 1fr;
   grid-template-rows: 1fr 1fr;
   grid-gap: 20px;
-  grid-template-areas: "sp2 zp2 sp1"
-                       "sp2 zp1 sp1";
+  grid-template-areas:
+    "sp2 zp2 sp1"
+    "sp2 zp1 sp1";
   background: SaddleBrown;
   width: 70vw;
   height: 50vh;
@@ -215,7 +216,7 @@ button {
 }
 
 .pit-info .score {
-  height: 20%; 
+  height: 20%;
 }
 .score {
   font-size: 1.3em;

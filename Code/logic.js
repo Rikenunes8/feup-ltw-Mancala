@@ -75,6 +75,102 @@ function updateBoard(game) {
   const storeP1 = document.querySelector("#store-p1");
   const storeP2 = document.querySelector("#store-p2");
 
+  zoneP1.innerHTML = "";
+  zoneP2.innerHTML = "";
+  storeP1.innerHTML = "";
+  storeP2.innerHTML = "";
+
+  console.log(zoneP2);
+  
+  //draw routine for player 2 (reverse)
+
+  let store = document.createElement('div');
+  store.setAttribute('class', 'store hole');
+  let storeScore = document.createElement('div');
+  storeScore.setAttribute('class', 'score');
+
+  for (let j = 0; j < game.players[1].store; j++)
+  {
+      let seed = document.createElement('div');
+      seed.setAttribute('class', 'seeds');
+      //semi-random drawing routine
+      store.appendChild(seed);
+  }
+
+  storeP2.appendChild(store);
+  storeP2.appendChild(storeScore);
+
+
+  for(let i = 0; i < game.num_pits; i++)
+  {   
+      console.log("HERE!");
+      let pitInfo = document.createElement('div');
+      pitInfo.setAttribute('class', 'pit-info');
+
+      let pit = document.createElement('div');
+      pit.setAttribute('class', 'pit hole');
+
+      let pitScore = document.createElement('div');
+      pitScore.setAttribute('class', 'score');
+      
+      for (let j = 0; j < game.players[1].pits[game.num_pits - i - 1]; j++)
+      {
+          let seed = document.createElement('div');
+          seed.setAttribute('class', 'seeds');
+          //semi-random drawing routine
+          pit.appendChild(seed);
+      }
+
+      pitInfo.appendChild(pitScore);
+      pitInfo.appendChild(pit);
+      console.log(pitInfo);
+      zoneP2.appendChild(pitInfo);
+  }
+
+  console.log(zoneP2);
+  
+  //draw routine for player 1
+
+  storeScore = document.createElement('div');
+  storeScore.setAttribute('class', 'score');
+  store = document.createElement('div');
+  store.setAttribute('class', 'store hole');
+
+  for (let j = 0; j < game.players[0].store; j++)
+  {
+      let seed = document.createElement('div');
+      seed.setAttribute('class', 'seeds');
+      //semi-random drawing routine
+      store.appendChild(seed);
+  }
+
+  storeP1.appendChild(storeScore);
+  storeP1.appendChild(store);
+  
+  for(let i = 0; i < game.num_pits; i++)
+  {
+      let pitInfo = document.createElement('div');
+      pitInfo.setAttribute('class', 'pit-info');
+
+      let pit = document.createElement('div');
+      pit.setAttribute('class', 'pit hole');
+
+      let pitScore = document.createElement('div');
+      pitScore.setAttribute('class', 'score');
+      
+      for (let j = 0; j < game.players[0].pits[i]; j++)
+      {
+          let seed = document.createElement('div');
+          seed.setAttribute('class', 'seeds');
+          //semi-random drawing routine
+          pit.appendChild(seed);
+      }
+      pitInfo.appendChild(pit);
+      pitInfo.appendChild(pitScore);
+      zoneP1.appendChild(pitInfo);
+      
+  }
+
   const nSeedsP1 = zoneP1.querySelectorAll(".pit-info .score");
   const nSeedsP2 = zoneP2.querySelectorAll(".pit-info .score");
   const scoreP1 = storeP1.querySelector(".score");
@@ -90,19 +186,16 @@ function updateBoard(game) {
   scoreP1.innerHTML = game.players[0].store;
   scoreP2.innerHTML = game.players[1].store;
 
-}
-
-
-window.addEventListener("load", function() {
-  const game = new Game();
   const cavities_p1 = document.querySelectorAll("#zone-p1 .pit-info .pit");
-  let len = cavities_p1.length
+  let len = cavities_p1.length;
   for (let c = 0; c < len; c++) {
     cavities_p1[c].addEventListener("click", function() {game.playAuto(c); updateBoard(game);});
   }
 
+}
 
+window.addEventListener("load", function() {
+  const game = new Game();
   updateBoard(game);
   
-
 });

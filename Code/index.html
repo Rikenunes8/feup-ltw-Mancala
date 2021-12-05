@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="styles.css" type="text/css">
     <script src="buttons.js"></script>
-    <script src = "seed_pos.js"></script>
+    <script src="logic.js"></script>
   </head>
   <body>
     <header>
@@ -43,30 +43,6 @@
           </button>
         </div>
       </div>
-
-      <div class="board">
-        <div class="section sidesection">
-            <div class="pot"></div> 
-        </div>
-        <div class="section midsection">
-          <div class="midrow topmid">
-          </div>
-          <div class="midrow midmid">
-            <div class="n-seeds">4</div>
-            <div class="n-seeds">4</div>
-            <div class="n-seeds">4</div>
-            <div class="n-seeds">4</div>
-            <div class="n-seeds">4</div>
-            <div class="n-seeds">4</div>
-          </div>
-          <div class="midrow botmid">
-          </div>
-        </div>
-        <div class="section sidesection">
-            <div class="pot"></div>        
-        </div>
-      </div>
-
       <div class="windows">
 
         <div class="window" id=login-window>
@@ -101,12 +77,12 @@
                 <td><label>AI Level</label></td>
                 <td><input type="radio"></td>
               </tr>
-              <tr class="field" id = "n_p">
-                <td><label>Cavities per player</label></td>
+              <tr class="field" id="n_p">
+                <td><label>Pits per player</label></td>
                 <td><input type="number" value=6></td>
               </tr>
-              <tr class="field" id = "n_s">
-                <td><label>Seeds per cavity</label></td>
+              <tr class="field" id="n_s">
+                <td><label>Seeds per pit</label></td>
                 <td><input type="number" value=4></td>
               </tr>
               <tr class="field">
@@ -239,6 +215,70 @@
             </p>
           </div>
         </div>
+      </div>
+
+      <div id="board">
+        <div class="store-info" id="store-p2">
+          <div class="store hole"></div>
+          <div class="score">0</div>
+        </div>
+        <div class="pits-container" id="zone-p2">
+          <div class="pit-info">
+            <div class="pit hole"></div>
+            <div class="score">4</div>
+          </div>
+          <div class="pit-info">
+            <div class="pit hole"></div>
+            <div class="score">4</div>
+          </div>
+          <div class="pit-info">
+            <div class="pit hole"></div>
+            <div class="score">4</div>
+          </div>
+          <div class="pit-info">
+            <div class="pit hole"></div>
+            <div class="score">4</div>
+          </div>
+          <div class="pit-info">
+            <div class="pit hole"></div>
+            <div class="score">4</div>
+          </div>
+          <div class="pit-info">
+            <div class="pit hole"></div>
+            <div class="score">4</div>
+          </div>
+        </div>
+        <div class="store-info" id="store-p1">
+          <div class="score">0</div>
+          <div class="store hole"></div>
+        </div>
+        <div class="pits-container" id="zone-p1">
+          <div class="pit-info">
+            <div class="score">4</div>
+            <div class="pit hole"></div>
+          </div>
+          <div class="pit-info">
+            <div class="score">4</div>
+            <div class="pit hole"></div>
+          </div>
+          <div class="pit-info">
+            <div class="score">4</div>
+            <div class="pit hole"></div>
+          </div>
+          <div class="pit-info">
+            <div class="score">4</div>
+            <div class="pit hole"></div>
+          </div>
+          <div class="pit-info">
+            <div class="score">4</div>
+            <div class="pit hole"></div>
+          </div>
+          <div class="pit-info">
+            <div class="score">4</div>
+            <div class="pit hole"></div>
+          </div>
+        </div>
+  
       </div>
     </section>
 

@@ -1,4 +1,4 @@
-window.addEventListener('load', function() {
+window.addEventListener("load", function() {
   const logout = document.querySelector("#btn-logout");
   logout.addEventListener("click", function() {makeLogout();});
   const login = document.querySelector("#btn-login");
@@ -12,8 +12,9 @@ window.addEventListener('load', function() {
   settings.addEventListener("click", function() {showHideWindow("#btn-settings", "#settings-window");})
   const ranking = document.querySelector("#btn-ranking");
   ranking.addEventListener("click", function() {showHideWindow("#btn-ranking", "#ranking-window");})
-}
-);
+});
+
+
 function makeLogin() {
   const username = document.querySelector("#login-window input[type=text]");
   const password = document.querySelector("#login-window input[type=password]");
@@ -50,6 +51,7 @@ function makeLogout() {
 }
 
 function showHideWindow(button, window) {
+  console.log("fjdsafdks");
   const btn = document.querySelector(button);
   const win = document.querySelector(window);
   let show = getComputedStyle(win).display == "none";

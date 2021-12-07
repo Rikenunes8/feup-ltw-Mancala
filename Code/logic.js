@@ -54,17 +54,25 @@ class Game {
   }
 
   collectMirrors(side, pit) {
-    let seed1 = this.players[side].pits[pit].pop();
-    this.players[side].store.push(seed1);
+    let seed = this.players[side].pits[pit].pop();
+    this.players[side].store.push(seed);
     while(this.players[(side+1)%2].pits[this.num_pits-pit-1].length > 0){
-      let seed2 = this.players[(side+1)%2].pits[this.num_pits-pit-1].pop();
-      this.players[side].store.push(seed2);
+      let seed = this.players[(side+1)%2].pits[this.num_pits-pit-1].pop();
+      this.players[side].store.push(seed);
     }
   }
 
   playAuto(pit) {
-    if (this.sow(0, pit) != 0)
-      while (this.sow(1, Math.floor(Math.random() * this.num_pits)) == 1);
+    if (this.sow(0, pit) != 0) {
+      
+      setTimeout(() => {
+        let tryAgain = true;
+        while (tryAgain) {
+          tryAgain = this.sow(1, Math.floor(Math.random() * this.num_pits))
+        };
+      },2000);
+
+    }
   }
 }
 

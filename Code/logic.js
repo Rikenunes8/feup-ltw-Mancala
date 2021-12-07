@@ -1,9 +1,10 @@
 class Player {
   constructor(nPits, vPits) {
-    this.store = 0;
-    this.pits = []
-    for (let _ = 0; _ < nPits; _++)
-      this.pits.push(vPits);
+    this.store = [];
+    this.pits = [];
+    for (let _ = 0; _ < nPits; _++){
+      this.pits.push(createSeeds(vPits));
+    }
   }
 }
 
@@ -18,8 +19,9 @@ class Game {
 
   sow(side, pit) {
     const turn = side;
-    let seeds = this.players[side].pits[pit];
-    this.players[side].pits[pit] = 0;
+    let seeds = this.players[side].pits[pit].length;
+    let seedsToSow = this.players[side].pits[pit];
+    this.players[side].pits[pit] = [];
     pit++;
 
     if (seeds == 0)
@@ -27,16 +29,16 @@ class Game {
     while (seeds > 0) {
       if (pit == this.num_pits) {
         if (side == turn) {
-          this.players[side].store++;
-          seeds--;
+          let seed = seedsToSow.pop();
+          this.players[side].store.push(seed);
         }
         pit = 0;
         if (seeds != 0)
           side = (side+1)%2;
       }
       else {
-        this.players[side].pits[pit]++;
-        seeds--;
+        let seed = seedsToSow.pop();
+        this.players[side].pits[pit].push(seed);
         pit++;
       }
     }
@@ -45,7 +47,7 @@ class Game {
       if (pit == -1) {
         return turn;
       }
-      if (this.players[side].pits[pit] == 1) {
+      if (this.players[side].pits[pit].length == 1) {
         this.collectMirrors(side, pit);
       }
     }
@@ -53,32 +55,51 @@ class Game {
   }
 
   collectMirrors(side, pit) {
-    this.players[side].pits[pit] = 0;
-    let aux = this.players[(side+1)%2].pits[this.num_pits-pit-1];
-    this.players[(side+1)%2].pits[this.num_pits-pit-1] = 0;
-    this.players[side].store += 1 + aux;
+    let seed1 = this.players[side].pits[pit].pop();
+    this.players[side].store.push(seed1);
+    while(this.players[(side+1)%2].pits[this.num_pits-pit-1].length > 0){
+      let seed2 = this.players[(side+1)%2].pits[this.num_pits-pit-1].pop();
+      this.players[side].store.push(seed2);
+    }
   }
 
   playAuto(pit) {
     if (this.sow(0, pit) != 0)
-      while (this.sow(1, Math.floor(Math.random() * this.num_pits)) == 1);
+    {
+      while (this.sow(1, Math.floor(Math.random() * this.num_pits)) == 1)
+      {
+        console.log("playing");
+      }
+    }
   }
 
 
 
 }
 
-
-function drawSeeds(hole, n) {
+function createSeeds(n) {
+  let seeds = [];
   for (let j = 0; j < n; j++) {
     let seed = document.createElement('div');
     seed.setAttribute('class', 'seeds');
     let pos1 = Math.floor(Math.random()*60);
     let pos2 = Math.floor(Math.random()*90);
     seed.style.transform = "translate("+pos1+"px, "+pos2+"px)";
-    hole.appendChild(seed);
+    seeds.push(seed);
   }
+  return seeds;
 }
+
+function drawSeeds(hole, lseeds) {
+    console.log(lseeds);
+    console.log(hole);
+    for (let seed of lseeds)
+    {
+      hole.appendChild(seed);
+    }
+}
+
+//function updateSeeds()
 
 function drawStore(game, player) {
   const store = document.createElement('div');
@@ -89,7 +110,7 @@ function drawStore(game, player) {
   let storeScore = document.createElement('div');
   storeHole.setAttribute('class', 'store hole');
   storeScore.setAttribute('class', 'score');
-  storeScore.innerHTML = game.players[player-1].store;
+  storeScore.innerHTML = game.players[player-1].store.length;
   drawSeeds(storeHole, game.players[player-1].store)
   
   if (player == 1) {
@@ -122,7 +143,7 @@ function drawPits(game, player) {
     else {
       index = game.num_pits - i - 1;
     }
-    pitScore.innerHTML = game.players[player-1].pits[index];
+    pitScore.innerHTML = game.players[player-1].pits[index].length;
     drawSeeds(pitHole, game.players[player-1].pits[index])
 
     if (player == 1) {

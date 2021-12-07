@@ -73,7 +73,9 @@ function drawSeeds(hole, n) {
   for (let j = 0; j < n; j++) {
     let seed = document.createElement('div');
     seed.setAttribute('class', 'seeds');
-    //semi-random drawing routine
+    let pos1 = Math.floor(Math.random()*60);
+    let pos2 = Math.floor(Math.random()*90);
+    seed.style.transform = "translate("+pos1+"px, "+pos2+"px)";
     hole.appendChild(seed);
   }
 }

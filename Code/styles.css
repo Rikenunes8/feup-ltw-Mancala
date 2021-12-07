@@ -224,6 +224,7 @@ button {
 
 .seeds {
   position: absolute;
+  transform: translate(0px, 0px);
   background-color: #51bd1f;
   width: 20px;
   height: 20px;

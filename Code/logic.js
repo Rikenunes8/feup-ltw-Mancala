@@ -19,21 +19,20 @@ class Game {
 
   sow(side, pit) {
     const turn = side;
-    let seeds = this.players[side].pits[pit].length;
     let seedsToSow = this.players[side].pits[pit];
     this.players[side].pits[pit] = [];
     pit++;
 
-    if (seeds == 0)
+    if (seedsToSow.length == 0)
       return turn;
-    while (seeds > 0) {
+    while (seedsToSow.length > 0) {
       if (pit == this.num_pits) {
         if (side == turn) {
           let seed = seedsToSow.pop();
           this.players[side].store.push(seed);
         }
         pit = 0;
-        if (seeds != 0)
+        if (seedsToSow.length != 0)
           side = (side+1)%2;
       }
       else {
@@ -65,16 +64,8 @@ class Game {
 
   playAuto(pit) {
     if (this.sow(0, pit) != 0)
-    {
-      while (this.sow(1, Math.floor(Math.random() * this.num_pits)) == 1)
-      {
-        console.log("playing");
-      }
-    }
+      while (this.sow(1, Math.floor(Math.random() * this.num_pits)) == 1);
   }
-
-
-
 }
 
 function createSeeds(n) {
@@ -91,15 +82,10 @@ function createSeeds(n) {
 }
 
 function drawSeeds(hole, lseeds) {
-    console.log(lseeds);
-    console.log(hole);
     for (let seed of lseeds)
-    {
       hole.appendChild(seed);
-    }
 }
 
-//function updateSeeds()
 
 function drawStore(game, player) {
   const store = document.createElement('div');

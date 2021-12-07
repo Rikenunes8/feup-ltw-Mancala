@@ -63,9 +63,6 @@ class Game {
     if (this.sow(0, pit) != 0)
       while (this.sow(1, Math.floor(Math.random() * this.num_pits)) == 1);
   }
-
-
-
 }
 
 

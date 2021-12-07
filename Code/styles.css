@@ -151,7 +151,7 @@ button {
   display: grid;
   grid-template-columns: 1fr 6fr 1fr;
   grid-template-rows: 1fr 1fr;
-  grid-gap: 20px;
+  grid-gap: 10px;
   grid-template-areas:
     "sp2 zp2 sp1"
     "sp2 zp1 sp1";
@@ -209,10 +209,10 @@ button {
   align-items: center;
 }
 #store-p1 .score {
-  padding-right: 5vw;
+  right: 26vw;
 }
 #store-p2 .score {
-  padding-left: 1.5vw;
+  left: 26vw;
 }
 
 .pit-info .score {
@@ -225,8 +225,8 @@ button {
 .seeds {
   position: absolute;
   background-color: #51bd1f;
-  width: 40px;
-  height: 40px;
+  width: 20px;
+  height: 20px;
   border-radius: 40px 10px;
 }
 

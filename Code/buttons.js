@@ -1,3 +1,5 @@
+
+
 window.addEventListener("load", function() {
   const logout = document.querySelector("#btn-logout");
   const login = document.querySelector("#btn-login");
@@ -7,6 +9,7 @@ window.addEventListener("load", function() {
   const ranking = document.querySelector("#btn-ranking");
   const start = document.querySelector("#btn-start");
   const stop = document.querySelector("#btn-stop");
+  lockButton(stop);
 
   logout.addEventListener("click", function() {makeLogout();});
   login.addEventListener("click", function() {buttonPressed("#btn-login", "#login-window");});
@@ -14,8 +17,8 @@ window.addEventListener("load", function() {
   help.addEventListener("click", function() {buttonPressed("#btn-help", "#help-window");})
   settings.addEventListener("click", function() {buttonPressed("#btn-settings", "#settings-window");})
   ranking.addEventListener("click", function() {buttonPressed("#btn-ranking", "#ranking-window");})
-  start.addEventListener("click", function() {hideAllWindows(); blockButton(start); unblockButton(stop); initGame()})
-  stop.addEventListener("click", function() {hideAllWindows(); blockButton(stop); unblockButton(start);})
+  start.addEventListener("click", function() {hideAllWindows(); lockButton(start); unlockButton(stop); initGame()})
+  stop.addEventListener("click", function() {hideAllWindows(); lockButton(stop); unlockButton(start);})
 });
 
 
@@ -77,9 +80,9 @@ function hideAllWindows() {
     w.classList.remove("win_selected");
 }
 
-function blockButton(btn) {
+function lockButton(btn) {
   btn.classList.add("btn_blocked");
 }
-function unblockButton(btn) {
+function unlockButton(btn) {
   btn.classList.remove("btn_blocked");
 }

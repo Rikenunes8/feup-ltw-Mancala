@@ -47,13 +47,13 @@ class Game {
         return turn;
       }
       if (this.players[side].pits[pit].length == 1) {
-        this.collectMirrors(side, pit);
+        this.collectOpposite(side, pit);
       }
     }
     return (turn+1)%2;
   }
 
-  collectMirrors(side, pit) {
+  collectOpposite(side, pit) {
     let seed = this.players[side].pits[pit].pop();
     this.players[side].store.push(seed);
     while(this.players[(side+1)%2].pits[this.num_pits-pit-1].length > 0){

@@ -1,17 +1,21 @@
 window.addEventListener("load", function() {
   const logout = document.querySelector("#btn-logout");
-  logout.addEventListener("click", function() {makeLogout();});
   const login = document.querySelector("#btn-login");
-  login.addEventListener("click", function() {showHideWindow("#btn-login", "#login-window");});
   const submit_login = document.querySelector("#submit-login");
-  submit_login.addEventListener("click", function () {makeLogin();});
-
   const help = document.querySelector("#btn-help");
-  help.addEventListener("click", function() {showHideWindow("#btn-help", "#help-window");})
   const settings = document.querySelector("#btn-settings");
-  settings.addEventListener("click", function() {showHideWindow("#btn-settings", "#settings-window");})
   const ranking = document.querySelector("#btn-ranking");
-  ranking.addEventListener("click", function() {showHideWindow("#btn-ranking", "#ranking-window");})
+  const start = document.querySelector("#btn-start");
+  const stop = document.querySelector("#btn-stop");
+
+  logout.addEventListener("click", function() {makeLogout();});
+  login.addEventListener("click", function() {buttonPressed("#btn-login", "#login-window");});
+  submit_login.addEventListener("click", function () {makeLogin();});
+  help.addEventListener("click", function() {buttonPressed("#btn-help", "#help-window");})
+  settings.addEventListener("click", function() {buttonPressed("#btn-settings", "#settings-window");})
+  ranking.addEventListener("click", function() {buttonPressed("#btn-ranking", "#ranking-window");})
+  start.addEventListener("click", function() {hideAllWindows(); blockButton(start); unblockButton(stop); initGame()})
+  stop.addEventListener("click", function() {hideAllWindows(); blockButton(stop); unblockButton(start);})
 });
 
 
@@ -19,7 +23,7 @@ function makeLogin() {
   const username = document.querySelector("#login-window input[type=text]");
   const password = document.querySelector("#login-window input[type=password]");
 
-  showHideWindow("#btn-login", "#login-window");
+  buttonPressed("#btn-login", "#login-window");
   const elems_notlog = document.querySelectorAll(".not-logged");
   const elems_log = document.querySelectorAll(".logged:not(#btn-logout, #btn-logout-username)");
   const btn_logout = document.querySelector("#btn-logout");
@@ -50,7 +54,7 @@ function makeLogout() {
   }
 }
 
-function showHideWindow(button, window) {
+function buttonPressed(button, window) {
   const btn = document.querySelector(button);
   const win = document.querySelector(window);
   let show = !btn.classList.contains("btn_selected");
@@ -71,4 +75,11 @@ function hideAllWindows() {
     b.classList.remove("btn_selected");
   for (let w of wins)
     w.classList.remove("win_selected");
+}
+
+function blockButton(btn) {
+  btn.classList.add("btn_blocked");
+}
+function unblockButton(btn) {
+  btn.classList.remove("btn_blocked");
 }

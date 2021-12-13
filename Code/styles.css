@@ -86,6 +86,22 @@ section .btn_selected {
   background-color: burlywood;
 }
 
+header button:hover {
+  background-color: rgba(245, 222, 179, 0.5);
+}
+section button:hover {
+  background-color: rgba(222, 184, 135, 0.5);
+}
+
+.btn_blocked {
+  opacity: 0.5;
+  cursor: default;
+  background-color: rgba(255, 255, 255, 0);
+}
+.btn_blocked:hover {
+  background-color: rgba(255, 255, 255, 0);
+}
+
 
 #board {
   display: grid;
@@ -268,6 +284,9 @@ table tr td:nth-child(2) {
   font-size: 1.1em;
   line-height: 0.9em;
   font-weight: 400;
+}
+#login-window .window-content .field .submit:hover {
+  background: rgba(245, 222, 179, 0.5);
 }
 
 /*Styles for a table*/

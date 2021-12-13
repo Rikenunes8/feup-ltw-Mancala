@@ -164,7 +164,11 @@ function drawBoard(game) {
   }
 }
 
-window.addEventListener("load", function() {
+function initGame() {
   const game = new Game();
   drawBoard(game);
+}
+
+window.addEventListener("load", function() {
+  initGame();
 });

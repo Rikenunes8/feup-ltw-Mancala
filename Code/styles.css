@@ -90,10 +90,10 @@ button img {
     "sp2 zp1 sp1";
   background: SaddleBrown;
   width: 100%;
-  height: 50%;
+  height: 70vh;
   min-height: 350px;
   margin: auto;
-  padding: 2vw;
+  padding: 20px;
   border-radius: 20px;
 }
 .hole {
@@ -121,7 +121,7 @@ button img {
 .pit-info {
   width: 100%;
   text-align: center;
-  margin: 0 1vw 0 1vw;
+  margin: 0 10px 0 10px;
 }
 
 .pit {
@@ -137,15 +137,15 @@ button img {
 .store-info .score {
   display: inline-flex;
   position: absolute;
-  min-height: calc(350px - 5vh);
-  height: 48vh;
+  min-height: calc(350px - 10vh);
+  height: 63vh;
   align-items: center;
 }
 #store-p1 .score {
-  right: 26vw;
+  right: 14%;
 }
 #store-p2 .score {
-  left: 26vw;
+  left: 14%;
 }
 
 .pit-info .score {

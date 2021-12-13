@@ -53,7 +53,7 @@ function makeLogout() {
 function showHideWindow(button, window) {
   const btn = document.querySelector(button);
   const win = document.querySelector(window);
-  let show = btn.classList.contains("btn_selected");
+  let show = !btn.classList.contains("btn_selected");
   
   hideAllWindows();
 

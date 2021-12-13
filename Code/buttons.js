@@ -53,21 +53,22 @@ function makeLogout() {
 function showHideWindow(button, window) {
   const btn = document.querySelector(button);
   const win = document.querySelector(window);
-  let show = getComputedStyle(win).display == "none";
+  let show = btn.classList.contains("btn_selected");
   
   hideAllWindows();
 
   if (show) this.showWindow(btn, win);
 }
 function showWindow(btn, win) {
-  btn.style.backgroundColor = "burlywood";
-  win.style.display = "inline-block";
+  btn.classList.add("btn_selected");
+  win.classList.add("win_selected");
 }
 function hideAllWindows() {
-  const btns = document.querySelectorAll("section button, header button");
-  const wins = document.querySelectorAll(".window");
+  const btns = document.querySelectorAll(".btn_selected");
+  const wins = document.querySelectorAll(".win_selected");
+
   for (let b of btns)
-    b.style.backgroundColor = "rgba(255, 255, 255, 0.0)";
+    b.classList.remove("btn_selected");
   for (let w of wins)
-    w.style.display = "none";
+    w.classList.remove("win_selected");
 }

@@ -40,6 +40,7 @@ h1 {
   transform: translate(0, -50%);}
 .btns-log {
   position: absolute;
+  margin: 0 1% 0 1%;
   top: 50%;
   right: 0;
   transform: translate(0, -50%);
@@ -49,7 +50,6 @@ h1 {
 section {
   margin-top: 30px;
 }
-
 .column {
   float: left;
 }
@@ -77,8 +77,15 @@ button {
 
 button img {
   width: 60%;
-  
 }
+
+header .btn_selected {
+  background-color: wheat;
+}
+section .btn_selected {
+  background-color: burlywood;
+}
+
 
 #board {
   display: grid;
@@ -196,6 +203,10 @@ button img {
 }
 .window .window-content .field {
   height: 2em;
+}
+
+.win_selected {
+  display: inline-block;
 }
 
 /* Settings Window */

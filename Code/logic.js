@@ -64,13 +64,13 @@ class Game {
 
   playAuto(pit) {
     if (this.sow(0, pit) != 0) {
+      let tryAgain = true;
+      while (tryAgain) {
+        tryAgain = this.sow(1, Math.floor(Math.random() * this.num_pits))
+      };
       
-      setTimeout(() => {
-        let tryAgain = true;
-        while (tryAgain) {
-          tryAgain = this.sow(1, Math.floor(Math.random() * this.num_pits))
-        };
-      },2000);
+      //setTimeout(() => {
+      //},2000);
 
     }
   }

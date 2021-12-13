@@ -10,20 +10,21 @@
   </head>
   <body>
     <header>
-      <h1>Mancala</h1>
-    </header>
-    <section>
-
-      <div class="buttons">
+      <div class="header-log">
         <div class="btns-log">
           <button class="not-logged" id="btn-login">
             <img src="../Icons/login.png" alt="Login btn">
           </button>
-          <div class="logged" id="btn-logout-username"></div>
           <button class="logged" id="btn-logout">
             <img src="../Icons/logout.png" alt="Logout btn">
           </button>
         </div>
+        <div class="logged" id="btn-logout-username"></div>
+      </div>
+      <h1>Mancala</h1>
+    </header>
+    <section>
+      <div class="column btns">
         <div class="btns-left">
           <button class="logged" id="btn-settings">
             <img src="../Icons/gear.png" alt="Settings btn">
@@ -35,7 +36,12 @@
             <img src="../Icons/idea.png" alt="Help btn">
           </button>
         </div>
-        <div class="btns-right logged">
+      </div>
+      <div class="column board">
+        <div id="board"></div>
+      </div>
+      <div class="column btns">
+        <div class="btns-right">
           <button id="btn-start">
             <img src="../Icons/start.png" alt="Start btn">
           </button>
@@ -44,8 +50,10 @@
           </button>
         </div>
       </div>
-
-      <div class="windows">
+    </section>
+      
+    
+    <div class="windows">
 
         <div class="window" id=login-window>
           <div class="window-title">Login Form</div>
@@ -59,7 +67,7 @@
               <label>Password</label>
             </div>
             <div class="field" id="submit-login">
-              <button>Login</button>
+              <div class="submit">Login</div>
             </div>
           </div>
         </div>
@@ -219,8 +227,6 @@
         </div>
       </div>
 
-      <div id="board"></div>
-    </section>
 
     <footer>
       <!--<p>

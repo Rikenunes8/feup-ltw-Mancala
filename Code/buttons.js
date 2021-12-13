@@ -51,7 +51,6 @@ function makeLogout() {
 }
 
 function showHideWindow(button, window) {
-  console.log("fjdsafdks");
   const btn = document.querySelector(button);
   const win = document.querySelector(window);
   let show = getComputedStyle(win).display == "none";
@@ -65,7 +64,7 @@ function showWindow(btn, win) {
   win.style.display = "inline-block";
 }
 function hideAllWindows() {
-  const btns = document.querySelectorAll(".buttons button");
+  const btns = document.querySelectorAll("section button, header button");
   const wins = document.querySelectorAll(".window");
   for (let b of btns)
     b.style.backgroundColor = "rgba(255, 255, 255, 0.0)";

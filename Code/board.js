@@ -3,7 +3,7 @@ class Board {
     this.nSeeds = nSeeds;
     this.nPits = nPits;
 
-    this.board = document.querySelector("#board");
+    let board = document.querySelector("#board");
     board.innerHTML = "";
     this.store1 = this.createStore(1);
     this.store2 = this.createStore(2);
@@ -46,6 +46,7 @@ class Board {
   }
 
   addSeed(holeInfo, seed) {
+    holeInfo.transformSeed(seed);
     holeInfo.nSeeds++;
     holeInfo.score.innerHTML = holeInfo.nSeeds;
     holeInfo.seeds.push(seed);
@@ -62,8 +63,6 @@ class Board {
   }
 
   sow(turn, choice) {
-
-
     let size = this.holes.length;
     let ownStore = (turn == 0 ? size/2 : size) - 1;
     let pass = (turn == 0 ? size : size/2) - 1;
@@ -107,8 +106,14 @@ class Hole {
     this.hole = document.createElement('div');
     this.score = document.createElement('div');
     this.score.setAttribute('class', 'score');
-    if (isStore) this.hole.setAttribute('class', 'store hole');
-    else         this.hole.setAttribute('class', 'pit hole');
+    if (isStore) {
+      this.dxMax = 40; this.dyMax = 160; this.rotMax = 90;
+      this.hole.setAttribute('class', 'store hole');
+    }
+    else{
+      this.dxMax = 40; this.dyMax = 80; this.rotMax = 90;
+      this.hole.setAttribute('class', 'pit hole');
+    } 
     this.seeds = this.createSeeds();
 
     this.score.innerHTML = this.nSeeds;
@@ -126,19 +131,20 @@ class Hole {
   }
 
   createSeeds() {
-    let dxMax = 50;
-    let dyMax = 90;
-    let rotMax = 90;
     let seeds = [];
     for (let _ = 0; _ < this.nSeeds; _++) {
       let seed = document.createElement('div');
       seed.setAttribute('class', 'seeds');
-      let dx = Math.floor(Math.random()*dxMax);
-      let dy = Math.floor(Math.random()*dyMax);
-      let rot = Math.floor(Math.random()*rotMax);
-      seed.style.transform = "translate("+(0.5+dx/10)+"vw, "+(0.5+dy/10)+"vw) rotate("+rot+"deg)";
+      this.transformSeed(seed);
       seeds.push(seed);
     }
     return seeds;
+  }
+
+  transformSeed(seed) {
+    let dx = 0.5 + Math.floor(Math.random()*this.dxMax)/10;
+    let dy = 0.5 + Math.floor(Math.random()*this.dyMax)/10;
+    let rot = Math.floor(Math.random()*this.rotMax);
+    seed.style.transform = "translate("+dx+"vw, "+dy+"vw) rotate("+rot+"deg)";
   }
 }

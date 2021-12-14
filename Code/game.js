@@ -5,17 +5,20 @@ class Game {
     this.turn = playFirst ? 0 : 1;
   }
 
+
+  // TODO: THIS IS NOT READY YET
   play(player) {
-    if (this.turn == -1) return;
+    if (this.turn == -1 || this.turn != player) return;
+    
     console.log("Play");
     console.log(player);
     console.log(this.turn);
 
-    if (player != this.turn) return;
-
     let choice = this.players[this.turn].play();
+
     console.log("choice: "+choice)
     if (choice == -1) return;
+    
     this.turn = this.board.sow(this.turn, choice);
     console.log("newturn: "+this.turn);
 
@@ -23,7 +26,7 @@ class Game {
     this.play(this.turn);
 
   }
-
+  // TODO: 
   checkEndGame() {
     this.players[0].score = this.board.store1.nSeeds;
     this.players[1].score = this.board.store2.nSeeds;

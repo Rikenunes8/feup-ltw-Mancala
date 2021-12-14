@@ -1,19 +1,18 @@
 class Player {
-  constructor(nPits, vPits) {
+  constructor(nPits, nSeeds) {
     this.store = [];
     this.pits = [];
-    for (let _ = 0; _ < nPits; _++){
-      this.pits.push(createSeeds(vPits));
+    for (let _ = 0; _ < nPits; _++) {
+      this.pits.push(createSeeds(nSeeds, 50, 90, 90));
     }
   }
 }
 
 class Game {
-  constructor() {
-    this.num_seeds = document.querySelector("#n_s input").value;
-    this.num_pits = document.querySelector("#n_p input").value;
-    const p1 = new Player(this.num_pits, this.num_seeds);
-    const p2 = new Player(this.num_pits, this.num_seeds);
+  constructor(nPits, nSeeds, p1, p2) {
+    this.nPits = nPits;
+    this.nSeeds = nSeeds;
+    this.totalSeeds = nSeeds*nPits;
     this.players = [p1, p2];
   }
 
@@ -76,25 +75,37 @@ class Game {
   }
 }
 
-function createSeeds(n) {
+
+function createSeeds(n, dxMax, dyMax, rotMax) {
   let seeds = [];
   for (let j = 0; j < n; j++) {
     let seed = document.createElement('div');
     seed.setAttribute('class', 'seeds');
-    let pos1 = Math.floor(Math.random()*60);
-    let pos2 = Math.floor(Math.random()*90);
-    seed.style.transform = "translate("+pos1+"px, "+pos2+"px)";
+    let dx = Math.floor(Math.random()*dxMax);
+    let dy = Math.floor(Math.random()*dyMax);
+    let rot = Math.floor(Math.random()*rotMax);
+    seed.style.transform = "translate("+(0.5+dx/10)+"vw, "+(0.5+dy/10)+"vw) rotate("+rot+"deg)";
     seeds.push(seed);
   }
   return seeds;
 }
 
-function drawSeeds(hole, lseeds) {
-    for (let seed of lseeds)
-      hole.appendChild(seed);
+function makePlayable(game) {
+  const pits = document.querySelectorAll("#zone-p1 .pit-info .pit");
+  for(let i = 0; i < pits.length; i++)
+    pits[i].addEventListener("click", function() {game.playAuto(i); makePlayable(game)});
 }
 
+function makeNotPlayable() {
+  const pits = document.querySelectorAll("#zone-p1 .pit-info .pit");
+  for(let i = 0; i < pits.length; i++)
+    pits[i].removeEventListener("click");
+}
 
+function drawSeeds(hole, seeds) {
+  for (let seed of seeds)
+    hole.appendChild(seed);
+}
 function drawStore(game, player) {
   const store = document.createElement('div');
   store.setAttribute('class', 'store-info');
@@ -118,7 +129,6 @@ function drawStore(game, player) {
 
   return store;
 }
-
 function drawPits(game, player) {
   const zone = document.createElement('div');
   zone.setAttribute('class', 'pits-container');
@@ -130,13 +140,10 @@ function drawPits(game, player) {
     pitInfo.setAttribute('class', 'pit-info');
     pitHole.setAttribute('class', 'pit hole');
     pitScore.setAttribute('class', 'score');
-    if (player == 1) {
-      pitHole.addEventListener("click", function() {game.playAuto(i); drawBoard(game);});
-      index = i;
-    }
-    else {
-      index = game.num_pits - i - 1;
-    }
+    
+    if (player == 1)  index = i;
+    else              index = game.num_pits - i - 1;
+
     pitScore.innerHTML = game.players[player-1].pits[index].length;
     drawSeeds(pitHole, game.players[player-1].pits[index])
 
@@ -153,7 +160,6 @@ function drawPits(game, player) {
   }
   return zone;
 }
-
 function drawBoard(game) {
   const board = document.querySelector("#board");
   board.innerHTML = "";
@@ -165,10 +171,23 @@ function drawBoard(game) {
 }
 
 function initGame() {
-  const game = new Game();
+  let nSeeds = document.querySelector("#n_s input").value;
+  let nPits = document.querySelector("#n_p input").value;
+  let p1 = new Player(nPits, nSeeds);
+  let p2 = new Player(nPits, nSeeds);
+  const game = new Game(nPits, nSeeds, p1, p2);
   drawBoard(game);
+  return game;
 }
 
+function endGame() {
+
+}
+
+
+
+
 window.addEventListener("load", function() {
-  initGame();
+  let game = initGame();
+  makePlayable(game);
 });

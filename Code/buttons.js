@@ -17,8 +17,8 @@ window.addEventListener("load", function() {
   help.addEventListener("click", function() {buttonPressed("#btn-help", "#help-window");})
   settings.addEventListener("click", function() {buttonPressed("#btn-settings", "#settings-window");})
   ranking.addEventListener("click", function() {buttonPressed("#btn-ranking", "#ranking-window");})
-  start.addEventListener("click", function() {hideAllWindows(); lockButton(start); unlockButton(stop); initGame()})
-  stop.addEventListener("click", function() {hideAllWindows(); lockButton(stop); unlockButton(start);})
+  start.addEventListener("click", function() {hideAllWindows(); lockButton(start); unlockButton(stop); initGame();})
+  stop.addEventListener("click", function() {hideAllWindows(); lockButton(stop); unlockButton(start); endGame();})
 });
 
 

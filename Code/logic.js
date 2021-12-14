@@ -1,4 +1,4 @@
-class Player {
+/*class Player {
   constructor(nPits, nSeeds) {
     this.store = [];
     this.pits = [];
@@ -90,17 +90,7 @@ function createSeeds(n, dxMax, dyMax, rotMax) {
   return seeds;
 }
 
-function makePlayable(game) {
-  const pits = document.querySelectorAll("#zone-p1 .pit-info .pit");
-  for(let i = 0; i < pits.length; i++)
-    pits[i].addEventListener("click", function() {game.playAuto(i); makePlayable(game)});
-}
 
-function makeNotPlayable() {
-  const pits = document.querySelectorAll("#zone-p1 .pit-info .pit");
-  for(let i = 0; i < pits.length; i++)
-    pits[i].removeEventListener("click");
-}
 
 function drawSeeds(hole, seeds) {
   for (let seed of seeds)
@@ -187,7 +177,4 @@ function endGame() {
 
 
 
-window.addEventListener("load", function() {
-  let game = initGame();
-  makePlayable(game);
-});
+*/

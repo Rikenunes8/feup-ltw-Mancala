@@ -94,6 +94,11 @@ section button:hover {
   background-color: rgba(222, 184, 135, 0.5);
 }
 
+section button:disabled {
+  opacity: 0.5;
+  cursor: default;
+  background-color: rgba(255, 255, 255, 0);
+}
 .btn_blocked {
   opacity: 0.5;
   cursor: default;
@@ -103,7 +108,7 @@ section button:hover {
   background-color: rgba(255, 255, 255, 0);
 }
 
-#messages {
+#message_box {
   width: 100%;
   margin-top: 20px;
   background-color: pink;

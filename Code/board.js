@@ -2,6 +2,7 @@ class Board {
   constructor(nSeeds, nPits) {
     this.nSeeds = nSeeds;
     this.nPits = nPits;
+    this.messagesBox = document.querySelector("#message_box");
 
     let board = document.querySelector("#board");
     board.innerHTML = "";
@@ -83,7 +84,7 @@ class Board {
     if (i == ownStore) {
       return turn;
     }
-    else if (Math.floor(i/(size/2)) == turn && this.holes[i].nSeeds == 1 ) {
+    else if (Math.floor(i/(size/2)) == turn && this.holes[i].nSeeds == 1 && this.holes[2*this.nPits - i].nSeeds != 0) {
       let ownSeeds = this.takeAllSeeds(this.holes[i]);
       let oppSeeds = this.takeAllSeeds(this.holes[2*this.nPits - i]);
       while (ownSeeds.length != 0) {
@@ -96,6 +97,28 @@ class Board {
       }
     }
     return (turn+1) % 2;
+  }
+
+  collectAllSeeds(player) {
+    let side = this.nPits+1;
+    let storeIndex = (player+1)*side - 1;
+
+    for (let i = 0; i < this.nPits; i++) {
+      let seeds = this.takeAllSeeds(this.holes[player*side + i]);
+      while (seeds.length != 0) {
+        let seed = seeds.pop();
+        this.addSeed(this.holes[storeIndex], seed);
+      }
+    }
+  }
+
+  isEmpty(turn, choice) {
+    let sideSize = parseInt(this.nPits)+1;
+    return this.holes[turn*sideSize + choice].isEmpty();
+  }
+
+  setMessage(str) {
+    this.messagesBox.innerHTML = str;
   }
 }
 
@@ -146,5 +169,9 @@ class Hole {
     let dy = 0.5 + Math.floor(Math.random()*this.dyMax)/10;
     let rot = Math.floor(Math.random()*this.rotMax);
     seed.style.transform = "translate("+dx+"vw, "+dy+"vw) rotate("+rot+"deg)";
+  }
+
+  isEmpty() {
+    return this.nSeeds == 0;
   }
 }

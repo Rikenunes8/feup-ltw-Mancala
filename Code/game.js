@@ -3,46 +3,61 @@ class Game {
     this.board = board;
     this.players = [p1, p2];
     this.turn = playFirst ? 0 : 1;
+    this.running = true;
+
+    if (!playFirst) this.play(1);
   }
 
+  playRound(player) {
+    while (this.play(player++));
+    setTimeout(()=> {while (this.play(player%2));}, 2000);
+    
+  }
 
   // TODO: THIS IS NOT READY YET
   play(player) {
-    if (this.turn == -1 || this.turn != player) return;
-    
-    console.log("Play");
-    console.log(player);
-    console.log(this.turn);
+    let oldTurn = this.turn;
+    if (!this.running || this.turn != player) 
+      return false;
 
     let choice = this.players[this.turn].play();
-
-    console.log("choice: "+choice)
-    if (choice == -1) return;
     
+    if (choice == -1) 
+      return false;
+    if (this.board.isEmpty(player, choice))
+      return this.play(player);
+
     this.turn = this.board.sow(this.turn, choice);
-    console.log("newturn: "+this.turn);
 
-    if (this.checkEndGame()) return;
-    this.play(this.turn);
+    if (this.checkEndGame()) {
+      this.board.setMessage("End of the game");
+    }
+    else {
+      if (this.turn == oldTurn)
+        this.board.setMessage("Play again "+this.players[this.turn].name);
+      else
+        this.board.setMessage("Play now "+this.players[this.turn].name);
+    }
 
+    return this.turn == oldTurn;
   }
   // TODO: 
   checkEndGame() {
+    let endGame = false;
     this.players[0].score = this.board.store1.nSeeds;
     this.players[1].score = this.board.store2.nSeeds;
 
     let totalSeeds = 2*this.board.nPits * this.board.nSeeds;
     if (this.players[0].score > totalSeeds/2 || this.players[1].score > totalSeeds/2) {
-      this.turn = -1;
-      return true;
+      this.running = false;
+      endGame = true;
     }
     else if(!this.anyMove(this.turn)) {
-      this.turn = -1
-      console.log("End game for not to have more moves")
-      // TODO: when Game.play() is ok
-      return true;
+      this.board.collectAllSeeds((this.turn+1)%2);
+      this.running = false;
+      endGame = true;
     }
-    return false;
+    return endGame;
   }
 
   anyMove(player) {
@@ -71,7 +86,7 @@ function initGame() {
 function makePlayable(player, game) {
   const pits = document.querySelectorAll("#zone-p1 .pit-info .pit");
   for(let i = 0; i < pits.length; i++)
-    pits[i].addEventListener("click", function() {player.setNextPlay(i); game.play(0);});
+    pits[i].addEventListener("click", function() {player.setNextPlay(i); game.playRound(0);});
 }
 
 window.addEventListener("load", function() {

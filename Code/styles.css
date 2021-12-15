@@ -169,6 +169,7 @@ section button:disabled {
   min-height: calc(350px - 10vh);
   height: 63vh;
   align-items: center;
+  z-index: 1;
 }
 #store-p1 .score {
   right: 14%;

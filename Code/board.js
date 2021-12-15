@@ -3,6 +3,8 @@ class Board {
     this.nSeeds = nSeeds;
     this.nPits = nPits;
     this.messagesBox = document.querySelector("#message_box");
+    if (nSeeds == 0)
+      this.setMessage("Please login, set your game and press START");
 
     let board = document.querySelector("#board");
     board.innerHTML = "";
@@ -130,11 +132,11 @@ class Hole {
     this.score = document.createElement('div');
     this.score.setAttribute('class', 'score');
     if (isStore) {
-      this.dxMax = 40; this.dyMax = 160; this.rotMax = 90;
+      this.dxMax = 40; this.dyMax = 250; this.rotMax = 90;
       this.hole.setAttribute('class', 'store hole');
     }
     else{
-      this.dxMax = 40; this.dyMax = 80; this.rotMax = 90;
+      this.dxMax = 40; this.dyMax = 100; this.rotMax = 90;
       this.hole.setAttribute('class', 'pit hole');
     } 
     this.seeds = this.createSeeds();
@@ -165,7 +167,7 @@ class Hole {
   }
 
   transformSeed(seed) {
-    let dx = 0.5 + Math.floor(Math.random()*this.dxMax)/10;
+    let dx = 0.2 + Math.floor(Math.random()*this.dxMax)/10;
     let dy = 0.5 + Math.floor(Math.random()*this.dyMax)/10;
     let rot = Math.floor(Math.random()*this.rotMax);
     seed.style.transform = "translate("+dx+"vw, "+dy+"vw) rotate("+rot+"deg)";

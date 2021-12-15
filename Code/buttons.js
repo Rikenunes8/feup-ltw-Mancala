@@ -14,11 +14,13 @@ window.addEventListener("load", function() {
   logout.addEventListener("click", function() {makeLogout();});
   login.addEventListener("click", function() {buttonPressed("#btn-login", "#login-window");});
   submit_login.addEventListener("click", function () {makeLogin();});
-  help.addEventListener("click", function() {buttonPressed("#btn-help", "#help-window");})
-  settings.addEventListener("click", function() {buttonPressed("#btn-settings", "#settings-window");})
-  ranking.addEventListener("click", function() {buttonPressed("#btn-ranking", "#ranking-window");})
-  start.addEventListener("click", function() {hideAllWindows(); lockButton(start); unlockButton(stop); initGame();})
-  stop.addEventListener("click", function() {hideAllWindows(); lockButton(stop); unlockButton(start);})
+  help.addEventListener("click", function() {buttonPressed("#btn-help", "#help-window");});
+  settings.addEventListener("click", function() {buttonPressed("#btn-settings", "#settings-window");});
+  ranking.addEventListener("click", function() {buttonPressed("#btn-ranking", "#ranking-window");});
+  
+  let object = {ref: 0};
+  start.addEventListener("click", function() {hideAllWindows(); lockButton(settings); lockButton(start); unlockButton(stop); initGame(object);});
+  stop.addEventListener("click", function() {hideAllWindows(); unlockButton(settings); lockButton(stop); unlockButton(start); endGame(object);});
 });
 
 

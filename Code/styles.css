@@ -186,7 +186,6 @@ section button:disabled {
 
 .seeds {
   position: absolute;
-  transform: translate(0px, 0px);
   background-color: #51bd1f;
   width: 20px;
   height: 20px;
@@ -270,6 +269,7 @@ table tr td:nth-child(2) {
 #login-window .window-content .field input {
   height: 100%;
   width: 100%;
+  border: 1px solid SaddleBrown;
 }
 #login-window .window-content .field label {
   position: relative;
@@ -281,6 +281,7 @@ table tr td:nth-child(2) {
   height: 100%;
   width: 100%;
   background: wheat;
+  border: 1px solid SaddleBrown;
   border-radius: 3em;
   margin: auto;
   margin-top: 1.6em;

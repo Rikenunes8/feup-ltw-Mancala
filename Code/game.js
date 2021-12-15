@@ -4,8 +4,10 @@ class Game {
     this.players = [p1, p2];
     this.turn = playFirst ? 0 : 1;
     this.running = true;
-
-    if (!playFirst) this.play(1);
+    
+    this.board.setMessage("Play now "+this.players[this.turn].name);
+    if (!playFirst)
+      setTimeout(()=> {while (this.play(1));}, 2000);
   }
 
   playRound(player) {
@@ -29,7 +31,7 @@ class Game {
     this.turn = this.board.sow(this.turn, choice);
 
     if (this.checkEndGame()) {
-      this.board.setMessage("End of the game");
+      this.endGame();
     }
     else {
       if (this.turn == oldTurn)
@@ -48,12 +50,10 @@ class Game {
 
     let totalSeeds = 2*this.board.nPits * this.board.nSeeds;
     if (this.players[0].score > totalSeeds/2 || this.players[1].score > totalSeeds/2) {
-      this.running = false;
       endGame = true;
     }
     else if(!this.anyMove(this.turn)) {
       this.board.collectAllSeeds((this.turn+1)%2);
-      this.running = false;
       endGame = true;
     }
     return endGame;
@@ -67,20 +67,57 @@ class Game {
     }
     return false;
   }
+  endGame() {
+    this.running = false;
+    this.board.setMessage("End of the game");
+    
+    setTimeout(()=>{}, 2000);
+    
+    let p1 = this.players[0];
+    let p2 = this.players[1];
+    if (p1.score > p2.score)
+      this.board.setMessage(p1.name + " WON");
+    else if (p1.score < p2.score)
+      this.board.setMessage(p2.name + " WON");
+    else
+      this.board.setMessage("TIE");
+  }
+
 }
 
-function initGame() {
+function initGame(object) {
   let nSeeds = document.querySelector("#n_s input").value;
   let nPits = document.querySelector("#n_p input").value;
-  let playFirst = true; // TODO:
-
+  let playFirst = document.querySelector("#play_first input").checked;
+  let modes = document.querySelectorAll("#game_mode input");
+  let gameMode;
+  for (let i = 0; i < modes.length; i++) {
+    if (modes[i].checked) {
+      gameMode = i;
+      break;
+    }
+  }
+  let levels = document.querySelectorAll("#ai_level input");
+  let aiLevel;
+  for (let i = 0; i < levels.length; i++) {
+    if (levels[i].checked) {
+      aiLevel = i+1;
+      break;
+    }
+  }
   let board = new Board(nSeeds, nPits);
   let p1 = new PlayerHuman();
-  let p2 = new PlayerAI(board, 1);
+  let p2 = new PlayerAI(board, aiLevel);
   let game = new Game(board, p1, p2, playFirst);
   makePlayable(p1, game);
+
+  object['ref'] = game;
 }
 
+function endGame(object) {
+  let game = object['ref'];
+  game.endGame();
+}
 
 function makePlayable(player, game) {
   const pits = document.querySelectorAll("#zone-p1 .pit-info .pit");
@@ -89,7 +126,6 @@ function makePlayable(player, game) {
 }
 
 window.addEventListener("load", function() {
-  let nSeeds = document.querySelector("#n_s input").value;
   let nPits = document.querySelector("#n_p input").value;
-  new Board(nSeeds, nPits);
+  new Board(0, nPits);
 });

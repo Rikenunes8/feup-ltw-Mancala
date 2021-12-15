@@ -79,26 +79,35 @@
           <div class="window-title">Settings</div>
           <div class="window-content">
             <table>
-              <tr class="field">
+              <tr class="field" id="game_mode">
                 <td><label>Game mode</label></td>
                 <td>
+                  <span>Bot</span>
                   <input name="game-mode" type="radio" checked>
+                  <span>Friend</span>
                   <input name="game-mode" type="radio">
                 </td>
               </tr>
-              <tr class="field">
+              <tr class="field" id="ai_level">
                 <td><label>AI Level</label></td>
-                <td><input type="radio"></td>
+                <td>
+                  <span>1</span>
+                  <input name="ai-level" type="radio" checked>
+                  <span>2</span>
+                  <input name="ai-level" type="radio">
+                  <span>3</span>
+                  <input name="ai-level" type="radio">
+                </td>
               </tr>
               <tr class="field" id="n_p">
                 <td><label>Pits per player</label></td>
-                <td><input type="number" value=6></td>
+                <td><input type="number" value=6 min=2 max=10></td>
               </tr>
               <tr class="field" id="n_s">
                 <td><label>Seeds per pit</label></td>
-                <td><input type="number" value=4></td>
+                <td><input type="number" value=4 min=1 max=10></td>
               </tr>
-              <tr class="field">
+              <tr class="field" id="play_first">
                 <td><label>Play first</label></td>
                 <td><input type="checkbox" checked></td>
               </tr>

@@ -14,7 +14,6 @@ class Game {
     
   }
 
-  // TODO: THIS IS NOT READY YET
   play(player) {
     let oldTurn = this.turn;
     if (!this.running || this.turn != player) 
@@ -41,7 +40,7 @@ class Game {
 
     return this.turn == oldTurn;
   }
-  // TODO: 
+
   checkEndGame() {
     let endGame = false;
     this.players[0].score = this.board.store1.nSeeds;

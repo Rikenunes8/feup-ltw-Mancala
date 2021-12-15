@@ -82,9 +82,7 @@ function hideAllWindows() {
 
 function lockButton(btn) {
   btn.disabled = true;
-  //btn.classList.add("btn_blocked");
 }
 function unlockButton(btn) {
   btn.disabled = false;
-  //btn.classList.remove("btn_blocked");
 }

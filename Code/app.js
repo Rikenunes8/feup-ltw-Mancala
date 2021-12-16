@@ -1,4 +1,4 @@
-function builidRankingTable(tableData) {
+function appBuilidRankingTable(tableData) {
   let table = document.querySelector("#ranking-window .table");
   table.innerHTML = "";
 
@@ -30,3 +30,50 @@ function builidRankingTable(tableData) {
     table.appendChild(tableRow);
   }
 }
+
+function appRegister(response) {
+  if (response.error == null) {
+    setMessage("You are now logged in");
+  }
+  else {
+    setMessage(response.error);
+  }
+}
+
+function appJoin(response) {
+  let game;
+  if (response.error == null) {
+    game = response.game;
+    setMessage("Waitting to join game: "+ game);
+  }
+  else {
+    setMessage(response.error);
+  }
+}
+
+function appLeave(response) {
+  if (response.error == null) {
+    setMessage("Leaving the game");
+  }
+  else {
+    setMessage(response.error);
+  }
+}
+
+
+function setMessage(str) {
+  let messagesBox = document.querySelector("#message_box");
+  messagesBox.innerHTML = str;
+}
+
+
+window.addEventListener("load", function() {
+  setMessage("Please login, set your game and press START");
+  let nPits = document.querySelector("#n_p input").value;
+  new Board(0, nPits);
+  //ranking();
+  //register("group85", "82");
+  //join("85", "group85", "85", 6, 4);
+  //setTimeout(()=>function(){}, 2000);
+  //leave("a752e34c33244ce0365209bb2d724d57", "group85", "85")
+});

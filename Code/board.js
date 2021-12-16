@@ -2,9 +2,6 @@ class Board {
   constructor(nSeeds, nPits) {
     this.nSeeds = nSeeds;
     this.nPits = nPits;
-    this.messagesBox = document.querySelector("#message_box");
-    if (nSeeds == 0)
-      this.setMessage("Please login, set your game and press START");
 
     let board = document.querySelector("#board");
     board.innerHTML = "";
@@ -117,10 +114,6 @@ class Board {
   isEmpty(turn, choice) {
     let sideSize = parseInt(this.nPits)+1;
     return this.holes[turn*sideSize + choice].isEmpty();
-  }
-
-  setMessage(str) {
-    this.messagesBox.innerHTML = str;
   }
 }
 

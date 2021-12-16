@@ -5,7 +5,7 @@ class Game {
     this.turn = playFirst ? 0 : 1;
     this.running = true;
     
-    this.board.setMessage("Play now "+this.players[this.turn].name);
+    setMessage("Play now "+this.players[this.turn].name);
     if (!playFirst)
       setTimeout(()=> {while (this.play(1));}, 2000);
   }
@@ -35,9 +35,9 @@ class Game {
     }
     else {
       if (this.turn == oldTurn)
-        this.board.setMessage("Play again "+this.players[this.turn].name);
+        setMessage("Play again "+this.players[this.turn].name);
       else
-        this.board.setMessage("Play now "+this.players[this.turn].name);
+        setMessage("Play now "+this.players[this.turn].name);
     }
 
     return this.turn == oldTurn;
@@ -69,18 +69,18 @@ class Game {
   }
   endGame() {
     this.running = false;
-    this.board.setMessage("End of the game");
+    setMessage("End of the game");
     
     setTimeout(()=>{}, 2000);
     
     let p1 = this.players[0];
     let p2 = this.players[1];
     if (p1.score > p2.score)
-      this.board.setMessage(p1.name + " WON");
+      setMessage(p1.name + " WON");
     else if (p1.score < p2.score)
-      this.board.setMessage(p2.name + " WON");
+      setMessage(p2.name + " WON");
     else
-      this.board.setMessage("TIE");
+      setMessage("TIE");
   }
 
 }
@@ -130,12 +130,3 @@ function makePlayable(player, game) {
   for(let i = 0; i < pits.length; i++)
     pits[i].addEventListener("click", function() {player.setNextPlay(i); game.playRound(0);});
 }
-
-
-
-
-window.addEventListener("load", function() {
-  let nPits = document.querySelector("#n_p input").value;
-  new Board(0, nPits);
-  ranking();
-});

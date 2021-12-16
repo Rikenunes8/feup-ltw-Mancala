@@ -304,8 +304,6 @@ table tr td:nth-child(2) {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-width: 30em;
-  max-height: 100vh;
 }
 
 .table {
@@ -314,12 +312,14 @@ table tr td:nth-child(2) {
 
 .table-header {
   display: flex;
+  flex-wrap: nowrap;
   width: 100%;
   font-weight: 600;
 }
 
 .table-row {
   display: flex;
+  flex-wrap: wrap;
   width: 100%;
 }
 

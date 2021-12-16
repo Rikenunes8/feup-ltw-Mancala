@@ -105,13 +105,19 @@ function initGame(object) {
       break;
     }
   }
-  let board = new Board(nSeeds, nPits);
-  let p1 = new PlayerHuman();
-  let p2 = new PlayerAI(board, aiLevel);
-  let game = new Game(board, p1, p2, playFirst);
-  makePlayable(p1, game);
 
-  object['ref'] = game;
+  if (gameMode == 0) {
+    let board = new Board(nSeeds, nPits);
+    let p1 = new PlayerHuman();
+    let p2 = new PlayerAI(board, aiLevel);
+    let game = new Game(board, p1, p2, playFirst);
+    makePlayable(p1, game);
+  
+    object['ref'] = game;
+  }
+  else {
+
+  }
 }
 
 function endGame(object) {
@@ -125,7 +131,11 @@ function makePlayable(player, game) {
     pits[i].addEventListener("click", function() {player.setNextPlay(i); game.playRound(0);});
 }
 
+
+
+
 window.addEventListener("load", function() {
   let nPits = document.querySelector("#n_p input").value;
   new Board(0, nPits);
+  ranking();
 });

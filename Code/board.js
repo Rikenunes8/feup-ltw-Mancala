@@ -2,64 +2,22 @@ class Board {
   constructor(nSeeds, nPits) {
     this.nSeeds = nSeeds;
     this.nPits = nPits;
-
-    let board = document.querySelector("#board");
-    board.innerHTML = "";
-    this.store1 = this.createStore(1);
-    this.store2 = this.createStore(2);
-    this.pits1 = []
-    this.pits2 = []
-    let zone1 = this.createPits(1);
-    let zone2 = this.createPits(2);
-
+    this.store1;
+    this.store2;
+    this.pits1 = [];
+    this.pits2 = [];
     this.holes = [];
-    for (let pit of this.pits1) this.holes.push(pit);
+  }
+
+  initHoles() {
+    for (let pit of this.pits1) 
+      this.holes.push(pit);
     this.holes.push(this.store1);
-    for (let pit of this.pits2.reverse()) this.holes.push(pit);
+    for (let pit of this.pits2.reverse()) 
+      this.holes.push(pit);
     this.holes.push(this.store2);
 
-    board.appendChild(this.store2.info);
-    board.appendChild(zone2);
-    board.appendChild(this.store1.info);
-    board.appendChild(zone1);
-  }
-
-  createStore(player) {
-    const store = document.createElement('div');
-    store.setAttribute('class', 'store-info');
-    store.setAttribute('id', 'store-p'+player);
-    return new Hole(store, 0, true, player==2);
-  }
-
-  createPits(player) {
-    let pits = player == 1 ? this.pits1 : this.pits2;
-    const zone = document.createElement('div');
-    zone.setAttribute('class', 'pits-container');
-    zone.setAttribute('id', 'zone-p'+player);
-    for(let i = 0; i < this.nPits; i++) {
-      let pitInfo = document.createElement('div');
-      pitInfo.setAttribute('class', 'pit-info');
-      pits.push(new Hole(pitInfo, this.nSeeds, false, player==2));
-      zone.appendChild(pitInfo);
-    }
-    return zone;
-  }
-
-  addSeed(holeInfo, seed) {
-    holeInfo.transformSeed(seed);
-    holeInfo.nSeeds++;
-    holeInfo.score.innerHTML = holeInfo.nSeeds;
-    holeInfo.seeds.push(seed);
-    holeInfo.hole.appendChild(seed);
-    return holeInfo.nSeeds;
-  }
-
-  takeAllSeeds(holeInfo) {
-    holeInfo.nSeeds = 0;
-    holeInfo.score.innerHTML = 0;
-    let seeds = holeInfo.seeds;
-    holeInfo.seeds = [];
-    return seeds;
+    this.pits2.reverse();
   }
 
   sow(turn, choice) {
@@ -70,7 +28,6 @@ class Board {
     let i = (turn*(size/2) + choice) % size;
     let seeds = this.takeAllSeeds(this.holes[i]);
     if (seeds.length == 0) return turn;
-    
     i = (i+1) % size;
     while (seeds.length != 0) {
       let seed = seeds.pop();
@@ -110,11 +67,123 @@ class Board {
       }
     }
   }
+  
+}
+
+class BoardReal extends Board {
+  constructor(nSeeds, nPits) {
+    super(nSeeds, nPits);
+    
+    let board = document.querySelector("#board");
+    board.innerHTML = "";
+    this.store1 = this.createStore(1);
+    this.store2 = this.createStore(2);
+    this.pits1 = []
+    this.pits2 = []
+    let zone1 = this.createPits(1);
+    let zone2 = this.createPits(2);
+
+    this.initHoles();
+    console.log(this.holes);
+
+    board.appendChild(this.store2.info);
+    board.appendChild(zone2);
+    board.appendChild(this.store1.info);
+    board.appendChild(zone1);
+  }
+
+  createStore(player) {
+    const store = document.createElement('div');
+    store.setAttribute('class', 'store-info');
+    store.setAttribute('id', 'store-p'+player);
+    return new Hole(store, 0, true, player==2);
+  }
+
+  createPits(player) {
+    let pits = player == 1 ? this.pits1 : this.pits2;
+    const zone = document.createElement('div');
+    zone.setAttribute('class', 'pits-container');
+    zone.setAttribute('id', 'zone-p'+player);
+    for(let i = 0; i < this.nPits; i++) {
+      let pitInfo = document.createElement('div');
+      pitInfo.setAttribute('class', 'pit-info');
+      pits.push(new Hole(pitInfo, this.nSeeds, false, player==2));
+      zone.appendChild(pitInfo);
+    }
+    return zone;
+  }
+
+  addSeed(holeInfo, seed) {
+    holeInfo.nSeeds++;
+    holeInfo.transformSeed(seed);
+    holeInfo.score.innerHTML = holeInfo.nSeeds;
+    holeInfo.seeds.push(seed);
+    holeInfo.hole.appendChild(seed);
+    return holeInfo.nSeeds;
+  }
+
+  takeAllSeeds(holeInfo) {
+    holeInfo.nSeeds = 0;
+    holeInfo.score.innerHTML = 0;
+    let seeds = holeInfo.seeds;
+    holeInfo.seeds = [];
+    return seeds;
+  }
+
+  collectAllSeeds(player) {
+    let side = this.nPits+1;
+    let storeIndex = (player+1)*side - 1;
+
+    for (let i = 0; i < this.nPits; i++) {
+      let seeds = this.takeAllSeeds(this.holes[player*side + i]);
+      while (seeds.length != 0) {
+        let seed = seeds.pop();
+        this.addSeed(this.holes[storeIndex], seed);
+      }
+    }
+  }
 
   isEmpty(turn, choice) {
     let sideSize = parseInt(this.nPits)+1;
     return this.holes[turn*sideSize + choice].isEmpty();
   }
+
+}
+
+class BoardFake extends Board {
+  constructor(board) {
+    super(board.nSeeds, board.nPits);
+    this.store1 = {'nSeeds': board.store1.nSeeds};
+    this.store2 = {'nSeeds': board.store2.nSeeds};
+    for (let pit of board.pits1)
+      this.pits1.push({'nSeeds': pit.nSeeds});
+    for (let pit of board.pits2)
+      this.pits2.push({'nSeeds': pit.nSeeds});
+    console.log(this.pits1);
+    console.log(this.pits2);
+
+    this.initHoles();
+    console.log(this.holes);
+  }
+
+  addSeed(holeInfo, seed) {
+    holeInfo.nSeeds++;
+    return holeInfo.nSeeds;
+  }
+
+  takeAllSeeds(holeInfo) {
+    let seeds = [];
+    for (let i = 0; i < holeInfo.nSeeds; i++)
+      seeds.push(null);
+    holeInfo.nSeeds = 0;
+    return seeds;
+  }
+
+  isEmpty(turn, choice) {
+    let sideSize = parseInt(this.nPits)+1;
+    return this.holes[turn*sideSize + choice].nSeeds == 0;
+  }
+
 }
 
 class Hole {

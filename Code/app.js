@@ -70,7 +70,7 @@ function setMessage(str) {
 window.addEventListener("load", function() {
   setMessage("Please login, set your game and press START");
   let nPits = document.querySelector("#n_p input").value;
-  new Board(0, nPits);
+  new BoardReal(0, nPits);
   //ranking();
   //register("group85", "82");
   //join("85", "group85", "85", 6, 4);

@@ -107,7 +107,7 @@ function initGame(object) {
   }
 
   if (gameMode == 0) {
-    let board = new Board(nSeeds, nPits);
+    let board = new BoardReal(nSeeds, nPits);
     let p1 = new PlayerHuman();
     let p2 = new PlayerAI(board, aiLevel);
     let game = new Game(board, p1, p2, playFirst);

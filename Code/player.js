@@ -31,37 +31,34 @@ class PlayerAI extends Player {
       return Math.floor(Math.random() * this.board.nPits);
     }
     else if (this.level == 2) {
-      
-      let lres = [];
-      for(let i = 0; i < this.board.nPits; i++)
-      {
-        let boardSim = this.board;
-        boardSim.sow(1, i);
-        lres.push(boardSim.store2);
-      }
-      return lres.indexOf(Math.max(lres));
-
+      return this.currentBestMove();
     }
     else {
       return 0; // TODO: minimax
     }
   }
-}
 
-/**
- * Given a board, simulates a turn in a given choice.
- * @param {Board} b 
- * @param {*} turn 
- * @param {*} choice 
- */
-function simulSow(b, turn, choice)
-{
-  let size = b.holes.length;
-  let ownStr = (turn == 0 ? size/2 : size) - 1;
-  let pass = (turn == 0 ? size : size/2) - 1;
 
-  let i = (turn*(size/2) + choice) % size;
-  let seeds = this.takeAllSeeds(b.holes[i]);
+  currentBestMove() {
+    let turn = 1;
+    let lres = [];
+    for(let i = 0; i < this.board.nPits; i++) {
+      let boardFake = new BoardFake(this.board);
+      let nextTurn = boardFake.sow(1, i);
+      lres.push({'score': boardFake.store2.nSeeds, 'nextTurn': nextTurn});
+    }
+    console.log(lres);
 
-  return (b.store2.score);
+    let max = -1; let nextTurn = 0; let choice;
+    for (let i = 0; i < lres.length; i++) {
+      let move = lres[i];
+      if (move.score > max || (move.score == max && move.nextTurn == turn)) {
+        max = move.score;
+        nextTurn = move.nextTurn;
+        choice = i;
+      }
+    }
+
+    return choice;
+  }
 }

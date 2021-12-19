@@ -47,7 +47,6 @@ class PlayerAI extends Player {
       let nextTurn = boardFake.sow(1, i);
       lres.push({'score': boardFake.store2.nSeeds, 'nextTurn': nextTurn});
     }
-    console.log(lres);
 
     let max = -1; let nextTurn = 0; let choice;
     for (let i = 0; i < lres.length; i++) {

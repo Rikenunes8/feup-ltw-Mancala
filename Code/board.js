@@ -36,7 +36,7 @@ class Board {
       i = (i+1) % size;
     }
 
-    i = (i-1) % size;
+    i = (i-1 + size) % size;
     if (i == ownStore) {
       return turn;
     }
@@ -84,7 +84,6 @@ class BoardReal extends Board {
     let zone2 = this.createPits(2);
 
     this.initHoles();
-    console.log(this.holes);
 
     board.appendChild(this.store2.info);
     board.appendChild(zone2);
@@ -159,11 +158,8 @@ class BoardFake extends Board {
       this.pits1.push({'nSeeds': pit.nSeeds});
     for (let pit of board.pits2)
       this.pits2.push({'nSeeds': pit.nSeeds});
-    console.log(this.pits1);
-    console.log(this.pits2);
 
     this.initHoles();
-    console.log(this.holes);
   }
 
   addSeed(holeInfo, seed) {

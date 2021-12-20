@@ -63,6 +63,7 @@ function appJoin(response) {
   else {
     game = response.game;
     setMessage("Waitting to join game: "+ game);
+    setGameRef(game);
   }
 }
 
@@ -99,6 +100,7 @@ function setMessage(str) {
 let game;
 function setGameRef(ref) {
   game = ref;
+  console.log("game set to: "+game);
 }
 
 window.addEventListener("load", function() {
@@ -107,11 +109,7 @@ window.addEventListener("load", function() {
   new BoardReal(0, nPits);
   //ranking();
   join("85", "group85", "85", 6, 4);
-  setTimeout(()=>update("7b23e6ec0aaac336b8b236538c4b1313", "group85"), 2000);
-
-
-  setTimeout(()=> join("85", "group_85", "85", 6, 4), 3000);
-  setTimeout(()=> update("7b23e6ec0aaac336b8b236538c4b1313", "group_85"), 4000);
+  setTimeout(()=>update(game, "group85"), 2000);
 
   //update("470422445dde14c553e0c3b68fcbcf7f", "group85");
   //leave("a752e34c33244ce0365209bb2d724d57", "group85", "85")

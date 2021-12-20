@@ -51,8 +51,11 @@ function notify(nick, pass, game, move) {
 function update(game, nick) {
   console.log(nick, game);
   let query = "?nick="+nick+"&game="+game;
-  fetch("http://twserver.alunos.dcc.fc.up.pt:8008/update"+query)
-  .then(response => response.json())
+  let r = fetch("http://twserver.alunos.dcc.fc.up.pt:8008/update"+query)
+  .then(response => response.json());
+  console.log(r);
+  let x = r
   .then(response => appUpdate(response))
   .catch(console.log);
+  console.log(x);
 }

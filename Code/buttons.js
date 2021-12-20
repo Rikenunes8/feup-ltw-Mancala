@@ -27,26 +27,18 @@ window.addEventListener("load", function() {
 function makeLogin() {
   const username = document.querySelector("#login-window input[type=text]");
   const password = document.querySelector("#login-window input[type=password]");
-
-  buttonPressed("#btn-login", "#login-window");
-  const elems_notlog = document.querySelectorAll(".not-logged");
-  const elems_log = document.querySelectorAll(".logged:not(#btn-logout, #btn-logout-username)");
-  const btn_logout = document.querySelector("#btn-logout");
-  const btn_logout_username = document.querySelector("#btn-logout-username");
-  btn_logout_username.innerHTML = username.value;
+  let nick = username.value;
+  let pass = password.value;
   
-  for (let elem of elems_notlog)
-    elem.style.display = "none";
-  for (let elem of elems_log)
-    elem.style.display = "block";
-  btn_logout.style.display = "inline-block";
-  btn_logout_username.style.display = "inline-block";
+  register(nick, pass);
 
   username.value = "";
   password.value = "";
 }
 
 function makeLogout() {
+  setMessage("Please login, set your game and press START");
+
   hideAllWindows();
   const elems_notlog = document.querySelectorAll(".not-logged");
   const elems_log = document.querySelectorAll(".logged");

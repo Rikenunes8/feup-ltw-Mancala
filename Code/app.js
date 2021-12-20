@@ -31,9 +31,25 @@ function appBuilidRankingTable(tableData) {
   }
 }
 
-function appRegister(response) {
+function appRegister(response, nick, pass) {  
   if (response.error == null) {
-    setMessage("You are now logged in");
+    setMessage("You are now logged in " + nick);
+    
+    // Set logged in environment
+    buttonPressed("#btn-login", "#login-window");
+    const elems_notlog = document.querySelectorAll(".not-logged");
+    const elems_log = document.querySelectorAll(".logged:not(#btn-logout, #btn-logout-username)");
+    const btn_logout = document.querySelector("#btn-logout");
+    const btn_logout_username = document.querySelector("#btn-logout-username");
+    btn_logout_username.innerHTML = nick;
+    
+    for (let elem of elems_notlog)
+      elem.style.display = "none";
+    for (let elem of elems_log)
+      elem.style.display = "block";
+    btn_logout.style.display = "inline-block";
+    btn_logout_username.style.display = "inline-block";
+    
   }
   else {
     setMessage(response.error);

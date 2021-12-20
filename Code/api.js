@@ -10,13 +10,13 @@ function ranking(){
 
 function register(nick, pass) {
   let obj = {"nick": nick, "password": pass};
-
+  console.log(obj)
   fetch("http://twserver.alunos.dcc.fc.up.pt:8008/register", {
     method: 'POST',
     body: JSON.stringify(obj)
   })
   .then(response => response.json())
-  .then(response => appRegister(response))
+  .then(response => appRegister(response, nick, pass))
   .catch(console.log);
 }
 

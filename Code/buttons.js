@@ -30,6 +30,12 @@ function makeLogin() {
   let nick = username.value;
   let pass = password.value;
   
+  // Backdoor for faster testing
+  if (nick == "") {
+    appRegister({}, nick, pass);
+    return;
+  }
+
   register(nick, pass);
 
   username.value = "";

@@ -61,9 +61,36 @@ class PlayerAI extends Player {
     return choice;
   }
 
+  bestMove(b)
+  {
+
+  }
+
+  bestMoveHelper(b, depth, isMin)
+  {
+    if (depth == 0)
+      return [this.euristic(b), -1];
+  }
+
+  childrenGen(isMin)
+  {
+    let children = [];
+    for(let i = 0; i < this.board.nPits; i++)
+    {
+      let child = new BoardFake(this.board)
+      if(isMin)
+        let turn = child.sow(1, i);
+      else
+        let turn = child.sow(0, i);
+      
+      children.push([i, child, turn]);
+    }
+  }
+
   /**
-   * Function that evaluates the state of the board, depending on the number of seeds on each side, store or game-ending conditions.
-   * Negative favours bot, positive favours player.
+   * 
+   * @param {*} b - board that is to be evaluated.
+   * @returns - evaluation. Positive favours player, negative favours bot.
    */
   //TODO: game ending conditions to be included.
   euristic(b)

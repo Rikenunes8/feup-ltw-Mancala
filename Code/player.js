@@ -60,4 +60,29 @@ class PlayerAI extends Player {
 
     return choice;
   }
+
+  /**
+   * Function that evaluates the state of the board, depending on the number of seeds on each side, store or game-ending conditions.
+   * Negative favours bot, positive favours player.
+   */
+  //TODO: game ending conditions to be included.
+  euristic(b)
+  {
+    let eval = 0;
+    
+    for(let i = 0; i < this.b.pits1.length; i++)
+    {
+      eval += this.b.pits1[i].length;
+    }
+
+    for(let i = 0; i < this.b.pits2.length; i++)
+    {
+      eval -= this.b.pits2[i].length;
+    }
+
+    eval += (b.store1.nSeeds * 2);
+    eval -= (b.store2.nSeeds * 2);
+
+    return eval;
+  }
 }

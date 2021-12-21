@@ -68,8 +68,7 @@ class PlayerAI extends Player {
 
   bestMoveHelper(b, depth, isMin)
   {
-    if (depth == 0)
-      return [this.euristic(b), -1];
+    
   }
 
   childrenGen(isMin)
@@ -85,6 +84,7 @@ class PlayerAI extends Player {
       
       children.push([i, child, turn]);
     }
+    return children;
   }
 
   /**

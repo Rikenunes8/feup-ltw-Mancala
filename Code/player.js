@@ -61,22 +61,27 @@ class PlayerAI extends Player {
     return choice;
   }
 
-  bestMove(b)
+  bestMove()
   {
-
-  }
-
-  bestMoveHelper(b, depth, isMin)
-  {
-    
-  }
-
-  childrenGen(isMin)
-  {
-    let children = [];
+    let turn = 1;
+    let isMin = false;
+    let lresB = [];
     for(let i = 0; i < this.board.nPits; i++)
     {
-      let child = new BoardFake(this.board)
+      let board1 = new BoardFake(this.board);
+      let nextTurn = board1.sow(1, i);
+      let children1 = this.childrenGen(board1, !isMin)
+      children1 = this.treat(children1, nextTurn, turn);
+      lresB.push();
+    }
+  }
+
+  childrenGen(b, isMin)
+  {
+    let children = [];
+    for(let i = 0; i < b.nPits; i++)
+    {
+      let child = new BoardFake(b)
       if(isMin)
         let turn = child.sow(1, i);
       else

@@ -82,7 +82,7 @@ class PlayerAI extends Player {
       else
         let turn = child.sow(0, i);
       
-      children.push([i, child, turn]);
+      children.push([i, child, turn, this.euristic(child)]);
     }
     return children;
   }

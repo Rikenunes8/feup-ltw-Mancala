@@ -91,6 +91,12 @@ class PlayerAI extends Player {
     return (a[2] - b[2])*(-1);
   }
 
+  /**
+   * generates all possible boards coming from a previous board, depending who is playing.
+   * @param {*} b - The "parent" board.
+   * @param {*} isMin - Boolean. Is the AI or the Player the one who is playing.
+   * @returns - A list of possible plays, each containing a list with the hole played, the "child" board derived and its evaluation.
+   */
   childrenGen(b, isMin)
   {
     let children = [];
@@ -112,9 +118,11 @@ class PlayerAI extends Player {
   }
 
   /**
-   * 
-   * @param {*} b - board that is to be evaluated.
-   * @returns - evaluation. Positive favours player, negative favours bot.
+   * Functions that evaluates the value of a board derived from a play.
+   * @param {*} b - The board that is being evaluated.
+   * @param {*} prevTurn - The previous turn.
+   * @param {*} curTurn - The turn playing next.
+   * @returns An evaluation of said board. Negative favours the AI, positive favours the human player.
    */
   //TODO: game ending conditions to be included.
   euristic(b, prevTurn, curTurn)

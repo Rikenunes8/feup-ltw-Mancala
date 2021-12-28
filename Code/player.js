@@ -34,7 +34,7 @@ class PlayerAI extends Player {
       return this.currentBestMove();
     }
     else {
-      return 0; // TODO: minimax
+      return this.bestMove();
     }
   }
 
@@ -64,30 +64,49 @@ class PlayerAI extends Player {
   bestMove()
   {
     let turn = 1;
-    let isMin = false;
+    let isMin = true;
     let lresB = [];
     for(let i = 0; i < this.board.nPits; i++)
     {
       let board1 = new BoardFake(this.board);
       let nextTurn = board1.sow(1, i);
-      let children1 = this.childrenGen(board1, !isMin)
-      children1 = this.treat(children1, nextTurn, turn);
-      lresB.push();
+      let children1 = this.childrenGen(board1, isMin);
+      children1.sort(this.compareChildDesc);
+      lresB.push([i, children1[0][1], children1[0][2]]); //maintaining the children composition formula to facilitate sort methods ahead
     }
+
+    lresB.sort(this.compareChildrenAsc);
+    return lresB[0][0];
+  }
+
+  //Functions of comparison to sort "children" array, by ascending or descending order, respectively.
+
+  compareChildrenAsc(a, b)
+  {
+    return (a[2] - b[2]);
+  }
+
+  compareChildDesc(a, b)
+  {
+    return (a[2] - b[2])*(-1);
   }
 
   childrenGen(b, isMin)
   {
     let children = [];
+    let CTurn = 0;
     for(let i = 0; i < b.nPits; i++)
     {
       let child = new BoardFake(b)
       if(isMin)
-        let turn = child.sow(1, i);
+      {
+        CTurn = 1;
+        let turn = child.sow(CTurn, i);
+      }
       else
-        let turn = child.sow(0, i);
+        let turn = child.sow(CTurn, i);
       
-      children.push([i, child, turn, this.euristic(child)]);
+      children.push([i, child, this.euristic(child, CTurn, turn)]);
     }
     return children;
   }
@@ -98,7 +117,7 @@ class PlayerAI extends Player {
    * @returns - evaluation. Positive favours player, negative favours bot.
    */
   //TODO: game ending conditions to be included.
-  euristic(b)
+  euristic(b, prevTurn, curTurn)
   {
     let eval = 0;
     
@@ -110,6 +129,18 @@ class PlayerAI extends Player {
     for(let i = 0; i < this.b.pits2.length; i++)
     {
       eval -= this.b.pits2[i].length;
+    }
+
+    //human player gets to repeat
+    if(prevTurn == 0 && curTurn == 0)
+    {
+      eval += 200;
+    }
+
+    //AI gets to repeat
+    if(prevTurn == 1 && curTurn == 1)
+    {
+      eval -= 200;
     }
 
     eval += (b.store1.nSeeds * 2);

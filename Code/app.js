@@ -79,16 +79,16 @@ function appLeave(response) {
 
 function appUpdate(response) {
   console.log("appUpdate");
-  console.log(response);
+  response.close();
 
-  if (response.error != null) {
+  /*if (response.error != null) {
     console.log("errorrrr");
     setMessage(response.error);
   }
   else {
     console.log("updated");
     setMessage("updated");
-  }
+  }*/
 }
 
 

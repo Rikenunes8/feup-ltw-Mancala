@@ -51,11 +51,13 @@ function notify(nick, pass, game, move) {
 function update(game, nick) {
   console.log(nick, game);
   let query = "?nick="+nick+"&game="+game;
-  let r = fetch("http://twserver.alunos.dcc.fc.up.pt:8008/update"+query)
-  .then(response => response.json());
-  console.log(r);
-  let x = r
-  .then(response => appUpdate(response))
-  .catch(console.log);
-  console.log(x);
+  const eventSource = new EventSource("http://twserver.alunos.dcc.fc.up.pt:8008/update"+query);
+  eventSource.onopen = function() {
+    console.log("connetion established");
+  }
+  eventSource.onmessage = function(event) {
+    const data = JSON.parse(event.data);
+    console.log(data);
+    appUpdate(eventSource);
+  }
 }

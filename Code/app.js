@@ -108,8 +108,8 @@ window.addEventListener("load", function() {
   let nPits = document.querySelector("#n_p input").value;
   new BoardReal(0, nPits);
   //ranking();
-  join("85", "group85", "85", 6, 4);
-  setTimeout(()=>update(game, "group85"), 2000);
+  //join("85", "group85", "85", 6, 4);
+  //setTimeout(()=>update(game, "group85"), 2000);
 
   //update("470422445dde14c553e0c3b68fcbcf7f", "group85");
   //leave("a752e34c33244ce0365209bb2d724d57", "group85", "85")

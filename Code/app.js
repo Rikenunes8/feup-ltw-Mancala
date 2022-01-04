@@ -32,7 +32,10 @@ function appBuilidRankingTable(tableData) {
 }
 
 function appRegister(response, nick, pass) {  
-  if (response.error == null) {
+  if (response.error != null) {
+    setMessage(response.error);
+  }
+  else {
     setMessage("You are now logged in " + nick);
     
     // Set logged in environment
@@ -49,31 +52,43 @@ function appRegister(response, nick, pass) {
       elem.style.display = "block";
     btn_logout.style.display = "inline-block";
     btn_logout_username.style.display = "inline-block";
-    
-  }
-  else {
-    setMessage(response.error);
   }
 }
 
 function appJoin(response) {
   let game;
-  if (response.error == null) {
-    game = response.game;
-    setMessage("Waitting to join game: "+ game);
+  if (response.error != null) {
+    setMessage(response.error);
   }
   else {
-    setMessage(response.error);
+    game = response.game;
+    setMessage("Waitting to join game: "+ game);
+    setGameRef(game);
   }
 }
 
 function appLeave(response) {
-  if (response.error == null) {
-    setMessage("Leaving the game");
-  }
-  else {
+  console.log(response)
+  if (response.error != null) {
     setMessage(response.error);
   }
+  else {
+    setMessage("Leaving the game");
+  }
+}
+
+function appUpdate(response) {
+  console.log("appUpdate");
+  response.close();
+
+  /*if (response.error != null) {
+    console.log("errorrrr");
+    setMessage(response.error);
+  }
+  else {
+    console.log("updated");
+    setMessage("updated");
+  }*/
 }
 
 
@@ -82,14 +97,20 @@ function setMessage(str) {
   messagesBox.innerHTML = str;
 }
 
+let game;
+function setGameRef(ref) {
+  game = ref;
+  console.log("game set to: "+game);
+}
 
 window.addEventListener("load", function() {
   setMessage("Please login, set your game and press START");
   let nPits = document.querySelector("#n_p input").value;
   new BoardReal(0, nPits);
   //ranking();
-  //register("group85", "82");
-  //join("85", "group85", "85", 6, 4);
-  //setTimeout(()=>function(){}, 2000);
+  join("85", "group85", "85", 6, 4);
+  setTimeout(()=>update(game, "group85"), 2000);
+
+  //update("470422445dde14c553e0c3b68fcbcf7f", "group85");
   //leave("a752e34c33244ce0365209bb2d724d57", "group85", "85")
 });

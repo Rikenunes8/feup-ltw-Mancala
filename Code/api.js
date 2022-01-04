@@ -10,7 +10,7 @@ function ranking(){
 
 function register(nick, pass) {
   let obj = {"nick": nick, "password": pass};
-  
+
   fetch("http://twserver.alunos.dcc.fc.up.pt:8008/register", {
     method: 'POST',
     body: JSON.stringify(obj)
@@ -49,5 +49,15 @@ function notify(nick, pass, game, move) {
 }
 
 function update(game, nick) {
-
+  console.log(nick, game);
+  let query = "?nick="+nick+"&game="+game;
+  const eventSource = new EventSource("http://twserver.alunos.dcc.fc.up.pt:8008/update"+query);
+  eventSource.onopen = function() {
+    console.log("connetion established");
+  }
+  eventSource.onmessage = function(event) {
+    const data = JSON.parse(event.data);
+    console.log(data);
+    appUpdate(eventSource);
+  }
 }

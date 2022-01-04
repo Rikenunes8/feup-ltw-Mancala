@@ -67,7 +67,6 @@ class Board {
       }
     }
   }
-  
 }
 
 class BoardReal extends Board {
@@ -127,19 +126,6 @@ class BoardReal extends Board {
     let seeds = holeInfo.seeds;
     holeInfo.seeds = [];
     return seeds;
-  }
-
-  collectAllSeeds(player) {
-    let side = this.nPits+1;
-    let storeIndex = (player+1)*side - 1;
-
-    for (let i = 0; i < this.nPits; i++) {
-      let seeds = this.takeAllSeeds(this.holes[player*side + i]);
-      while (seeds.length != 0) {
-        let seed = seeds.pop();
-        this.addSeed(this.holes[storeIndex], seed);
-      }
-    }
   }
 
   isEmpty(turn, choice) {

@@ -33,7 +33,7 @@ class PlayerAI extends Player {
     else if (this.level == 2) {
       return this.currentBestMove();
     }
-    else {
+    else if (this.level == 3) {
       return this.bestMove();
     }
   }
@@ -101,16 +101,20 @@ class PlayerAI extends Player {
   {
     let children = [];
     let CTurn = 0;
+    let turn = 0;
     for(let i = 0; i < b.nPits; i++)
     {
       let child = new BoardFake(b)
       if(isMin)
       {
         CTurn = 1;
-        let turn = child.sow(CTurn, i);
+        turn = child.sow(CTurn, i);
       }
       else
-        let turn = child.sow(CTurn, i);
+      {
+        turn = child.sow(CTurn, i);
+      }
+        
       
       children.push([i, child, this.euristic(child, CTurn, turn)]);
     }
@@ -127,33 +131,33 @@ class PlayerAI extends Player {
   //TODO: game ending conditions to be included.
   euristic(b, prevTurn, curTurn)
   {
-    let eval = 0;
+    let evalB = 0;
     
-    for(let i = 0; i < this.b.pits1.length; i++)
+    for(let i = 0; i < b.pits1.length; i++)
     {
-      eval += this.b.pits1[i].length;
+      evalB += b.pits1[i].length * 0.1;
     }
 
-    for(let i = 0; i < this.b.pits2.length; i++)
+    for(let i = 0; i < b.pits2.length; i++)
     {
-      eval -= this.b.pits2[i].length;
+      evalB -= b.pits2[i].length * 0.1;
     }
 
     //human player gets to repeat
     if(prevTurn == 0 && curTurn == 0)
     {
-      eval += 200;
+      evalB += 200;
     }
 
     //AI gets to repeat
     if(prevTurn == 1 && curTurn == 1)
     {
-      eval -= 200;
+      evalB -= 200;
     }
 
-    eval += (b.store1.nSeeds * 2);
-    eval -= (b.store2.nSeeds * 2);
+    evalB += (b.store1.nSeeds * 2);
+    evalB -= (b.store2.nSeeds * 2);
 
-    return eval;
+    return evalB;
   }
 }

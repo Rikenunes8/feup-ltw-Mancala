@@ -34,7 +34,7 @@ class PlayerAI extends Player {
       return this.currentBestMove();
     }
     else {
-      return 0; // TODO: minimax
+      return this.bestMove();
     }
   }
 
@@ -61,39 +61,71 @@ class PlayerAI extends Player {
     return choice;
   }
 
-  bestMove(b)
+  bestMove()
   {
-
-  }
-
-  bestMoveHelper(b, depth, isMin)
-  {
-    if (depth == 0)
-      return [this.euristic(b), -1];
-  }
-
-  childrenGen(isMin)
-  {
-    let children = [];
+    let turn = 1;
+    let isMin = true;
+    let lresB = [];
     for(let i = 0; i < this.board.nPits; i++)
     {
-      let child = new BoardFake(this.board)
-      if(isMin)
-        let turn = child.sow(1, i);
-      else
-        let turn = child.sow(0, i);
-      
-      children.push([i, child, turn]);
+      let board1 = new BoardFake(this.board);
+      let nextTurn = board1.sow(1, i);
+      let children1 = this.childrenGen(board1, isMin);
+      children1.sort(this.compareChildDesc);
+      lresB.push([i, children1[0][1], children1[0][2]]); //maintaining the children composition formula to facilitate sort methods ahead
     }
+
+    lresB.sort(this.compareChildrenAsc);
+    return lresB[0][0];
+  }
+
+  //Functions of comparison to sort "children" array, by ascending or descending order, respectively.
+
+  compareChildrenAsc(a, b)
+  {
+    return (a[2] - b[2]);
+  }
+
+  compareChildDesc(a, b)
+  {
+    return (a[2] - b[2])*(-1);
   }
 
   /**
-   * 
-   * @param {*} b - board that is to be evaluated.
-   * @returns - evaluation. Positive favours player, negative favours bot.
+   * generates all possible boards coming from a previous board, depending who is playing.
+   * @param {*} b - The "parent" board.
+   * @param {*} isMin - Boolean. Is the AI or the Player the one who is playing.
+   * @returns - A list of possible plays, each containing a list with the hole played, the "child" board derived and its evaluation.
+   */
+  childrenGen(b, isMin)
+  {
+    let children = [];
+    let CTurn = 0;
+    for(let i = 0; i < b.nPits; i++)
+    {
+      let child = new BoardFake(b)
+      if(isMin)
+      {
+        CTurn = 1;
+        let turn = child.sow(CTurn, i);
+      }
+      else
+        let turn = child.sow(CTurn, i);
+      
+      children.push([i, child, this.euristic(child, CTurn, turn)]);
+    }
+    return children;
+  }
+
+  /**
+   * Functions that evaluates the value of a board derived from a play.
+   * @param {*} b - The board that is being evaluated.
+   * @param {*} prevTurn - The previous turn.
+   * @param {*} curTurn - The turn playing next.
+   * @returns An evaluation of said board. Negative favours the AI, positive favours the human player.
    */
   //TODO: game ending conditions to be included.
-  euristic(b)
+  euristic(b, prevTurn, curTurn)
   {
     let eval = 0;
     
@@ -105,6 +137,18 @@ class PlayerAI extends Player {
     for(let i = 0; i < this.b.pits2.length; i++)
     {
       eval -= this.b.pits2[i].length;
+    }
+
+    //human player gets to repeat
+    if(prevTurn == 0 && curTurn == 0)
+    {
+      eval += 200;
+    }
+
+    //AI gets to repeat
+    if(prevTurn == 1 && curTurn == 1)
+    {
+      eval -= 200;
     }
 
     eval += (b.store1.nSeeds * 2);

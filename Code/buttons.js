@@ -17,7 +17,7 @@ function initButtons(app) {
   ranking.addEventListener("click", function() {buttonPressed("#btn-ranking", "#ranking-window");});
   
   start.addEventListener("click", function() {hideAllWindows(); lockButton(settings); lockButton(start); unlockButton(stop); app.initGame();});
-  stop.addEventListener("click", function() {hideAllWindows(); unlockButton(settings); lockButton(stop); unlockButton(start); app.appendGame();});
+  stop.addEventListener("click", function() {hideAllWindows(); unlockButton(settings); lockButton(stop); unlockButton(start); app.endGame();});
 
 }
 

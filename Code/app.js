@@ -3,7 +3,7 @@ class App {
     this.server = "http://twserver.alunos.dcc.fc.up.pt:8008/";
     this.group = '85';
     this.gameHash;
-    this.game;
+    this.game = null;
     this.eventSource;
 
     setMessage("Please login, set your game and press START");
@@ -47,9 +47,11 @@ class App {
     }
   }
 
-  appendGame() {
-    this.game.endGame();
-    this.eventSource.close();
+  endGame() {
+    this.leave(this.gameHash, this.username, this.password);
+    setTimeout(()=>{}, 5000);
+    //this.game.endGame();
+    this.updateEnd();
   }
 
   ranking() {
@@ -114,6 +116,7 @@ class App {
       else {
         this.gameHash = json.game;
         setMessage("Waitting to join game: "+ this.gameHash);
+        console.log("Waitting to join game: "+ this.gameHash);
         this.update(this.gameHash, this.username);
       }
     })
@@ -123,7 +126,7 @@ class App {
   leave(game, nick, pass) {
     let obj = {"game": game, "nick": nick, "password": pass};
   
-    fetch(this.server + "register", {
+    fetch(this.server + "leave", {
       method: 'POST',
       body: JSON.stringify(obj)
     })
@@ -134,6 +137,27 @@ class App {
       }
       else {
         setMessage("Leaving the game");
+        console.log("Leaving the game");
+      }
+    })
+    .catch(console.log);
+  }
+
+  notify(nick, pass, game, move) {
+    let obj = {"nick": nick, "password": pass, "game": game, "move": move};
+  
+    fetch(this.server + "notify", {
+      method: 'POST',
+      body: JSON.stringify(obj)
+    })
+    .then(response => response.json())
+    .then(json => {
+      if (json.error != null) {
+        setMessage(json.error);
+      }
+      else {
+        setMessage("Notifying the game");
+        console.log("Notifying the game");
       }
     })
     .catch(console.log);
@@ -158,14 +182,41 @@ class App {
   }
   updateAction(data) {
     console.log(data);
+    if (data.error != null) {
+      setMessage(data.error);
+    }
+    if (data.board != null){
+      if (this.game == null) {
+        const sides = data.board.sides;
+        const nPits = sides[this.username].pits.length;
+        const nSeeds = sides[this.username].pits[0];
+        let board = new BoardReal(nSeeds, nPits);
+        let p1 = new PlayerHuman(this.username);
+        let p2Name;
+        for (const key in sides) if (sides[key] != this.username) p2Name = key;
+        let p2 = new PlayerHuman(p2Name);
+        this.game = new Game(board, p1, p2, data.board.turn == this.username);
+        this.makePlayable(p1, this.game);
+      }
+      else {
+
+      }
+      
+    }
+    if (data.winner != null){
+      this.leave(this.gameHash, this.username, this.password);
+    }
+
+  }
+
+  makePlayable(player, game) {
+    const pits = document.querySelectorAll("#zone-p1 .pit-info .pit");
+    let that = this;
+    for(let i = 0; i < pits.length; i++)
+      pits[i].addEventListener("click", function() {player.setNextPlay(i); game.playRound(0); that.notify(that.username, that.password, that.gameHash, i)});
   }
 }
 
-function makePlayable(player, game) {
-  const pits = document.querySelectorAll("#zone-p1 .pit-info .pit");
-  for(let i = 0; i < pits.length; i++)
-    pits[i].addEventListener("click", function() {player.setNextPlay(i); game.playRound(0);});
-}
 
 function builidRankingTable(tableData) {
   let table = document.querySelector("#ranking-window .table");
@@ -209,10 +260,4 @@ window.addEventListener("load", function() {
   let app = new App();
   initButtons(app);
   app.ranking();
-
-  //join("85", "group85", "85", 6, 4);
-  //setTimeout(()=>update(game, "group85"), 2000);
-
-  //update("470422445dde14c553e0c3b68fcbcf7f", "group85");
-  //leave("a752e34c33244ce0365209bb2d724d57", "group85", "85")
 });

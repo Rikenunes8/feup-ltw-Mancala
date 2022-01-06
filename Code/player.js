@@ -72,10 +72,19 @@ class PlayerAI extends Player {
       let nextTurn = board1.sow(1, i);
       let children1 = this.childrenGen(board1, isMin);
       children1.sort(this.compareChildDesc);
-      lresB.push([i, children1[0][1], children1[0][2]]); //maintaining the children composition formula to facilitate sort methods ahead
+      lresB.push([i, children1[0][1], children1[0][2], nextTurn]); //maintaining the children composition formula to facilitate sort methods ahead
+    }
+    
+    lresB.sort(this.compareChildrenAsc);
+
+    let move = lresB[0];
+    let nT = 0;
+    
+    if(move[3] == turn)
+    {
+      nT = move[3];
     }
 
-    lresB.sort(this.compareChildrenAsc);
     return lresB[0][0];
   }
 
@@ -135,28 +144,28 @@ class PlayerAI extends Player {
     
     for(let i = 0; i < b.pits1.length; i++)
     {
-      evalB += b.pits1[i].length * 0.1;
+      evalB += b.pits1[i].length * 0.01;
     }
 
     for(let i = 0; i < b.pits2.length; i++)
     {
-      evalB -= b.pits2[i].length * 0.1;
+      evalB -= b.pits2[i].length * 0.01;
     }
 
     //human player gets to repeat
     if(prevTurn == 0 && curTurn == 0)
     {
-      evalB += 200;
+      evalB += 1;
     }
 
     //AI gets to repeat
     if(prevTurn == 1 && curTurn == 1)
     {
-      evalB -= 200;
+      evalB -= 1;
     }
 
-    evalB += (b.store1.nSeeds * 2);
-    evalB -= (b.store2.nSeeds * 2);
+    evalB += (b.store1.nSeeds * 100);
+    evalB -= (b.store2.nSeeds * 100);
 
     return evalB;
   }

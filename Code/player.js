@@ -80,9 +80,13 @@ class PlayerAI extends Player {
     let move = lresB[0];
     let nT = 0;
     
+    console.log(move[3]);
+    console.log(turn);
+    console.log(move[2]);
+
     if(move[3] == turn)
     {
-      nT = move[3];
+      return this.currentBestMove();
     }
 
     return lresB[0][0];
@@ -123,7 +127,6 @@ class PlayerAI extends Player {
       {
         turn = child.sow(CTurn, i);
       }
-        
       
       children.push([i, child, this.euristic(child, CTurn, turn)]);
     }

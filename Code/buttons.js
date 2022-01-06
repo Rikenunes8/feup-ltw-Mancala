@@ -1,6 +1,4 @@
-
-
-window.addEventListener("load", function() {
+function initButtons(app) {
   const logout = document.querySelector("#btn-logout");
   const login = document.querySelector("#btn-login");
   const submit_login = document.querySelector("#submit-login");
@@ -10,33 +8,26 @@ window.addEventListener("load", function() {
   const start = document.querySelector("#btn-start");
   const stop = document.querySelector("#btn-stop");
   lockButton(stop);
-
+  
   logout.addEventListener("click", function() {makeLogout();});
   login.addEventListener("click", function() {buttonPressed("#btn-login", "#login-window");});
-  submit_login.addEventListener("click", function () {makeLogin();});
+  submit_login.addEventListener("click", function () {makeLogin(app);});
   help.addEventListener("click", function() {buttonPressed("#btn-help", "#help-window");});
   settings.addEventListener("click", function() {buttonPressed("#btn-settings", "#settings-window");});
   ranking.addEventListener("click", function() {buttonPressed("#btn-ranking", "#ranking-window");});
   
-  let object = {ref: 0};
-  start.addEventListener("click", function() {hideAllWindows(); lockButton(settings); lockButton(start); unlockButton(stop); initGame(object);});
-  stop.addEventListener("click", function() {hideAllWindows(); unlockButton(settings); lockButton(stop); unlockButton(start); endGame(object);});
-});
+  start.addEventListener("click", function() {hideAllWindows(); lockButton(settings); lockButton(start); unlockButton(stop); app.initGame();});
+  stop.addEventListener("click", function() {hideAllWindows(); unlockButton(settings); lockButton(stop); unlockButton(start); app.endGame();});
 
+}
 
-function makeLogin() {
+function makeLogin(app) {
   const username = document.querySelector("#login-window input[type=text]");
   const password = document.querySelector("#login-window input[type=password]");
   let nick = username.value;
   let pass = password.value;
-  
-  // Backdoor for faster testing
-  if (nick == "") {
-    appRegister({}, nick, pass);
-    return;
-  }
 
-  register(nick, pass);
+  app.register(nick, pass);
 
   username.value = "";
   password.value = "";
@@ -55,6 +46,22 @@ function makeLogout() {
   for (let elem of elems_notlog) {
     elem.style.display = "block";
   }
+}
+
+function setLoggedEnv(nick) {
+  buttonPressed("#btn-login", "#login-window");
+  const elems_notlog = document.querySelectorAll(".not-logged");
+  const elems_log = document.querySelectorAll(".logged:not(#btn-logout, #btn-logout-username)");
+  const btn_logout = document.querySelector("#btn-logout");
+  const btn_logout_username = document.querySelector("#btn-logout-username");
+  btn_logout_username.innerHTML = nick;
+  
+  for (let elem of elems_notlog)
+    elem.style.display = "none";
+  for (let elem of elems_log)
+    elem.style.display = "block";
+  btn_logout.style.display = "inline-block";
+  btn_logout_username.style.display = "inline-block";
 }
 
 function buttonPressed(button, window) {

@@ -1,18 +1,21 @@
 class Game {
-  constructor(board, p1, p2, playFirst) {
+  constructor(board, p1, p2, playFirst, hasBot) {
     this.board = board;
     this.players = [p1, p2];
     this.turn = playFirst ? 0 : 1;
     this.running = true;
+    this.hasBot = hasBot;
     
-    setMessage("Play now "+this.players[this.turn].name);
-    if (!playFirst)
+    setMessage("Turn of " + this.players[this.turn].name);
+    if (!playFirst && this.hasBot)
       setTimeout(()=> {while (this.play(1));}, 2000);
   }
 
   playRound(player) {
-    while (this.play(player++));
-    setTimeout(()=> {while (this.play(player%2));}, 2000);
+    this.play(player++);
+    
+    if (this.hasBot)
+      setTimeout(()=> {while (this.play(player%2));}, 2000);
     
   }
 
@@ -23,10 +26,8 @@ class Game {
 
     let choice = this.players[this.turn].play();
     
-    if (choice == -1) 
-      return false;
-    if (this.board.isEmpty(player, choice))
-      return this.play(player);
+    if (choice == -1 || this.board.isEmpty(player, choice)) 
+      return true;
 
     this.turn = this.board.sow(this.turn, choice);
 
@@ -34,10 +35,7 @@ class Game {
       this.endGame();
     }
     else {
-      if (this.turn == oldTurn)
-        setMessage("Play again "+this.players[this.turn].name);
-      else
-        setMessage("Play now "+this.players[this.turn].name);
+      setMessage("Turn of " + this.players[this.turn].name);
     }
 
     return this.turn == oldTurn;
@@ -52,34 +50,40 @@ class Game {
     if (this.players[0].score > totalSeeds/2 || this.players[1].score > totalSeeds/2) {
       endGame = true;
     }
-    else if(!this.anyMove(this.turn)) {
-      this.board.collectAllSeeds((this.turn+1)%2);
+    else if(!this.anyMove(this.turn) || !this.anyMove((this.turn+1)%2)) {
+      this.board.collectAllSeeds();
       endGame = true;
     }
     return endGame;
   }
 
   anyMove(player) {
-    let nPits = parseInt(this.board.nPits);
-    for (let i = 0; i < nPits; i++) {
-      if (this.board.holes[player*(nPits + 1) + i].nSeeds != 0)
+    for (let i = 0; i < this.board.nPits; i++) {
+      if (!this.board.isEmpty(player, i))
         return true;
     }
     return false;
   }
-  endGame() {
+
+  endGame(forcedEnd=false, winner) {
     this.running = false;
     setMessage("End of the game");
     
     setTimeout(()=>{}, 2000);
-    
-    let p1 = this.players[0];
-    let p2 = this.players[1];
-    if (p1.score > p2.score)
-      setMessage(p1.name + " WON");
-    else if (p1.score < p2.score)
-      setMessage(p2.name + " WON");
-    else
-      setMessage("TIE");
+    if (forcedEnd) {
+      if (!winner) setMessage("TIE");
+      else setMessage(winner + " WON");
+    }
+    else {
+      let p1 = this.players[0];
+      let p2 = this.players[1];
+      if (p1.score > p2.score)
+        setMessage(p1.name + " WON");
+      else if (p1.score < p2.score)
+        setMessage(p2.name + " WON");
+      else
+        setMessage("TIE");
+      openCloseGame(false);
+    }
   }
 }

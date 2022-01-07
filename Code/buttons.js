@@ -16,8 +16,8 @@ function initButtons(app) {
   settings.addEventListener("click", function() {buttonPressed("#btn-settings", "#settings-window");});
   ranking.addEventListener("click", function() {buttonPressed("#btn-ranking", "#ranking-window");});
   
-  start.addEventListener("click", function() {hideAllWindows(); lockButton(settings); lockButton(start); unlockButton(stop); app.initGame();});
-  stop.addEventListener("click", function() {hideAllWindows(); unlockButton(settings); lockButton(stop); unlockButton(start); app.endGame();});
+  start.addEventListener("click", function() {openCloseGame(true); app.initGame();});
+  stop.addEventListener("click", function() {openCloseGame(false); app.endGame();});
 
 }
 
@@ -92,4 +92,21 @@ function lockButton(btn) {
 }
 function unlockButton(btn) {
   btn.disabled = false;
+}
+
+function openCloseGame(openClose) {
+  const start = document.querySelector("#btn-start");
+  const stop = document.querySelector("#btn-stop");
+  const settings = document.querySelector("#btn-settings");
+  hideAllWindows(); 
+  if (openClose) {
+    lockButton(settings); 
+    lockButton(start); 
+    unlockButton(stop); 
+  }
+  else {
+    unlockButton(settings); 
+    lockButton(stop); 
+    unlockButton(start);
+  }
 }

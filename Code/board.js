@@ -55,15 +55,16 @@ class Board {
     return (turn+1) % 2;
   }
 
-  collectAllSeeds(player) {
-    let side = this.nPits+1;
-    let storeIndex = (player+1)*side - 1;
-
-    for (let i = 0; i < this.nPits; i++) {
-      let seeds = this.takeAllSeeds(this.holes[player*side + i]);
-      while (seeds.length != 0) {
-        let seed = seeds.pop();
-        this.addSeed(this.holes[storeIndex], seed);
+  collectAllSeeds() {
+    let side = parseInt(this.nPits)+1;
+    for (let p = 0; p < 2; p++) {
+      let storeIndex = (p+1)*side - 1;
+      for (let i = 0; i < this.nPits; i++) {
+        let seeds = this.takeAllSeeds(this.holes[p*side + i]);
+        while (seeds.length != 0) {
+          let seed = seeds.pop();
+          this.addSeed(this.holes[storeIndex], seed);
+        }
       }
     }
   }

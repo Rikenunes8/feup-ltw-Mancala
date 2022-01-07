@@ -39,8 +39,8 @@ class App {
       let board = new BoardReal(nSeeds, nPits);
       let p1 = new PlayerHuman();
       let p2 = new PlayerAI(board, aiLevel);
-      this.game = new Game(board, p1, p2, playFirst);
-      makePlayable(p1, this.game);
+      this.game = new Game(board, p1, p2, playFirst, true);
+      this.makePlayable(p1, this.game);
     }
     else {
       this.join(this.group, this.username, this.password, nPits, nSeeds);
@@ -48,10 +48,14 @@ class App {
   }
 
   endGame() {
-    this.leave(this.gameHash, this.username, this.password);
-    setTimeout(()=>{}, 5000);
-    //this.game.endGame();
-    this.updateEnd();
+    if (!this.game.hasBot) {
+      this.leave(this.gameHash, this.username, this.password);
+      setTimeout(()=>{}, 5000);
+    }
+    this.game.endGame();
+    if (!this.game.hasBot) {
+      this.updateEnd();
+    }
   }
 
   ranking() {
@@ -136,7 +140,6 @@ class App {
         setMessage(json.error);
       }
       else {
-        setMessage("Leaving the game");
         console.log("Leaving the game");
       }
     })
@@ -156,7 +159,6 @@ class App {
         setMessage(json.error);
       }
       else {
-        setMessage("Notifying the game");
         console.log("Notifying the game");
       }
     })
@@ -195,7 +197,7 @@ class App {
         let p2Name;
         for (const key in sides) if (sides[key] != this.username) p2Name = key;
         let p2 = new PlayerHuman(p2Name);
-        this.game = new Game(board, p1, p2, data.board.turn == this.username);
+        this.game = new Game(board, p1, p2, data.board.turn == this.username, false);
         this.makePlayable(p1, this.game);
       }
       else {
@@ -213,7 +215,12 @@ class App {
     const pits = document.querySelectorAll("#zone-p1 .pit-info .pit");
     let that = this;
     for(let i = 0; i < pits.length; i++)
-      pits[i].addEventListener("click", function() {player.setNextPlay(i); game.playRound(0); that.notify(that.username, that.password, that.gameHash, i)});
+      pits[i].addEventListener("click", function() {
+        player.setNextPlay(i);
+        game.playRound(0);
+        if (!game.hasBot)
+          that.notify(that.username, that.password, that.gameHash, i);
+      });
   }
 }
 

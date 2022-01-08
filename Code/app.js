@@ -1,10 +1,10 @@
 class App {
   constructor() {
     this.server = "http://twserver.alunos.dcc.fc.up.pt:8008/";
-    this.group = '85';
-    this.gameHash;
+    this.group = '15';
+    this.gameHash = null;
     this.game = null;
-    this.eventSource;
+    this.eventSource = null;
 
     setMessage("Please login, set your game and press START");
     let nPits = document.querySelector("#n_p input").value;
@@ -56,6 +56,7 @@ class App {
     if (!this.game.hasBot) {
       this.updateEnd();
     }
+    this.game = null;
   }
 
   ranking() {
@@ -76,11 +77,11 @@ class App {
       this.password = pass
       return;
     } else if (nick == '1') {
-      nick = 'group85';
-      pass = '85';
+      nick = 'group15';
+      pass = '15';
     } else if (nick == '2') {
-      nick = 'group_85';
-      pass = '85';
+      nick = 'group_15';
+      pass = '15';
     }
     // --------------------
     let obj = {"nick": nick, "password": pass};
@@ -92,7 +93,7 @@ class App {
     .then(response => response.json())
     .then(json => {
       if (json.error != null) {
-        setMessage(json.error);
+        console.log(json.error);
       }
       else {
         setMessage("You are now logged in " + nick);
@@ -115,7 +116,7 @@ class App {
     .then(response => response.json())
     .then(json => {
       if (json.error != null) {
-        setMessage(json.error);
+        console.log(json.error);
       }
       else {
         this.gameHash = json.game;
@@ -137,7 +138,7 @@ class App {
     .then(response => response.json())
     .then(json => {
       if (json.error != null) {
-        setMessage(json.error);
+        console.log(json.error);
       }
       else {
         console.log("Leaving the game");
@@ -156,7 +157,7 @@ class App {
     .then(response => response.json())
     .then(json => {
       if (json.error != null) {
-        setMessage(json.error);
+        console.log(json.error);
       }
       else {
         console.log("Notifying the game");
@@ -194,14 +195,24 @@ class App {
         const nSeeds = sides[this.username].pits[0];
         let board = new BoardReal(nSeeds, nPits);
         let p1 = new PlayerHuman(this.username);
+        
         let p2Name;
-        for (const key in sides) if (sides[key] != this.username) p2Name = key;
+        for (const key in sides) {
+          if (key != this.username) {
+            p2Name = key;
+          }
+        }
+        
         let p2 = new PlayerHuman(p2Name);
+        console.log(data.board.turn);
+        console.log(this.username);
+        console.log(data.board.turn == this.username);
         this.game = new Game(board, p1, p2, data.board.turn == this.username, false);
         this.makePlayable(p1, this.game);
       }
-      else {
-
+      else if (data.pit != null) {
+        this.game.players[this.game.turn].setNextPlay(data.pit);
+        this.game.playRound(this.game.turn);
       }
       
     }
@@ -216,10 +227,13 @@ class App {
     let that = this;
     for(let i = 0; i < pits.length; i++)
       pits[i].addEventListener("click", function() {
-        player.setNextPlay(i);
-        game.playRound(0);
-        if (!game.hasBot)
+        if (game.hasBot) {
+          player.setNextPlay(i);
+          game.playRound(0);
+        }
+        else {
           that.notify(that.username, that.password, that.gameHash, i);
+        }
       });
   }
 }

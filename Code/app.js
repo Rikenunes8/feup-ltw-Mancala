@@ -204,15 +204,32 @@ class App {
         }
         
         let p2 = new PlayerHuman(p2Name);
-        console.log(data.board.turn);
-        console.log(this.username);
-        console.log(data.board.turn == this.username);
         this.game = new Game(board, p1, p2, data.board.turn == this.username, false);
         this.makePlayable(p1, this.game);
       }
       else if (data.pit != null) {
+        let p1Badge = document.querySelector('#p1-badge');
+        let p2Badge = document.querySelector('#p2-badge');
+        const p1Name = this.game.players[0].name;
+        const p2Name = this.game.players[1].name;
+        p1Badge.innerHTML = p1Name + ': ' + data.board.sides[p1Name].store;
+        p2Badge.innerHTML = p2Name + ': ' + data.board.sides[p2Name].store;
         this.game.players[this.game.turn].setNextPlay(data.pit);
         this.game.playRound(this.game.turn);
+
+        console.log(data.board.sides[p1Name].pits);
+        let pits1 = []
+        for (let pit of this.game.board.pits1) {
+          pits1.push(pit.nSeeds);
+        }
+        let pits2 = []
+        for (let pit of this.game.board.pits2) {
+          pits2.push(pit.nSeeds);
+        }
+        console.log(pits1);
+        console.log(data.board.sides[p2Name].pits);
+        console.log(pits2.reverse());
+
       }
       
     }

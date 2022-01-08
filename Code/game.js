@@ -5,8 +5,7 @@ class Game {
     this.turn = playFirst ? 0 : 1;
     this.running = true;
     this.hasBot = hasBot;
-    console.log(p1);
-    console.log(p2);
+
     setMessage("Turn of " + this.players[this.turn].name);
     if (!playFirst && this.hasBot)
       setTimeout(()=> {while (this.play(1));}, 2000);

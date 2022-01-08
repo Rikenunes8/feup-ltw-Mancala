@@ -100,10 +100,16 @@ section button:disabled {
   background-color: rgba(255, 255, 255, 0);
 }
 
-
-#message_box {
+#board-info {
+  display: flex;
   width: 100%;
   margin-top: 20px;
+}
+#board-info div {
+  flex-grow: 1;
+}
+#board-info div#message_box {
+  flex-grow: 2;
   background-color: pink;
   padding: 1em 1em 1em 1em;
   font-size: 1.1em;

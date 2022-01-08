@@ -40,7 +40,7 @@ class Board {
     if (i == ownStore) {
       return turn;
     }
-    else if (Math.floor(i/(size/2)) == turn && this.holes[i].nSeeds == 1 && this.holes[2*this.nPits - i].nSeeds != 0) {
+    else if (Math.floor(i/(size/2)) == turn && this.holes[i].nSeeds == 1) {
       let ownSeeds = this.takeAllSeeds(this.holes[i]);
       let oppSeeds = this.takeAllSeeds(this.holes[2*this.nPits - i]);
       while (ownSeeds.length != 0) {

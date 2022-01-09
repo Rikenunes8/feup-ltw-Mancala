@@ -6,17 +6,19 @@ class Game {
     this.running = true;
     this.hasBot = hasBot;
 
-    setMessage("Turn of " + this.players[this.turn].name);
+    setMessage("Turn of " + this.getPlayerName(this.turn));
     if (!playFirst && this.hasBot)
-      setTimeout(()=> {while (this.play(1));}, 2000);
+      setTimeout(()=> {while (this.play(1));}, 100);
   }
 
   playRound(player) {
     this.play(player++);
-    
-    if (this.hasBot)
-      setTimeout(()=> {while (this.play(player%2));}, 2000);
-    
+    if (this.hasBot) {
+      setTimeout(()=> {while (this.play(player%2));this.updatePlayersScores();}, 2000);
+    }
+    else {
+      this.updatePlayersScores();
+    }
   }
 
   play(player) {
@@ -35,20 +37,17 @@ class Game {
     this.turn = this.board.sow(this.turn, choice);
 
     if (this.checkEndGame()) {
-      this.endGame();
+      this.running = false;
       return false;
     }
     else {
-      setMessage("Turn of " + this.players[this.turn].name);
+      setMessage("Turn of " + this.getPlayerName(this.turn));
       return this.turn == oldTurn;
     }
   }
 
   checkEndGame() {
     let endGame = false;
-    this.players[0].score = this.board.store1.nSeeds;
-    this.players[1].score = this.board.store2.nSeeds;
-
     if(!this.anyMove(this.turn)) {
       this.board.collectAllSeeds();
       endGame = true;
@@ -64,23 +63,34 @@ class Game {
     return false;
   }
 
-  endGame(forcedEnd=false, winner) {
+  endGame(winner) {
     this.running = false;
     
-    if (forcedEnd) {
+    if (winner !== undefined) {
       if (!winner) setMessage("TIE");
       else setMessage(winner + " WON");
     }
     else {
-      let p1 = this.players[0];
-      let p2 = this.players[1];
-      if (p1.score > p2.score)
-        setMessage(p1.name + " WON");
-      else if (p1.score < p2.score)
-        setMessage(p2.name + " WON");
+      let scoreP1 = this.getPlayerScore(0);
+      let scoreP2 = this.getPlayerScore(1);
+      if (scoreP1 > scoreP2)
+        setMessage(this.getPlayerName(0) + " WON");
+      else if (scoreP1 < scoreP2)
+        setMessage(this.getPlayerName(1) + " WON");
       else
         setMessage("TIE");
-      openCloseGame(false);
     }
+  }
+
+  updatePlayersScores() {
+    this.players[0].score = this.board.store1.nSeeds;
+    this.players[1].score = this.board.store2.nSeeds;
+  }
+
+  getPlayerName(player) {
+    return this.players[player].name;
+  }
+  getPlayerScore(player) {
+    return this.players[player].score;
   }
 }

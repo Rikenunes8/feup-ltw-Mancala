@@ -50,15 +50,22 @@ class App {
       this.join(this.group, this.username, this.password, nPits, nSeeds);
     }
   }
-  
-  endGame() {
-    if (!this.game.hasBot) {
+  forceEndGame() {
+    if (this.gameHash) {
       this.leave(this.gameHash, this.username, this.password);
     }
     else {
-      this.game.endGame();
-      this.game = null;
+      this.endGame(this.game.getPlayerName(1));
     }
+  }
+  endGame(winner) {
+    console.log("end game");
+    this.game.endGame(winner);
+    this.game = null;
+
+    this.updateEnd();
+    openCloseGame(false);
+    this.makeNotPlayable();
   }
 
   ranking() {
@@ -182,6 +189,7 @@ class App {
     }
   }
   updateEnd() {
+    if (!this.eventSource) return;
     this.eventSource.close();
     this.eventSource = null;
   }
@@ -199,12 +207,7 @@ class App {
         let p1 = new PlayerHuman(this.username);
         
         let p2Name;
-        for (const key in sides) {
-          if (key != this.username) {
-            p2Name = key;
-          }
-        }
-        
+        for (const key in sides) if (key != this.username) p2Name = key;
         let p2 = new PlayerHuman(p2Name);
         this.game = new Game(board, p1, p2, data.board.turn == this.username, false);
         this.makePlayable(p1, this.game);
@@ -222,11 +225,7 @@ class App {
       
     }
     if ('winner' in data){
-      console.log('winner')
-      this.game.endGame(true, data.winner);
-      this.game = null;
-      this.updateEnd();
-      openCloseGame(false);
+      this.endGame(data.winner);
     }
 
   }
@@ -239,11 +238,18 @@ class App {
         if (game.hasBot) {
           player.setNextPlay(i);
           game.playRound(0);
+          setTimeout(()=> {if (!game.running) that.endGame();}, 2500);
         }
         else {
           that.notify(that.username, that.password, that.gameHash, i);
         }
       });
+  }
+  makeNotPlayable() {
+    let zoneP1 = document.querySelector("#zone-p1");
+    let clone = zoneP1.cloneNode(true);
+    zoneP1.parentNode.replaceChild(clone, zoneP1);
+
   }
 }
 
@@ -284,6 +290,10 @@ function builidRankingTable(tableData) {
 function setMessage(str) {
   let messagesBox = document.querySelector("#message_box");
   messagesBox.innerHTML = str;
+}
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 window.addEventListener("load", function() {

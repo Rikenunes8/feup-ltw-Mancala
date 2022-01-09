@@ -17,7 +17,7 @@ function initButtons(app) {
   ranking.addEventListener("click", function() {buttonPressed("#btn-ranking", "#ranking-window");});
   
   start.addEventListener("click", function() {openCloseGame(true); app.initGame();});
-  stop.addEventListener("click", function() {openCloseGame(false); app.endGame();});
+  stop.addEventListener("click", function() {openCloseGame(false); app.forceEndGame();});
 
 }
 

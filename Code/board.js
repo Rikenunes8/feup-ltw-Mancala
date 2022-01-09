@@ -187,10 +187,11 @@ class Hole {
     this.seeds = this.createSeeds();
 
     this.score.innerHTML = this.nSeeds;
-    for (let seed of this.seeds) 
+    for (let seed of this.seeds) {
       this.hole.appendChild(seed)
+    }
     
-      if (isHoleFirst) {
+    if (isHoleFirst) {
       this.info.appendChild(this.hole);
       this.info.appendChild(this.score);
     }

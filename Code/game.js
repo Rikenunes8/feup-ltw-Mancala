@@ -21,24 +21,27 @@ class Game {
 
   play(player) {
     let oldTurn = this.turn;
-    if (!this.running || this.turn != player) 
+    if (!this.running || this.turn != player) {
       return false;
+    }
+    
 
     let choice = this.players[this.turn].play();
     
-    if (choice == -1 || this.board.isEmpty(player, choice)) 
+    if (choice == -1 || this.board.isEmpty(player, choice)) {
       return true;
+    }
 
     this.turn = this.board.sow(this.turn, choice);
 
     if (this.checkEndGame()) {
       this.endGame();
+      return false;
     }
     else {
       setMessage("Turn of " + this.players[this.turn].name);
+      return this.turn == oldTurn;
     }
-
-    return this.turn == oldTurn;
   }
 
   checkEndGame() {
@@ -46,11 +49,7 @@ class Game {
     this.players[0].score = this.board.store1.nSeeds;
     this.players[1].score = this.board.store2.nSeeds;
 
-    let totalSeeds = 2*this.board.nPits * this.board.nSeeds;
-    if (this.players[0].score > totalSeeds/2 || this.players[1].score > totalSeeds/2) {
-      endGame = true;
-    }
-    else if(!this.anyMove(this.turn) || !this.anyMove((this.turn+1)%2)) {
+    if(!this.anyMove(this.turn)) {
       this.board.collectAllSeeds();
       endGame = true;
     }
@@ -67,9 +66,7 @@ class Game {
 
   endGame(forcedEnd=false, winner) {
     this.running = false;
-    setMessage("End of the game");
     
-    setTimeout(()=>{}, 2000);
     if (forcedEnd) {
       if (!winner) setMessage("TIE");
       else setMessage(winner + " WON");

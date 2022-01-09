@@ -15,6 +15,10 @@ class App {
   setGame(game) {this.game = game;}
 
   initGame() {
+    this.gameHash = null;
+    this.game = null;
+    this.eventSource = null;
+
     let nSeeds = document.querySelector("#n_s input").value;
     let nPits = document.querySelector("#n_p input").value;
     let playFirst = document.querySelector("#play_first input").checked;
@@ -37,7 +41,7 @@ class App {
   
     if (gameMode == 0) {
       let board = new BoardReal(nSeeds, nPits);
-      let p1 = new PlayerHuman();
+      let p1 = new PlayerHuman(this.username);
       let p2 = new PlayerAI(board, aiLevel);
       this.game = new Game(board, p1, p2, playFirst, true);
       this.makePlayable(p1, this.game);
@@ -46,17 +50,15 @@ class App {
       this.join(this.group, this.username, this.password, nPits, nSeeds);
     }
   }
-
+  
   endGame() {
     if (!this.game.hasBot) {
       this.leave(this.gameHash, this.username, this.password);
-      setTimeout(()=>{}, 5000);
     }
-    this.game.endGame();
-    if (!this.game.hasBot) {
-      this.updateEnd();
+    else {
+      this.game.endGame();
+      this.game = null;
     }
-    this.game = null;
   }
 
   ranking() {
@@ -185,10 +187,10 @@ class App {
   }
   updateAction(data) {
     console.log(data);
-    if (data.error != null) {
+    if ('error' in data) {
       setMessage(data.error);
     }
-    if (data.board != null){
+    if ('board' in data){
       if (this.game == null) {
         const sides = data.board.sides;
         const nPits = sides[this.username].pits.length;
@@ -207,34 +209,24 @@ class App {
         this.game = new Game(board, p1, p2, data.board.turn == this.username, false);
         this.makePlayable(p1, this.game);
       }
-      else if (data.pit != null) {
-        let p1Badge = document.querySelector('#p1-badge');
+      else if ('pit' in data) {
+        /*let p1Badge = document.querySelector('#p1-badge');
         let p2Badge = document.querySelector('#p2-badge');
         const p1Name = this.game.players[0].name;
         const p2Name = this.game.players[1].name;
         p1Badge.innerHTML = p1Name + ': ' + data.board.sides[p1Name].store;
-        p2Badge.innerHTML = p2Name + ': ' + data.board.sides[p2Name].store;
+        p2Badge.innerHTML = p2Name + ': ' + data.board.sides[p2Name].store;*/
         this.game.players[this.game.turn].setNextPlay(data.pit);
         this.game.playRound(this.game.turn);
-
-        console.log(data.board.sides[p1Name].pits);
-        let pits1 = []
-        for (let pit of this.game.board.pits1) {
-          pits1.push(pit.nSeeds);
-        }
-        let pits2 = []
-        for (let pit of this.game.board.pits2) {
-          pits2.push(pit.nSeeds);
-        }
-        console.log(pits1);
-        console.log(data.board.sides[p2Name].pits);
-        console.log(pits2.reverse());
-
       }
       
     }
-    if (data.winner != null){
-      this.leave(this.gameHash, this.username, this.password);
+    if ('winner' in data){
+      console.log('winner')
+      this.game.endGame(true, data.winner);
+      this.game = null;
+      this.updateEnd();
+      openCloseGame(false);
     }
 
   }

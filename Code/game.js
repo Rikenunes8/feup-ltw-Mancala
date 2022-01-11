@@ -67,19 +67,31 @@ class Game {
     this.running = false;
     
     if (winner !== undefined) {
-      if (!winner) setMessage("TIE");
+      if (!winner) {
+        setMessage("TIE");
+        return 0;
+      }
       else setMessage(winner + " WON");
+      if (winner == this.players[0].name) return 1;
+      else return -1;
     }
     else {
       let scoreP1 = this.getPlayerScore(0);
       let scoreP2 = this.getPlayerScore(1);
-      if (scoreP1 > scoreP2)
+      if (scoreP1 > scoreP2) {
         setMessage(this.getPlayerName(0) + " WON");
-      else if (scoreP1 < scoreP2)
+        return 1;
+      }
+      else if (scoreP1 < scoreP2) {
         setMessage(this.getPlayerName(1) + " WON");
-      else
+        return -1;
+      }
+      else {
         setMessage("TIE");
+        return 0;
+      }
     }
+    return 
   }
 
   updatePlayersScores() {

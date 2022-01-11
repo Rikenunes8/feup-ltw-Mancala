@@ -5,6 +5,7 @@ class App {
     this.gameHash = null;
     this.game = null;
     this.eventSource = null;
+    this.localRanking = new RankingLocal();
 
     setMessage("Please login, set your game and press START");
     let nPits = document.querySelector("#n_p input").value;
@@ -59,8 +60,13 @@ class App {
     }
   }
   endGame(winner) {
-    console.log("end game");
-    this.game.endGame(winner);
+    let win = this.game.endGame(winner);
+    if (this.game.hasBot) {
+      console.log(this.game.players[1]);
+      this.localRanking.update(this.game.players[1].level, win==1);
+      console.log("here");
+      builidRankingTable(this.localRanking.ranks, "AI Level");
+    }
     this.game = null;
 
     this.updateEnd();
@@ -74,7 +80,7 @@ class App {
       body: "{}"
     })
     .then(response => response.json())
-    .then(json => builidRankingTable(json))
+    .then(json => builidRankingTable(json, "Nick"))
     .catch(console.log);
   }
 
@@ -254,13 +260,13 @@ class App {
 }
 
 
-function builidRankingTable(tableData) {
+function builidRankingTable(tableData, label) {
   let table = document.querySelector("#ranking-window .table");
   table.innerHTML = "";
 
   let tableHeader = document.createElement('div');
   tableHeader.setAttribute('class', 'table-header');
-  let titles = ["Nick", "Wins", "Games"];
+  let titles = [label, "Wins", "Games"];
   for (let title of titles) {
     let node = document.createElement('div');
     node.setAttribute('class', 'table-item header-item');

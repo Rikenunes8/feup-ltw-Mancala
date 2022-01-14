@@ -4,7 +4,7 @@ const url     = require('url');
 const fs      = require('fs');
 const conf    = require('./conf.js');
 const ranking = require('./ranking.js');
-const register = require('./resgister.js'); 
+const register = require('./register.js'); 
 
 
 const headers = {
@@ -29,7 +29,7 @@ function doPostRequest(request, response) {
       ranking.get(request, response);
       break;
     case '/register':
-      register.get(request, response);
+      register.login(request, response);
       break;
     default:
       response.writeHead(404);

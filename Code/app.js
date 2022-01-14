@@ -62,10 +62,9 @@ class App {
   endGame(winner) {
     let win = this.game.endGame(winner);
     if (this.game.hasBot) {
-      console.log(this.game.players[1]);
       this.localRanking.update(this.game.players[1].level, win==1);
-      console.log("here");
       builidRankingTable(this.localRanking.ranks, "AI Level");
+      this.ranking();
     }
     this.game = null;
 
@@ -303,7 +302,7 @@ function sleep(ms) {
 }
 
 window.addEventListener("load", function() {
-  let app = new App();
+  const app = new App();
   initButtons(app);
   app.ranking();
 });

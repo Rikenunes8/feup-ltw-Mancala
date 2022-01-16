@@ -207,10 +207,10 @@ section button:disabled {
   min-width: 12em;
   position: absolute;
   left: 50%;
-  top: 25vh;
+  top: 12em;
   transform: translate(-50%, 0);
   border-radius: 20px;
-  border: 1px solid brown;
+  border: 2px solid saddlebrown;
 }
 
 .window .window-title {
@@ -222,14 +222,13 @@ section button:disabled {
   text-align: center;
 }
 .window .window-content {
-  max-height: 40vh;
   padding: 2em;
   overflow-y: auto;
 }
 .window .window-content .field input {
   padding-left: 1em;
   border-radius: 20px;
-  border: 1px solid brown;
+  border: 1px solid saddlebrown;
 }
 .window .window-content .field {
   height: 2em;
@@ -253,16 +252,21 @@ table tr td:nth-child(2) {
 }
 
 /* Help Window */
+#help-window .window-content {
+  max-height: 40vh;
+}
 #help-window {
-  max-width: 50vw;
+  max-width: 60vw;
   min-width: 20em;
 }
+
 
 /* Ranking Window */
 #ranking-window {
   max-width: 60vw;
   min-width: 30em;
 }
+
 
 /* Login Window */
 #login-window {
@@ -277,7 +281,7 @@ table tr td:nth-child(2) {
 #login-window .window-content .field input {
   height: 100%;
   width: 100%;
-  border: 1px solid SaddleBrown;
+  border: 2px solid SaddleBrown;
 }
 #login-window .window-content .field label {
   position: relative;
@@ -289,7 +293,7 @@ table tr td:nth-child(2) {
   height: 100%;
   width: 100%;
   background: wheat;
-  border: 1px solid SaddleBrown;
+  border: 2px solid SaddleBrown;
   border-radius: 3em;
   margin: auto;
   margin-top: 1.6em;
@@ -304,6 +308,7 @@ table tr td:nth-child(2) {
 #login-window .window-content .field .submit:hover {
   background: rgba(245, 222, 179, 0.5);
 }
+
 
 /*Styles for a table*/
 .container {

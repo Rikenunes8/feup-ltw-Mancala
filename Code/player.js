@@ -69,6 +69,12 @@ class PlayerAI extends Player {
     return choice;
   }
 
+  minimax(depth) {
+    
+  }
+
+
+
   bestMove()
   {
     let turn = 1;

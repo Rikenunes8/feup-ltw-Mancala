@@ -73,6 +73,8 @@ class App {
     if (this.game.hasBot) {
       this.localRanking.update(this.game.players[1].getLevel(), win==1);
       builidRankingTable(this.localRanking.ranks, "AI Level");
+    }
+    else {
       this.ranking();
     }
     this.game = null;
@@ -304,10 +306,6 @@ function builidRankingTable(tableData, label) {
 function setMessage(str) {
   let messagesBox = document.querySelector("#message_box span");
   messagesBox.innerHTML = str;
-}
-
-function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 window.addEventListener("load", function() {

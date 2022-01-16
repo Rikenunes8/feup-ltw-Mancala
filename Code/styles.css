@@ -228,7 +228,7 @@ section button:disabled {
 .window .window-content .field input {
   padding-left: 1em;
   border-radius: 20px;
-  border: 1px solid saddlebrown;
+  border: 2px solid saddlebrown;
 }
 .window .window-content .field {
   height: 2em;
@@ -281,7 +281,6 @@ table tr td:nth-child(2) {
 #login-window .window-content .field input {
   height: 100%;
   width: 100%;
-  border: 2px solid SaddleBrown;
 }
 #login-window .window-content .field label {
   position: relative;

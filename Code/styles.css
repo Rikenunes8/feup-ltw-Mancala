@@ -20,13 +20,6 @@ h1 {
   text-align: center;
 }
 
-.logged {
-  display: none;
-}
-.not-logged {
-  display: inline-block;
-}
-
 .log {
   height: 4.5em;
   position: absolute;
@@ -336,4 +329,14 @@ table tr td:nth-child(2) {
 
 .header-item {
   text-transform: uppercase;
+}
+
+.d-none {
+  display: none;
+}
+.d-block {
+  display: block;
+}
+.d-inline-block {
+  display: inline-block;
 }

@@ -42,10 +42,13 @@ function makeLogout(app, stop) {
   const elems_log = document.querySelectorAll(".logged");
   
   for (const elem of elems_log) {
-    elem.style.display = "none";
+    elem.classList.remove('d-block');
+    elem.classList.remove('d-inline-block');
+    elem.classList.add('d-none');
   }
   for (const elem of elems_notlog) {
-    elem.style.display = "block";
+    elem.classList.remove('d-none');
+    elem.classList.add('d-block');
   }
 }
 
@@ -57,12 +60,19 @@ function setLoggedEnv(nick) {
   const btn_logout_username = document.querySelector("#btn-logout-username");
   btn_logout_username.innerHTML = nick;
   
-  for (const elem of elems_notlog)
-    elem.style.display = "none";
-  for (const elem of elems_log)
-    elem.style.display = "block";
-  btn_logout.style.display = "inline-block";
-  btn_logout_username.style.display = "inline-block";
+  for (const elem of elems_notlog) {
+    elem.classList.remove('d-block');
+    elem.classList.remove('d-inline-block');
+    elem.classList.add('d-none');
+  }
+  for (const elem of elems_log) {
+    elem.classList.remove('d-none');
+    elem.classList.add('d-block');
+  }
+  btn_logout.classList.remove('d-none');
+  btn_logout.classList.add('d-inline-block');
+  btn_logout_username.classList.remove('d-none');
+  btn_logout_username.classList.add('d-inline-block');
 }
 
 function buttonPressed(button, window) {

@@ -22,13 +22,13 @@ class Game {
   }
 
   play(player) {
-    let oldTurn = this.turn;
+    const oldTurn = this.turn;
     if (!this.running || this.turn != player) {
       return false;
     }
     
 
-    let choice = this.players[this.turn].play();
+    const choice = this.players[this.turn].play();
     
     if (choice == -1 || this.board.isEmpty(player, choice)) {
       return true;
@@ -76,8 +76,8 @@ class Game {
       else return -1;
     }
     else {
-      let scoreP1 = this.getPlayerScore(0);
-      let scoreP2 = this.getPlayerScore(1);
+      const scoreP1 = this.getPlayerScore(0);
+      const scoreP2 = this.getPlayerScore(1);
       if (scoreP1 > scoreP2) {
         setMessage(this.getPlayerName(0) + " WON");
         return 1;

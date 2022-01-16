@@ -8,7 +8,7 @@ class App {
     this.localRanking = new RankingLocal();
 
     setMessage("Please login, set your game and press START");
-    let nPits = document.querySelector("#n_p input").value;
+    const nPits = document.querySelector("#n_p input").value;
     new BoardReal(0, nPits);
   }
   setUser(username) {this.username = username;}
@@ -20,10 +20,10 @@ class App {
     this.game = null;
     this.eventSource = null;
 
-    let nSeeds = document.querySelector("#n_s input").value;
-    let nPits = document.querySelector("#n_p input").value;
-    let playFirst = document.querySelector("#play_first input").checked;
-    let modes = document.querySelectorAll("#game_mode input");
+    const nSeeds = document.querySelector("#n_s input").value;
+    const nPits = document.querySelector("#n_p input").value;
+    const playFirst = document.querySelector("#play_first input").checked;
+    const modes = document.querySelectorAll("#game_mode input");
     let gameMode;
     for (let i = 0; i < modes.length; i++) {
       if (modes[i].checked) {
@@ -31,7 +31,7 @@ class App {
         break;
       }
     }
-    let levels = document.querySelectorAll("#ai_level input");
+    const levels = document.querySelectorAll("#ai_level input");
     let aiLevel;
     for (let i = 0; i < levels.length; i++) {
       if (levels[i].checked) {
@@ -60,7 +60,7 @@ class App {
     }
   }
   endGame(winner) {
-    let win = this.game.endGame(winner);
+    const win = this.game.endGame(winner);
     if (this.game.hasBot) {
       this.localRanking.update(this.game.players[1].getLevel(), win==1);
       builidRankingTable(this.localRanking.ranks, "AI Level");
@@ -98,7 +98,7 @@ class App {
       pass = '15';
     }
     // --------------------
-    let obj = {"nick": nick, "password": pass};
+    const obj = {"nick": nick, "password": pass};
   
     fetch(this.server + "register", {
       method: 'POST',
@@ -121,7 +121,7 @@ class App {
   }
 
   join(group, nick, pass, size, initial) {
-    let obj = {"group":group, "nick": nick, "password": pass, "size": size, "initial": initial};
+    const obj = {"group":group, "nick": nick, "password": pass, "size": size, "initial": initial};
   
     fetch(this.server + "join", {
       method: 'POST',
@@ -143,7 +143,7 @@ class App {
   }
 
   leave(game, nick, pass) {
-    let obj = {"game": game, "nick": nick, "password": pass};
+    const obj = {"game": game, "nick": nick, "password": pass};
   
     fetch(this.server + "leave", {
       method: 'POST',
@@ -162,7 +162,7 @@ class App {
   }
 
   notify(nick, pass, game, move) {
-    let obj = {"nick": nick, "password": pass, "game": game, "move": move};
+    const obj = {"nick": nick, "password": pass, "game": game, "move": move};
   
     fetch(this.server + "notify", {
       method: 'POST',
@@ -182,12 +182,12 @@ class App {
 
   update(game, nick) {
     console.log(nick, game);
-    let query = "?nick="+nick+"&game="+game;
+    const query = "?nick="+nick+"&game="+game;
     this.eventSource = new EventSource(this.server + "update" + query);
     this.eventSource.onopen = function() {
       console.log("connetion established");
     }
-    let that = this;
+    const that = this;
     this.eventSource.onmessage = function(event) {
       const data = JSON.parse(event.data);
       that.updateAction(data);
@@ -237,7 +237,7 @@ class App {
 
   makePlayable(player) {
     const pits = document.querySelectorAll("#zone-p1 .pit-info .pit");
-    let that = this;
+    const that = this;
     for(let i = 0; i < pits.length; i++)
       pits[i].addEventListener("click", function() {
         if (that.game.hasBot) {
@@ -251,8 +251,8 @@ class App {
       });
   }
   makeNotPlayable() {
-    let zoneP1 = document.querySelector("#zone-p1");
-    let clone = zoneP1.cloneNode(true);
+    const zoneP1 = document.querySelector("#zone-p1");
+    const clone = zoneP1.cloneNode(true);
     zoneP1.parentNode.replaceChild(clone, zoneP1);
 
   }
@@ -265,8 +265,8 @@ function builidRankingTable(tableData, label) {
 
   let tableHeader = document.createElement('div');
   tableHeader.setAttribute('class', 'table-header');
-  let titles = [label, "Wins", "Games"];
-  for (let title of titles) {
+  const titles = [label, "Wins", "Games"];
+  for (const title of titles) {
     let node = document.createElement('div');
     node.setAttribute('class', 'table-item header-item');
     node.innerText = title;
@@ -276,12 +276,12 @@ function builidRankingTable(tableData, label) {
   table.appendChild(tableHeader);
   
 
-  let players = tableData.ranking;
-  for (let player of players) {
+  const players = tableData.ranking;
+  for (const player of players) {
     let tableRow = document.createElement('div');
     tableRow.setAttribute('class', 'table-row');
-    let items = [player.nick, player.victories, player.games];
-    for (let item of items) {
+    const items = [player.nick, player.victories, player.games];
+    for (const item of items) {
       let node = document.createElement('div');
       node.setAttribute('class', 'table-item');
       node.innerText = item;

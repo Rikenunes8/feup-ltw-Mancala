@@ -41,11 +41,9 @@ function doPostRequest(request, response) {
 
 
 const server = http.createServer( (request, response) => {
-  let answer = {};
-
   switch(request.method) {
     case 'POST':
-      answer = doPostRequest(request, response);
+      doPostRequest(request, response);
       break;
     default:
       response.writeHead(500); // 501 Not Implemented

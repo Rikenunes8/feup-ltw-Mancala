@@ -10,10 +10,10 @@ class Board {
   }
 
   initHoles() {
-    for (let pit of this.pits1) 
+    for (const pit of this.pits1) 
       this.holes.push(pit);
     this.holes.push(this.store1);
-    for (let pit of this.pits2.reverse()) 
+    for (const pit of this.pits2.reverse()) 
       this.holes.push(pit);
     this.holes.push(this.store2);
 
@@ -21,9 +21,9 @@ class Board {
   }
 
   sow(turn, choice) {
-    let size = this.holes.length;
-    let ownStore = (turn == 0 ? size/2 : size) - 1;
-    let pass = (turn == 0 ? size : size/2) - 1;
+    const size = this.holes.length;
+    const ownStore = (turn == 0 ? size/2 : size) - 1;
+    const pass = (turn == 0 ? size : size/2) - 1;
 
     let i = (turn*(size/2) + choice) % size;
     let seeds = this.takeAllSeeds(this.holes[i]);
@@ -56,9 +56,9 @@ class Board {
   }
 
   collectAllSeeds() {
-    let side = parseInt(this.nPits)+1;
+    const side = parseInt(this.nPits)+1;
     for (let p = 0; p < 2; p++) {
-      let storeIndex = (p+1)*side - 1;
+      const storeIndex = (p+1)*side - 1;
       for (let i = 0; i < this.nPits; i++) {
         let seeds = this.takeAllSeeds(this.holes[p*side + i]);
         while (seeds.length != 0) {
@@ -80,8 +80,8 @@ class BoardReal extends Board {
     this.store2 = this.createStore(2);
     this.pits1 = []
     this.pits2 = []
-    let zone1 = this.createPits(1);
-    let zone2 = this.createPits(2);
+    const zone1 = this.createPits(1);
+    const zone2 = this.createPits(2);
 
     this.initHoles();
 
@@ -124,13 +124,13 @@ class BoardReal extends Board {
   takeAllSeeds(holeInfo) {
     holeInfo.nSeeds = 0;
     holeInfo.score.innerHTML = 0;
-    let seeds = holeInfo.seeds;
+    const seeds = holeInfo.seeds;
     holeInfo.seeds = [];
     return seeds;
   }
 
   isEmpty(turn, choice) {
-    let sideSize = parseInt(this.nPits)+1;
+    const sideSize = parseInt(this.nPits)+1;
     return this.holes[turn*sideSize + choice].isEmpty();
   }
 
@@ -141,9 +141,9 @@ class BoardFake extends Board {
     super(board.nSeeds, board.nPits);
     this.store1 = {'nSeeds': board.store1.nSeeds};
     this.store2 = {'nSeeds': board.store2.nSeeds};
-    for (let pit of board.pits1)
+    for (const pit of board.pits1)
       this.pits1.push({'nSeeds': pit.nSeeds});
-    for (let pit of board.pits2)
+    for (const pit of board.pits2)
       this.pits2.push({'nSeeds': pit.nSeeds});
 
     this.initHoles();
@@ -163,7 +163,7 @@ class BoardFake extends Board {
   }
 
   isEmpty(turn, choice) {
-    let sideSize = parseInt(this.nPits)+1;
+    const sideSize = parseInt(this.nPits)+1;
     return this.holes[turn*sideSize + choice].nSeeds == 0;
   }
 
@@ -187,7 +187,7 @@ class Hole {
     this.seeds = this.createSeeds();
 
     this.score.innerHTML = this.nSeeds;
-    for (let seed of this.seeds) {
+    for (const seed of this.seeds) {
       this.hole.appendChild(seed)
     }
     
@@ -213,9 +213,9 @@ class Hole {
   }
 
   transformSeed(seed) {
-    let dx = 0.2 + Math.floor(Math.random()*this.dxMax)/10;
-    let dy = 0.5 + Math.floor(Math.random()*this.dyMax)/10;
-    let rot = Math.floor(Math.random()*this.rotMax);
+    const dx = 0.2 + Math.floor(Math.random()*this.dxMax)/10;
+    const dy = 0.5 + Math.floor(Math.random()*this.dyMax)/10;
+    const rot = Math.floor(Math.random()*this.rotMax);
     seed.style.transform = "translate("+dx+"vw, "+dy+"vw) rotate("+rot+"deg)";
   }
 

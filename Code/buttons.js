@@ -24,8 +24,8 @@ function initButtons(app) {
 function makeLogin(app) {
   const username = document.querySelector("#login-window input[type=text]");
   const password = document.querySelector("#login-window input[type=password]");
-  let nick = username.value;
-  let pass = password.value;
+  const nick = username.value;
+  const pass = password.value;
 
   app.register(nick, pass);
 
@@ -40,10 +40,10 @@ function makeLogout() {
   const elems_notlog = document.querySelectorAll(".not-logged");
   const elems_log = document.querySelectorAll(".logged");
   
-  for (let elem of elems_log) {
+  for (const elem of elems_log) {
     elem.style.display = "none";
   }
-  for (let elem of elems_notlog) {
+  for (const elem of elems_notlog) {
     elem.style.display = "block";
   }
 }
@@ -56,9 +56,9 @@ function setLoggedEnv(nick) {
   const btn_logout_username = document.querySelector("#btn-logout-username");
   btn_logout_username.innerHTML = nick;
   
-  for (let elem of elems_notlog)
+  for (const elem of elems_notlog)
     elem.style.display = "none";
-  for (let elem of elems_log)
+  for (const elem of elems_log)
     elem.style.display = "block";
   btn_logout.style.display = "inline-block";
   btn_logout_username.style.display = "inline-block";
@@ -67,7 +67,7 @@ function setLoggedEnv(nick) {
 function buttonPressed(button, window) {
   const btn = document.querySelector(button);
   const win = document.querySelector(window);
-  let show = !btn.classList.contains("btn_selected");
+  const show = !btn.classList.contains("btn_selected");
   
   hideAllWindows();
 
@@ -81,9 +81,9 @@ function hideAllWindows() {
   const btns = document.querySelectorAll(".btn_selected");
   const wins = document.querySelectorAll(".win_selected");
 
-  for (let b of btns)
+  for (const b of btns)
     b.classList.remove("btn_selected");
-  for (let w of wins)
+  for (const w of wins)
     w.classList.remove("win_selected");
 }
 

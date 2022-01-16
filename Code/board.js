@@ -177,11 +177,11 @@ class Hole {
     this.score = document.createElement('div');
     this.score.setAttribute('class', 'score');
     if (isStore) {
-      this.dxMax = 40; this.dyMax = 250; this.rotMax = 90;
+      this.dxMax = 60; this.dyMax = 500; this.rotMax = 90;
       this.hole.setAttribute('class', 'store hole');
     }
     else{
-      this.dxMax = 40; this.dyMax = 100; this.rotMax = 90;
+      this.dxMax = 40; this.dyMax = 200; this.rotMax = 90;
       this.hole.setAttribute('class', 'pit hole');
     } 
     this.seeds = this.createSeeds();
@@ -216,7 +216,7 @@ class Hole {
     const dx = 0.2 + Math.floor(Math.random()*this.dxMax)/10;
     const dy = 0.5 + Math.floor(Math.random()*this.dyMax)/10;
     const rot = Math.floor(Math.random()*this.rotMax);
-    seed.style.transform = "translate("+dx+"vw, "+dy+"vw) rotate("+rot+"deg)";
+    seed.style.transform = "translate("+dx+"vw, "+dy+"vh) rotate("+rot+"deg)";
   }
 
   isEmpty() {

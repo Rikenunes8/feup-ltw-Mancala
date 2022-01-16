@@ -302,7 +302,7 @@ function builidRankingTable(tableData, label) {
 }
 
 function setMessage(str) {
-  let messagesBox = document.querySelector("#message_box");
+  let messagesBox = document.querySelector("#message_box span");
   messagesBox.innerHTML = str;
 }
 

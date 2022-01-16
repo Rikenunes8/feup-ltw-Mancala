@@ -2,19 +2,28 @@ class App {
   constructor() {
     this.server = "http://twserver.alunos.dcc.fc.up.pt:8008/";
     this.group = '15';
+    this.localRanking = new RankingLocal();
+
+    this.resetGame();
+  }
+  setUser(username) {this.username = username;}
+  setPass(password) {this.password = password;}
+  setGame(game) {this.game = game;}
+  
+  isGameRunning() {
+    return this.game !== null;
+  }
+
+  resetGame() {
     this.gameHash = null;
     this.game = null;
     this.eventSource = null;
-    this.localRanking = new RankingLocal();
 
     setMessage("Please login, set your game and press START");
     const nPits = document.querySelector("#n_p input").value;
     new BoardReal(0, nPits);
   }
-  setUser(username) {this.username = username;}
-  setPass(password) {this.password = password;}
-  setGame(game) {this.game = game;}
-
+  
   initGame() {
     this.gameHash = null;
     this.game = null;
@@ -243,7 +252,7 @@ class App {
         if (that.game.hasBot) {
           player.setNextMove(i);
           that.game.playRound(0);
-          setTimeout(()=> {if (that.game !== null && !that.game.running) that.endGame();}, 2500);
+          setTimeout(()=> {if (that.isGameRunning() && !that.game.running) that.endGame();}, 2500);
         }
         else {
           that.notify(that.username, that.password, that.gameHash, i);

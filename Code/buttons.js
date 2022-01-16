@@ -8,17 +8,16 @@ function initButtons(app) {
   const start = document.querySelector("#btn-start");
   const stop = document.querySelector("#btn-stop");
   lockButton(stop);
+
+  start.addEventListener("click", function() {openCloseGame(true); app.initGame();});
+  stop.addEventListener("click", function() {openCloseGame(false); app.forceEndGame();});
   
-  logout.addEventListener("click", function() {makeLogout();});
+  logout.addEventListener("click", function() { makeLogout(app, stop);});
   login.addEventListener("click", function() {buttonPressed("#btn-login", "#login-window");});
   submit_login.addEventListener("click", function () {makeLogin(app);});
   help.addEventListener("click", function() {buttonPressed("#btn-help", "#help-window");});
   settings.addEventListener("click", function() {buttonPressed("#btn-settings", "#settings-window");});
   ranking.addEventListener("click", function() {buttonPressed("#btn-ranking", "#ranking-window");});
-  
-  start.addEventListener("click", function() {openCloseGame(true); app.initGame();});
-  stop.addEventListener("click", function() {openCloseGame(false); app.forceEndGame();});
-
 }
 
 function makeLogin(app) {
@@ -28,14 +27,16 @@ function makeLogin(app) {
   const pass = password.value;
 
   app.register(nick, pass);
+  app.resetGame();
 
   username.value = "";
   password.value = "";
 }
 
-function makeLogout() {
-  setMessage("Please login, set your game and press START");
-
+function makeLogout(app, stop) {
+  if (app.isGameRunning()) {
+    stop.click();
+  }
   hideAllWindows();
   const elems_notlog = document.querySelectorAll(".not-logged");
   const elems_log = document.querySelectorAll(".logged");

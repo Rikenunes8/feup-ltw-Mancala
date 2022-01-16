@@ -224,7 +224,7 @@ class App {
         const p2Name = this.game.players[1].name;
         p1Badge.innerHTML = p1Name + ': ' + data.board.sides[p1Name].store;
         p2Badge.innerHTML = p2Name + ': ' + data.board.sides[p2Name].store;*/
-        this.game.players[this.game.turn].setNextPlay(data.pit);
+        this.game.players[this.game.turn].setNextMove(data.pit);
         this.game.playRound(this.game.turn);
       }
       
@@ -241,7 +241,7 @@ class App {
     for(let i = 0; i < pits.length; i++)
       pits[i].addEventListener("click", function() {
         if (game.hasBot) {
-          player.setNextPlay(i);
+          player.setNextMove(i);
           game.playRound(0);
           setTimeout(()=> {if (!game.running) that.endGame();}, 2500);
         }

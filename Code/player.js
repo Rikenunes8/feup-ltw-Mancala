@@ -8,14 +8,14 @@ class Player {
 class PlayerHuman extends Player {
   constructor(name="Unknown") {
     super(name);
-    this.nextPlay = -1;
+    this.nextMove = -1;
   }
-  setNextPlay(n) {
-    this.nextPlay = n;
+  setNextMove(n) {
+    this.nextMove = n;
   }
   play() {
-    let choice = this.nextPlay;
-    this.nextPlay = -1;
+    let choice = this.nextMove;
+    this.nextMove = -1;
     return choice;
   }
 }

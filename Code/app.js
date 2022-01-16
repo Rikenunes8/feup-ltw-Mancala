@@ -45,7 +45,7 @@ class App {
       let p1 = new PlayerHuman(this.username);
       let p2 = new PlayerAI(board, aiLevel);
       this.game = new Game(board, p1, p2, playFirst, true);
-      this.makePlayable(p1, this.game);
+      this.makePlayable(p1);
     }
     else {
       this.join(this.group, this.username, this.password, nPits, nSeeds);
@@ -215,7 +215,7 @@ class App {
         for (const key in sides) if (key != this.username) p2Name = key;
         let p2 = new PlayerHuman(p2Name);
         this.game = new Game(board, p1, p2, data.board.turn == this.username, false);
-        this.makePlayable(p1, this.game);
+        this.makePlayable(p1);
       }
       else if ('pit' in data) {
         /*let p1Badge = document.querySelector('#p1-badge');
@@ -235,15 +235,15 @@ class App {
 
   }
 
-  makePlayable(player, game) {
+  makePlayable(player) {
     const pits = document.querySelectorAll("#zone-p1 .pit-info .pit");
     let that = this;
     for(let i = 0; i < pits.length; i++)
       pits[i].addEventListener("click", function() {
-        if (game.hasBot) {
+        if (that.game.hasBot) {
           player.setNextMove(i);
-          game.playRound(0);
-          setTimeout(()=> {if (!game.running) that.endGame();}, 2500);
+          that.game.playRound(0);
+          setTimeout(()=> {if (that.game !== null && !that.game.running) that.endGame();}, 2500);
         }
         else {
           that.notify(that.username, that.password, that.gameHash, i);

@@ -62,7 +62,7 @@ class App {
   endGame(winner) {
     let win = this.game.endGame(winner);
     if (this.game.hasBot) {
-      this.localRanking.update(this.game.players[1].level, win==1);
+      this.localRanking.update(this.game.players[1].getLevel(), win==1);
       builidRankingTable(this.localRanking.ranks, "AI Level");
       this.ranking();
     }

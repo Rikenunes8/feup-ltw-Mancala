@@ -1,39 +1,47 @@
 class Player {
+  _name;
+  _score;
   constructor(name) {
-    this.name = name;
-    this.score = 0;
+    this._name = name;
+    this._score = 0;
   }
+  setName(name) {this._name = name;}
+  setScore(score) {this._score = score;}
+  getName() {return this._name;}
+  getScore() {return this._score;}
 }
 
 class PlayerHuman extends Player {
+  #nextMove;
   constructor(name="Unknown") {
     super(name);
-    this.nextMove = -1;
+    this.#nextMove = -1;
   }
-  setNextMove(n) {
-    this.nextMove = n;
-  }
+  setNextMove(n) { this.#nextMove = n;}
   play() {
-    let choice = this.nextMove;
-    this.nextMove = -1;
+    const choice = this.#nextMove;
+    this.#nextMove = -1;
     return choice;
   }
 }
 
 class PlayerAI extends Player {
+  #level;
   constructor(board, level, name="Bot") {
     super(name);
     this.board = board
-    this.level = level;
+    this.#level = level;
   }
+  getLevel() {return this.#level;}
+
   play() {
-    if (this.level == 1) {
+    if (this.#level == 1) {
       return Math.floor(Math.random() * this.board.nPits);
     }
-    else if (this.level == 2) {
+    else if (this.#level == 2) {
       return this.currentBestMove();
     }
-    else if (this.level == 3) {
+    else if (this.#level == 3) {
       return this.bestMove();
     }
   }

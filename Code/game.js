@@ -72,7 +72,7 @@ class Game {
         return 0;
       }
       else setMessage(winner + " WON");
-      if (winner == this.players[0].name) return 1;
+      if (winner == this.getPlayerName(0)) return 1;
       else return -1;
     }
     else {
@@ -95,14 +95,14 @@ class Game {
   }
 
   updatePlayersScores() {
-    this.players[0].score = this.board.store1.nSeeds;
-    this.players[1].score = this.board.store2.nSeeds;
+    this.players[0].setScore(this.board.store1.nSeeds);
+    this.players[1].setScore(this.board.store2.nSeeds);
   }
 
   getPlayerName(player) {
-    return this.players[player].name;
+    return this.players[player].getName();
   }
   getPlayerScore(player) {
-    return this.players[player].score;
+    return this.players[player].getScore();
   }
 }

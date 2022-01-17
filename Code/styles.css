@@ -241,7 +241,7 @@ section button:disabled {
 /* Settings Window */
 #settings-window {
   max-width: 30vw;
-  min-width: 20em;
+  min-width: 20.5em;
 }
 #settings-window .window-content .field input {
   line-height: 2em;
@@ -271,7 +271,7 @@ table tr td:nth-child(2) {
 /* Login Window */
 #login-window {
   max-width: 20vw;
-  min-width: 12em;
+  min-width: 15em;
 }
 #login-window .window-content .field {
   position: relative;

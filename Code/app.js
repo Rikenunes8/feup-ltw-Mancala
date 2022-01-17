@@ -20,6 +20,7 @@ class App {
     this.eventSource = null;
 
     setMessage("Please login, set your game and press START");
+    updateBoardInfo(null);
     const nPits = document.querySelector("#n_p input").value;
     new BoardReal(0, nPits);
   }
@@ -229,12 +230,6 @@ class App {
         this.makePlayable(p1);
       }
       else if ('pit' in data) {
-        /*let p1Badge = document.querySelector('#p1-badge');
-        let p2Badge = document.querySelector('#p2-badge');
-        const p1Name = this.game.players[0].name;
-        const p2Name = this.game.players[1].name;
-        p1Badge.innerHTML = p1Name + ': ' + data.board.sides[p1Name].store;
-        p2Badge.innerHTML = p2Name + ': ' + data.board.sides[p2Name].store;*/
         this.game.players[this.game.turn].setNextMove(data.pit);
         this.game.playRound(this.game.turn);
       }
@@ -303,9 +298,30 @@ function builidRankingTable(tableData, label) {
   }
 }
 
-function setMessage(str) {
+function setMessage(msg) {
   let messagesBox = document.querySelector("#message_box span");
-  messagesBox.innerHTML = str;
+  messagesBox.innerHTML = msg;
+}
+
+function updateBoardInfo(players) {
+  const name1 = document.querySelector("#p1-badge div:first-child b");
+  const name2 = document.querySelector("#p2-badge div:first-child b");
+  const score1 = document.querySelector("#p1-badge div:last-child");
+  const score2 = document.querySelector("#p2-badge div:last-child");
+  if (players === null) {
+    name1.innerHTML = 'Player 1';
+    name2.innerHTML = 'Player 2';
+    score1.innerHTML = 'Score: 0';
+    score2.innerHTML = 'Score: 0';
+  } else {
+    const p1 = players[0];
+    const p2 = players[1];
+    name1.innerHTML = p1.getName();
+    name2.innerHTML = p2.getName();
+    score1.innerHTML = 'Score: ' + p1.getScore();
+    score2.innerHTML = 'Score: ' + p2.getScore();
+  }
+
 }
 
 window.addEventListener("load", function() {

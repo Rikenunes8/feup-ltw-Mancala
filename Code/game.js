@@ -7,18 +7,22 @@ class Game {
     this.hasBot = hasBot;
 
     setMessage("Turn of " + this.getPlayerName(this.turn));
+    updateBoardInfo(this.players);
     if (!playFirst && this.hasBot)
-      setTimeout(()=> {while (this.play(1));}, 100);
+      setTimeout(()=> {while (this.play(1));updateBoardInfo(this.players);}, 100);
   }
 
   playRound(player) {
     this.play(player++);
     if (this.hasBot) {
-      setTimeout(()=> {while (this.play(player%2));this.updatePlayersScores();}, 2000);
+      setTimeout(()=> {
+        while (this.play(player%2));
+        this.updatePlayersScores();
+        updateBoardInfo(this.players);
+      }, 2000);
     }
-    else {
-      this.updatePlayersScores();
-    }
+    this.updatePlayersScores();
+    updateBoardInfo(this.players);
   }
 
   play(player) {
@@ -71,7 +75,10 @@ class Game {
         setMessage("TIE");
         return 0;
       }
-      else setMessage(winner + " WON");
+      else {
+        setMessage(winner + " WON");
+      }
+
       if (winner == this.getPlayerName(0)) return 1;
       else return -1;
     }

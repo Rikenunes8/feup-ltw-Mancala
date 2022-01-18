@@ -12,21 +12,17 @@ module.exports.login = function(request, response) {
   request.on('end', () => {
     try {
       json = JSON.parse(data);
-      let required = {'nick':null, 'pass':null};
-
-      if (data == '{}') json.empty = null;
-      for (const key in json) {
-        if (!(key in required)) {
-          endResponseWithError(response, 400, "Unexpected parameters on JSON request");
-          return;
-        }
-        else {
-          delete required[key];
-        }
+      if (!'nick' in json) {
+        endResponseWithError(response, 400, "nick is undefined");
+        return;
+      }
+      if (!'password' in json) {
+        endResponseWithError(response, 400, "password is undefined");
+        return;
       }
 
       const nick = json['nick'];
-      const pass = json['pass'];
+      const pass = json['password'];
 
       fs.readFile(file, encoding, (err, data) => {
         if (!err) {
@@ -55,11 +51,11 @@ module.exports.login = function(request, response) {
       });
     }
     catch(err) {
-      endResponseWithError(response, 400, err.message);
+      endResponseWithError(response, 400, "Error parsing JSON request: " + err.message);
     }
   });
   request.on('error', () => {
-    endResponseWithError(response, 400, err.message);
+    endResponseWithError(response, 400, "Error parsing JSON request: " + err.message);
   });
 }
 

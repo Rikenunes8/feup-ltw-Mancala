@@ -1,8 +1,9 @@
 const fs = require('fs');
-const rankingFile = "ranking.json";
-// const mediaType = getMediaType(pathname);
-// const encoding = isText(mediaType) ? "utf8" : null;
+const {endResponse, endResponseWithError} = require('./utils.js');
+
+const file = "ranking.json";
 const encoding = "utf8";
+
 
 
 
@@ -12,29 +13,31 @@ module.exports.get = function(request, response) {
   request.on('data', (chunk) => { data += chunk; })
   request.on('end', () => {
     try {
+      /*
       if (data != '{}') {
         endResponseWithError(response, 400, "Unexpected parameters on JSON request");
+        return;
       }
-      else {
-        fs.readFile(rankingFile, encoding, (err, data) => {
-          if (!err) {
-            const obj = JSON.parse(data.toString());
-            const ranking = sortRanking(obj.ranking);
-            const top10 = { "ranking": ranking.slice(0, 10) };
-            endResponse(response, 200, top10)
-          }
-          else {
-            endResponseWithError(response, 500, "Unable to read ranking json file");
-          }
-        });
-      }
+      */
+      
+      fs.readFile(file, encoding, (err, data) => {
+        if (!err) {
+          const obj = JSON.parse(data.toString());
+          const ranking = sortRanking(obj.ranking);
+          const top10 = { "ranking": ranking.slice(0, 10) };
+          endResponse(response, 200, top10)
+        }
+        else {
+          endResponseWithError(response, 500, "Unable to read ranking json file");
+        }
+      });
     }
     catch(err) {
-      endResponseWithError(response, 400, err.message);
+      endResponseWithError(response, 400, "Error parsing JSON request: " + err.message);
     }
   });
   request.on('error', () => {
-    endResponseWithError(response, 400, err.message);
+    endResponseWithError(response, 400, "Error parsing JSON request: " + err.message);
   });
 }
 
@@ -47,16 +50,4 @@ function sortRanking(ranking) {
     else return a.nick > b.nick;
   })
   return ranking;
-}
-
-function endResponse(response, status, obj) {
-  response.writeHead(status);
-  response.write(JSON.stringify(obj));
-  response.end();
-}
-
-function endResponseWithError(response, status, message) {
-  response.writeHead(status);
-  response.write(JSON.stringify({'error': message}));
-  response.end();
 }

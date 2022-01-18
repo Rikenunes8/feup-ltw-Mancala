@@ -5,7 +5,8 @@ const fs      = require('fs');
 const conf    = require('./conf.js');
 const ranking = require('./ranking.js');
 const register = require('./register.js');
-const join = require('./join.js'); 
+const join    = require('./join.js'); 
+const leave   = require('./leave.js');
 
 
 
@@ -39,6 +40,7 @@ function doPostRequest(request, response) {
     case '/notify':
       break;
     case '/leave':
+      leave.leave(request, response);
       break;
     default:
       response.writeHead(404);

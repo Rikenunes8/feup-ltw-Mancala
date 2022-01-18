@@ -31,6 +31,12 @@ function doPostRequest(request, response) {
     case '/register':
       register.login(request, response);
       break;
+    case '/join':
+      break;
+    case '/notify':
+      break;
+    case '/leave':
+      break;
     default:
       response.writeHead(404);
       response.end();

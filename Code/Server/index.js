@@ -4,7 +4,9 @@ const url     = require('url');
 const fs      = require('fs');
 const conf    = require('./conf.js');
 const ranking = require('./ranking.js');
-const register = require('./register.js'); 
+const register = require('./register.js');
+const join = require('./join.js'); 
+
 
 
 const headers = {
@@ -32,6 +34,7 @@ function doPostRequest(request, response) {
       register.login(request, response);
       break;
     case '/join':
+      join.join(request, response);
       break;
     case '/notify':
       break;

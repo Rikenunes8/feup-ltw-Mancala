@@ -1,5 +1,5 @@
 const fs = require('fs');
-const {endResponse, endResponseWithError} = require('./utils.js');
+const {endResponse, endResponseWithError, setHeaders} = require('./utils.js');
 
 const file = "ranking.json";
 const encoding = "utf8";
@@ -8,6 +8,7 @@ const encoding = "utf8";
 
 
 module.exports.get = function(request, response) {
+  setHeaders(response, 'plain');
   let data = '';
 
   request.on('data', (chunk) => { data += chunk; })

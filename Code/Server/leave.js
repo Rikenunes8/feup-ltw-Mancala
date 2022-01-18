@@ -1,12 +1,13 @@
 const fs = require('fs');
 const crypto = require('crypto');
-const {endResponse, endResponseWithError} = require('./utils.js');
+const {endResponse, endResponseWithError, setHeaders} = require('./utils.js');
 
 const gamesFile = "games.json";
 const registerFile = "register.json";
 const encoding = "utf8";
 
 module.exports.leave = function(request, response) {
+  setHeaders(response, 'plain');
   let data = '';
   let json = {};
 

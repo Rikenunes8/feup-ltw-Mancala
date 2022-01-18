@@ -7,22 +7,11 @@ const ranking = require('./ranking.js');
 const register = require('./register.js');
 const join    = require('./join.js'); 
 const leave   = require('./leave.js');
+const notify  = require('./notify.js');
+const update  = require('./update.js');
 
+const {endResponse, endResponseWithError} = require('./utils.js');
 
-
-const headers = {
-  plain: {
-      'Content-Type': 'application/javascript',
-      'Cache-Control': 'no-cache',
-      'Access-Control-Allow-Origin': '*'        
-  },
-  sse: {    
-      'Content-Type': 'text/event-stream',
-      'Cache-Control': 'no-cache',
-      'Access-Control-Allow-Origin': '*',
-      'Connection': 'keep-alive'
-  }
-};
 
 function doPostRequest(request, response) {
   const pathname = url.parse(request.url).pathname;
@@ -43,19 +32,32 @@ function doPostRequest(request, response) {
       leave.leave(request, response);
       break;
     default:
-      response.writeHead(404);
-      response.end();
+      endResponseWithError(404, "Unknown POST request");
     break;
   }
-
 }
+function doPostRequest(request, response) {
+  const pathname = url.parse(request.url).pathname;
 
+  switch(pathname) {
+    case '/update':
+      update.remember(response);
+      request.on('close', () => update.forget(response));
+      setImmediate(() => update.update(counter.get()));
+      break;
+    default:
+      endResponseWithError(404, "Unknown POST request");
+    break;
+  }
+}
 
 const server = http.createServer( (request, response) => {
   switch(request.method) {
     case 'POST':
       doPostRequest(request, response);
       break;
+    case 'GET':
+      doGetRequest(request, response);
     default:
       response.writeHead(500); // 501 Not Implemented
       response.end();    

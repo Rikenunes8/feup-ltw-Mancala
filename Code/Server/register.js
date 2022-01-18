@@ -1,10 +1,11 @@
 const fs = require('fs');
-const {endResponse, endResponseWithError} = require('./utils.js');
+const {endResponse, endResponseWithError, setHeaders} = require('./utils.js');
 
 const file = "register.json";
 const encoding = "utf8";
 
 module.exports.login = function(request, response) {
+  setHeaders(response, 'plain');
   let data = '';
   let json = {};
 

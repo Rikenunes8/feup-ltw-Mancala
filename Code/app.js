@@ -73,7 +73,7 @@ class App {
     const win = this.game.endGame(winner);
     if (this.game.hasBot) {
       this.localRanking.update(this.game.players[1].getLevel(), win==1);
-      builidRankingTable(this.localRanking.ranks, "AI Level");
+      builidRankingTable(this.localRanking.ranks, true);
     }
     else {
       this.ranking();
@@ -91,7 +91,7 @@ class App {
       body: "{}"
     })
     .then(response => response.json())
-    .then(json => builidRankingTable(json, "Nick"))
+    .then(json => builidRankingTable(json, false))
     .catch(console.log);
   }
 
@@ -265,8 +265,17 @@ class App {
 }
 
 
-function builidRankingTable(tableData, label) {
-  let table = document.querySelector("#ranking-window .table");
+function builidRankingTable(tableData, isLocal) {
+  let label; let tableClass;
+  if (isLocal) {
+    label = "AI Level";
+    tableClass = 'table-local';
+  }
+  else {
+    label = "Nick";
+    tableClass = 'table-remote';
+  }
+  let table = document.querySelector("#ranking-window ."+tableClass);
   table.innerHTML = "";
 
   let tableHeader = document.createElement('div');
@@ -328,4 +337,5 @@ window.addEventListener("load", function() {
   const app = new App();
   initButtons(app);
   app.ranking();
+  builidRankingTable(app.localRanking.ranks, true);
 });

@@ -5,6 +5,7 @@ function initButtons(app) {
   const help = document.querySelector("#btn-help");
   const settings = document.querySelector("#btn-settings");
   const ranking = document.querySelector("#btn-ranking");
+  const switch_rank = document.querySelector("#switch-ranking");
   const start = document.querySelector("#btn-start");
   const stop = document.querySelector("#btn-stop");
   lockButton(stop);
@@ -15,6 +16,7 @@ function initButtons(app) {
   logout.addEventListener("click", function() { makeLogout(app, stop);});
   login.addEventListener("click", function() {buttonPressed("#btn-login", "#login-window");});
   submit_login.addEventListener("click", function () {makeLogin(app);});
+  switch_rank.addEventListener("click", function () {switchRanking();})
   help.addEventListener("click", function() {buttonPressed("#btn-help", "#help-window");});
   settings.addEventListener("click", function() {buttonPressed("#btn-settings", "#settings-window");});
   ranking.addEventListener("click", function() {buttonPressed("#btn-ranking", "#ranking-window");});
@@ -49,6 +51,29 @@ function makeLogout(app, stop) {
   for (const elem of elems_notlog) {
     elem.classList.remove('d-none');
     elem.classList.add('d-block');
+  }
+}
+
+function switchRanking() {
+  const rankingWindow = document.querySelector("#ranking-window");
+  const tables = rankingWindow.querySelectorAll(".container div.table");
+  for (const table of tables) {
+    if (table.classList.contains('d-none')) {
+      table.classList.remove('d-none');
+      const title = rankingWindow.querySelector("div.window-title");
+      const but = rankingWindow.querySelector("div.field div.submit");
+      if (table.classList.contains('table-local')) {
+        title.innerHTML = "Local Ranking";
+        but.innerHTML = "Switch to Remote";
+      }
+      else {
+        title.innerHTML = "Remote Ranking";
+        but.innerHTML = "Switch to Local";
+      }
+    }
+    else {
+      table.classList.add('d-none');
+    }
   }
 }
 

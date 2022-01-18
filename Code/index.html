@@ -122,9 +122,16 @@
       </div>
 
       <div class="window" id="ranking-window">
-        <div class="window-title">Ranking</div>
-        <div class = "container window-content">
-          <div class = "table">
+        <div class="window-title">Remote Ranking</div>
+        <div class = "window-content">
+          <div class="container">
+            <div class=" table table-local d-none">
+            </div>
+            <div class="table table-remote">
+            </div>
+          </div>
+          <div class="field" id="switch-ranking">
+            <div class="submit">Switch to Local</div>
           </div>
         </div>
       </div>
@@ -137,40 +144,40 @@
 
           <p><strong>Set Up:</strong> After selecting the number of pits and seeds per pit, the board is placed that number of 
           seeds in each of the number of pits on your side of the game board. The opponent's
-          side does the same.</p>
+          side does the same. The board has 2 stores, 1 for each player.</p>
 
           <p><strong>Playing:</strong>
             <ul>
               <li><em>Rules:</em> 
                 <ul>
-                  <li> Play always moves around the board in a counter-clockwise circle (to the right) </li>
-                  <li> The store on your right belongs to you. That is where you keep the seeds you win.</li>
-                  <li> The six pits near you are your pits.</li>
-                  <li> Only use one hand to pick up and put down seeds.</li>
-                  <li> Once you touch the seeds in a pit, you must move those seeds.</li>
-                  <li> Only put seeds in your own store, not your opponent’s store.</li>
+                  <li>During set up, the stores remain empty. </li>
+                  <li>The rest of the cavities are filled with the same number of pieces, which can be defined in the configurations menu.</li>
+                  <li>The store to the player's right is his store. The other belongs to the adversary. </li>
+                  <li>Each player only controls the cavities on his side of the board, as well as his store. </li>
+                  <li>Each piece is called a seed. </li>
                 </ul>
               </li>
               <li> <em>Game Turn:</em>
                 <p>On a turn, a player picks up all the seeds in one pit and “sows” them to the right, placing one
-                seed in each of the pits along the way. If you come to your store, then add a seed to your store
-                and continue. You may end up putting seeds in your opponent’s pits along the way.
+                seed in each of the pits along the way. If you arrive at your store, then add a seed to your store
+                and continue through the opponents cavities. Should you arrive on the opponent's store, skip it and 
+                continue forth to your own side of the board.
                 Play alternates back and forth, with opponents picking up the seeds in one of their pits and
                 distributing them one at a time into the pits on the right, beginning in the pit immediately to the
                 right.</p>
               </li>
               <li><em>Special Rules:</em>
                 <ul>
-                  <li>When the last seed in your hand lands in your store, take another turn.</li>
-                  <li>When the last seed in your hand lands in one of your own pits, if that pit had been empty you
-                      get to keep all of the seeds in your opponents pit on the opposite side. Put those captured seeds,
+                  <li>If the last seed in your hand lands in your store, take another turn.</li>
+                  <li>If the last seed in your hand lands in one of your own pits and that pit was previously empty, you
+                      "reap" all of the seeds on the opposite side's pit. Put those captured seeds,
                       as well as the last seed that you just played on your side, into the store.</li>
                 </ul>
               </li>
               <li><em>Game ending conditions:</em>
-                <p>The game is over when one player’s pits are completely empty. The other player takes the seeds
-                  remaining in her pits and puts those seeds in her store. Count up the seeds. Whoever has the most
-                  seeds wins.</p>
+                <p>The game ends when one of the players becomes unable to play due to the pits on his side being completely empty. 
+                  The other player takes the remaining seeds in his pits and puts them in his store. 
+                  Count up the seeds on each side. Whoever has the most wins.</p>
               </li>
             </ul>
             

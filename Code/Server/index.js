@@ -7,10 +7,11 @@ const ranking = require('./ranking.js');
 const register = require('./register.js');
 const join    = require('./join.js'); 
 const leave   = require('./leave.js');
-//const notify  = require('./notify.js');
+const notify  = require('./notify.js');
+const model   = require('./model.js');
 //const update  = require('./update.js');
 
-const {endResponse, endResponseWithError} = require('./utils.js');
+const {endResponse, endResponseWithError, setHeaders} = require('./utils.js');
 
 
 function doPostRequest(request, response) {
@@ -27,6 +28,8 @@ function doPostRequest(request, response) {
       join.join(request, response);
       break;
     case '/notify':
+      console.log("calling notify");
+      notify.notify(request, response);
       break;
     case '/leave':
       leave.leave(request, response);
@@ -37,16 +40,22 @@ function doPostRequest(request, response) {
   }
 }
 function doGetRequest(request, response) {
-  const pathname = url.parse(request.url).pathname;
+  const purl = url.parse(request.url)
+  const pathname = purl.pathname;
+  const query = purl.query;
 
   switch(pathname) {
+    case '/state':
+      console.log(model.get());
+      endResponse(response, 200, {});
+      break;
     case '/update':
       /*update.remember(response);
       request.on('close', () => update.forget(response));
       setImmediate(() => update.update(counter.get()));
       break;*/
     default:
-      endResponseWithError(response, 404, "Unknown POST request");
+      endResponseWithError(response, 404, "Unknown GET request");
     break;
   }
 }

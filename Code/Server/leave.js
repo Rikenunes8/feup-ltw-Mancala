@@ -1,5 +1,5 @@
 const fs = require('fs');
-const crypto = require('crypto');
+const model = require('./model.js');
 const {endResponse, endResponseWithError, setHeaders} = require('./utils.js');
 
 const gamesFile = "games.json";
@@ -35,25 +35,11 @@ module.exports.leave = function(request, response) {
           if (!registered || pass != registers[nick]) {
             endResponseWithError(response, 401, "User registered with a different password");
           }
+          else if (model.removeGame(json['game'])) {
+            endResponse(response, 200, {});
+          }
           else {
-            fs.readFile(gamesFile, encoding, (err, data) => {
-              if (!err) {
-                const games = JSON.parse(data);
-                if (! (json['game'] in games)) {
-                  endResponseWithError(response, 400, "Not a valid game");
-                }
-                else {
-                  delete games[json['game']];
-                  fs.writeFile(gamesFile, JSON.stringify(games), (err) => {
-                    if (!err) endResponse(response, 200, {});
-                    else endResponseWithError(response, 500, "Unable to write register json file");
-                  });
-                }
-              }
-              else {
-                endResponseWithError(response, 500, "Unable to read games json file");
-              }
-            });
+            endResponseWithError(response, 400, "Not a valid game");
           }
         }
         else {

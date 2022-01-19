@@ -1,8 +1,7 @@
 const fs = require('fs');
-const crypto = require('crypto');
+const model = require('./model.js');
 const {endResponse, endResponseWithError, setHeaders} = require('./utils.js');
 
-const gamesFile = "games.json";
 const registerFile = "register.json";
 const encoding = "utf8";
 
@@ -44,7 +43,8 @@ module.exports.join = function(request, response) {
               endResponseWithError(response, 400, "Invalid initial: " + json["initial"]);
               return;
             }
-            createGame(response, json, 0);
+            hash = model.joinGame(nick, json['size'], json['initial'], json['group'], 0);
+            endResponse(response, 200, { "game":hash });
           }
         }
         else {
@@ -58,67 +58,6 @@ module.exports.join = function(request, response) {
   });
   request.on('error', () => {
     endResponseWithError(response, 400, "Error parsing JSON request: " + err.message);
-  });
-}
-
-
-
-function createGame(response, json, count) {
-  const nick = json['nick'];
-  const d = Math.floor(Date.now() / 100000);
-  const value = json["group"] + '_' + json["size"] + '_' + d + '_' + json["initial"] + '_' + count;
-  const hash = crypto.createHash('md5').update(value).digest('hex');
-
-  fs.readFile(gamesFile, encoding, (err, data) => {
-    if (!err) { 
-      const games = JSON.parse(data);
-      const pits = new Array(json['size']).fill(json['initial']);
-      
-      if (!(hash in games)) {
-        games[hash] = {
-            "board": {
-              "sides": { 
-                [nick]: { 
-                  "pits": pits, 
-                  "store":0 
-                } 
-              }, 
-              "turn": nick
-            }, 
-            "stores": { 
-              [nick]: 0
-            }
-          }
-
-        fs.writeFile(gamesFile, JSON.stringify(games), (err) => {
-          if (!err) endResponse(response, 200, { "game":hash });
-          else endResponseWithError(response, 500, "Unable to write games json file");
-        });
-      }
-      else if (Object.keys(games[hash].board.sides).length == 1) {
-        if (nick in games[hash].board.sides) {
-          endResponse(response, 200, { "game":hash });
-        }
-        else {
-          games[hash].board.sides[nick] = { 
-            "pits":pits, 
-            "store":0 
-          };
-          games[hash].stores[nick] = 0;
-
-          fs.writeFile(gamesFile, JSON.stringify(games), (err) => {
-            if (!err) endResponse(response, 200, { "game":hash });
-            else endResponseWithError(response, 500, "Unable to write games json file");
-          });
-        }
-      }
-      else {
-        createGame(response, json, count+1);
-      }
-    }
-    else {
-      endResponseWithError(response, 500, "Unable to read games json file");
-    }
   });
 }
 

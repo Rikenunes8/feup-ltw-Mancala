@@ -13,8 +13,8 @@ const headers = {
 };
 
 function setHeaders(response, type) {
-  const heads = headers[type]
-  for (const head of heads) {
+  const heads = headers[type];
+  for (const head in heads) {
     response.setHeader(head, heads[head]);
   }
 }

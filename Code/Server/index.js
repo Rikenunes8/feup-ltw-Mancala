@@ -7,8 +7,8 @@ const ranking = require('./ranking.js');
 const register = require('./register.js');
 const join    = require('./join.js'); 
 const leave   = require('./leave.js');
-const notify  = require('./notify.js');
-const update  = require('./update.js');
+//const notify  = require('./notify.js');
+//const update  = require('./update.js');
 
 const {endResponse, endResponseWithError} = require('./utils.js');
 
@@ -32,21 +32,21 @@ function doPostRequest(request, response) {
       leave.leave(request, response);
       break;
     default:
-      endResponseWithError(404, "Unknown POST request");
+      endResponseWithError(response, 404, "Unknown POST request");
     break;
   }
 }
-function doPostRequest(request, response) {
+function doGetRequest(request, response) {
   const pathname = url.parse(request.url).pathname;
 
   switch(pathname) {
     case '/update':
-      update.remember(response);
+      /*update.remember(response);
       request.on('close', () => update.forget(response));
       setImmediate(() => update.update(counter.get()));
-      break;
+      break;*/
     default:
-      endResponseWithError(404, "Unknown POST request");
+      endResponseWithError(response, 404, "Unknown POST request");
     break;
   }
 }
@@ -58,6 +58,7 @@ const server = http.createServer( (request, response) => {
       break;
     case 'GET':
       doGetRequest(request, response);
+      break;
     default:
       response.writeHead(500); // 501 Not Implemented
       response.end();    

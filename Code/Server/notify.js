@@ -1,5 +1,6 @@
 const fs = require('fs');
 const model = require('./model.js');
+const update = require('./update.js');
 const {endResponse, endResponseWithError, setHeaders} = require('./utils.js');
 
 const registerFile = "register.json";
@@ -9,12 +10,11 @@ module.exports.notify = function(request, response) {
   setHeaders(response, 'plain');
   let data = '';
   let json = {};
-  console.log("inside");
+
   request.on('data', (chunk) => { data += chunk; });
   request.on('end', () => {
     try {
       json = JSON.parse(data);
-      console.log(json)
       if (!'nick' in json) {
         endResponseWithError(response, 401, "nick is undefined");
         return;
@@ -28,7 +28,7 @@ module.exports.notify = function(request, response) {
       const pass = json['password'];
       const game = json['game'];
       const move = json['move'];
-      console.log("before reading")
+
       fs.readFile(registerFile, encoding, (err, data) => {
         if (!err) {
           const registers = JSON.parse(data);
@@ -38,7 +38,6 @@ module.exports.notify = function(request, response) {
             endResponseWithError(response, 401, "User registered with a different password");
           }
           else {
-            console.log("else")
             if (!model.hasGame(game)) {
               endResponseWithError(response, 400, "No game found with id:"+game);
             }
@@ -55,12 +54,12 @@ module.exports.notify = function(request, response) {
               endResponseWithError(response, 400, "invalid start position: "+move);
             }
             else {
-              console.log("double else")
               if (!model.play(game, move)) {
                 endResponseWithError(response, 400, "invalid empty pit: "+move);
               }
               else {
                 endResponse(response, 200, {});
+                update.update(game);
               }
             }
           }

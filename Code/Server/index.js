@@ -9,7 +9,7 @@ const join    = require('./join.js');
 const leave   = require('./leave.js');
 const notify  = require('./notify.js');
 const model   = require('./model.js');
-//const update  = require('./update.js');
+const update  = require('./update.js');
 
 const {endResponse, endResponseWithError, setHeaders} = require('./utils.js');
 
@@ -40,20 +40,19 @@ function doPostRequest(request, response) {
   }
 }
 function doGetRequest(request, response) {
-  const purl = url.parse(request.url)
-  const pathname = purl.pathname;
-  const query = purl.query;
-
+  const pathname = url.parse(request.url).pathname;
+  const query = url.parse(request.url, true).query;
+  
   switch(pathname) {
     case '/state':
       console.log(model.get());
       endResponse(response, 200, {});
       break;
     case '/update':
-      /*update.remember(response);
-      request.on('close', () => update.forget(response));
-      setImmediate(() => update.update(counter.get()));
-      break;*/
+      update.remember(response, query.game, query.nick);
+      request.on('close', () => update.forget(response, query.game, query.nick));
+      setImmediate(() => update.update(query.game));
+      break;
     default:
       endResponseWithError(response, 404, "Unknown GET request");
     break;

@@ -1,6 +1,6 @@
 class App {
   constructor() {
-    //this.server = "http://twserver.alunos.dcc.fc.up.pt:8008/";
+    // this.server = "http://twserver.alunos.dcc.fc.up.pt:8008/";
     this.server = "http://localhost:8915/";
     this.group = '15';
     this.localRanking = new RankingLocal();

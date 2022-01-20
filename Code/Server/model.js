@@ -77,29 +77,21 @@ function inSide(hash, move) {
 
 function play(hash, move) {
   let game = games[hash];
-  console.log(game);
   const p1 = game.players[0];
-  console.log(p1)
   const p2 = game.players[1];
-  console.log(p2)
   const player = p1 === game.game.board.turn? 0 : 1;
-  console.log(player)
 
   let sides = game.game.board.sides;
-  console.log(sides);
   if (sides[game.game.board.turn][move] == 0) {
     return false;
   }
-  console.log("bef merge")
   let board = mergeHoles(sides[p1].pits, sides[p2].pits, sides[p1].store, sides[p2].store)
-  console.log("aft merge")
-  console.log(board);
+  console.log(board, player)
   const next = sow(board, player, move);
-  console.log(next)
-  console.log("after sow")
-  console.log(board)
+  console.log(board, next)
+
   const arr = unmergeHoles(board, game.size);
-  console.log(arr)
+
   sides[p1].pits = arr[0];
   sides[p2].pits = arr[1];
   sides[p1].store = arr[2];
@@ -124,19 +116,9 @@ function mergeHoles(pits1, pits2, store1, store2) {
 function unmergeHoles(holes, size1) {
   const size = parseInt(size1);
   const pits1 = holes.slice(0, size);
-  console.log(pits1)
-  console.log(holes)
-  console.log("Size:", size, " End:", 2*size+1);
-  console.log(holes.slice(6, 13))
   const pits2 = holes.slice(size+1, 2*size+1);
-  console.log(pits2)
-  console.log(holes)
   const store1 = holes[size];
-  console.log(store1)
-  console.log(holes)
   const store2 = holes[2*size+1];
-  console.log(store2)
-  console.log(holes)
   return [pits1, pits2, store1, store2];
 }
 
@@ -153,13 +135,13 @@ function sow(board, player, pit) {
   
   i = (i+1) % size;
   while (seeds != 0) {
-    console.log(board);
+    console.log("while", board);
     if (i == storeOf[opponent]) i = (i+1) % size;
     board[i]++;
     i = (i+1) % size;
     seeds--;
   }
-  console.log(board)
+  console.log("Out", board)
   i = (i-1 + size) % size;
   if (i == storeOf[player]) {
     console.log("repeat")
@@ -172,7 +154,7 @@ function sow(board, player, pit) {
     board[2*side - i] = 0;
     console.log("collected oposite")
   }
-  console.log(board)
+  console.log("Ending", board, "next: ", (player+1) % 2)
   return (player+1) % 2;
 }
 
@@ -186,5 +168,8 @@ function get() {
   return games;
 }
 
+function getGame(hash) {
+  return games[hash];
+}
 
-module.exports = {joinGame, removeGame, hasGame, isTurn, inSide, play, get};
+module.exports = {joinGame, removeGame, hasGame, isTurn, inSide, play, get, getGame};

@@ -89,6 +89,20 @@ function play(hash, move) {
   console.log(board, player)
   const next = sow(board, player, move);
   console.log(board, next)
+  
+  console.log(board, next, game.size)
+  if (checkEndGame(board, next, game.size)) {
+    collectAllSeeds(board, game.size);
+    if (sides[p1].store > sides[p2].store) {
+      game.game["winner"] = p1;
+    }
+    else if (sides[p1].store < sides[p2].store) {
+      game.game["winner"] = p2;
+    }
+    else {
+      game.game["winner"] = null;
+    }
+  }
 
   const arr = unmergeHoles(board, game.size);
 
@@ -99,6 +113,7 @@ function play(hash, move) {
   game.game.pit = move;
   game.game.board.turn = game.players[next];
 
+
   return true;
 }
 
@@ -107,7 +122,7 @@ function mergeHoles(pits1, pits2, store1, store2) {
   for (const pit of pits1) 
     board.push(pit);
   board.push(store1);
-  for (const pit of pits2.reverse()) 
+  for (const pit of pits2) 
     board.push(pit);
   board.push(store2);
   return board;
@@ -127,7 +142,6 @@ function sow(board, player, pit) {
   const side = (size/2)-1;
   const storeOf = [ (size/2)-1, size-1 ];
   const opponent = (player+1)%2;
-  console.log(size, side, storeOf, opponent);
 
   let i = (player*(size/2) + pit) % size;
   let seeds = board[i]; board[i] = 0;
@@ -135,16 +149,13 @@ function sow(board, player, pit) {
   
   i = (i+1) % size;
   while (seeds != 0) {
-    console.log("while", board);
     if (i == storeOf[opponent]) i = (i+1) % size;
     board[i]++;
     i = (i+1) % size;
     seeds--;
   }
-  console.log("Out", board)
   i = (i-1 + size) % size;
   if (i == storeOf[player]) {
-    console.log("repeat")
     return player;
   }
   else if (Math.floor(i/(size/2)) == player && board[i] == 1) {
@@ -152,11 +163,42 @@ function sow(board, player, pit) {
     board[i] = 0;
     board[storeOf[player]] += board[2*side - i]; 
     board[2*side - i] = 0;
-    console.log("collected oposite")
   }
-  console.log("Ending", board, "next: ", (player+1) % 2)
   return (player+1) % 2;
 }
+
+function checkEndGame(board, next, side) {
+  let endGame = false;
+  if(!anyMove(board, next, side)) {
+    endGame = true;
+  }
+  return endGame;
+}
+
+function anyMove(board, player, side1) {
+  const side = parseInt(side1);
+  for (let i = 0; i < side; i++) {
+    console.log(player*(side+1)+i)
+    console.log(board[player*(side+1)+i])
+    if (board[player*(side+1)+i] > 0)
+      return true;
+  }
+  return false;
+}
+
+function collectAllSeeds(side) {
+  const size = side+1;
+  for (let p = 0; p < 2; p++) {
+    const storeIndex = (p+1)*size - 1;
+    for (let i = 0; i < side; i++) {
+      board[storeIndex] += board[p*size + i];
+      board[p*size + i] = 0;
+    }
+  }
+}
+
+
+
 
 function get() {
   for (const game in games) {

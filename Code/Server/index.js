@@ -28,7 +28,6 @@ function doPostRequest(request, response) {
       join.join(request, response);
       break;
     case '/notify':
-      console.log("calling notify");
       notify.notify(request, response);
       break;
     case '/leave':
@@ -48,9 +47,13 @@ function doGetRequest(request, response) {
       console.log(model.get());
       endResponse(response, 200, {});
       break;
+    case '/responses':
+      console.log(update.get());
+      endResponse(response, 200, {});
+      break;
     case '/update':
       update.remember(response, query.game, query.nick);
-      request.on('close', () => update.forget(response, query.game, query.nick));
+      request.on('close', () => update.forget(query.game, query.nick));
       setImmediate(() => update.update(query.game));
       break;
     default:

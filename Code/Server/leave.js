@@ -1,5 +1,7 @@
 const fs = require('fs');
 const model = require('./model.js');
+const update = require('./update.js');
+
 const {endResponse, endResponseWithError, setHeaders} = require('./utils.js');
 
 const gamesFile = "games.json";
@@ -26,6 +28,7 @@ module.exports.leave = function(request, response) {
 
       const nick = json['nick'];
       const pass = json['password'];
+      const game = json['game'];
 
       fs.readFile(registerFile, encoding, (err, data) => {
         if (!err) {
@@ -35,7 +38,8 @@ module.exports.leave = function(request, response) {
           if (!registered || pass != registers[nick]) {
             endResponseWithError(response, 401, "User registered with a different password");
           }
-          else if (model.removeGame(json['game'])) {
+          else if (model.forceEndGame(game, nick)) {
+            update.update(game);
             endResponse(response, 200, {});
           }
           else {

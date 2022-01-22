@@ -86,18 +86,11 @@ function play(hash, move) {
     return false;
   }
   let board = mergeHoles(sides[p1].pits, sides[p2].pits, sides[p1].store, sides[p2].store)
-  console.log(board, player)
   const next = sow(board, player, move);
-  console.log(board, next)
 
   let endGame = false;
-  console.log(board, next, game.size)
   if (checkEndGame(board, next, game.size)) {
-    console.log("bef collected")
-    console.log(board)
     collectAllSeeds(board, game.size);
-    console.log("collected")
-    console.log(board)
     endGame = true;
   }
 
@@ -187,8 +180,6 @@ function checkEndGame(board, next, side) {
 function anyMove(board, player, side1) {
   const side = parseInt(side1);
   for (let i = 0; i < side; i++) {
-    console.log(player*(side+1)+i)
-    console.log(board[player*(side+1)+i])
     if (board[player*(side+1)+i] > 0)
       return true;
   }
@@ -206,7 +197,21 @@ function collectAllSeeds(board, side) {
   }
 }
 
-
+function forceEndGame(hash, nick) {
+  if (! (hash in games)) {
+    return false;
+  }
+  else {
+    let game = games[hash];
+    for (const name of game.players) {
+      if (name !== nick) {
+        game.game = {"winner": name}
+        break;
+      }
+    }
+    return true;
+  }
+}
 
 
 function get() {
@@ -223,4 +228,4 @@ function getGame(hash) {
   return games[hash];
 }
 
-module.exports = {joinGame, removeGame, hasGame, isTurn, inSide, play, get, getGame};
+module.exports = {joinGame, removeGame, hasGame, isTurn, inSide, play, forceEndGame, get, getGame};

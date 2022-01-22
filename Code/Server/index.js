@@ -53,7 +53,10 @@ function doGetRequest(request, response) {
       break;
     case '/update':
       update.remember(response, query.game, query.nick);
-      request.on('close', () => update.forget(query.game, query.nick));
+      request.on('close', () => { 
+        ranking.update(model.getGame(query.game)); 
+        update.forget(query.game, query.nick) 
+      });
       setImmediate(() => update.update(query.game));
       break;
     default:

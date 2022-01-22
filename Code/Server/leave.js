@@ -39,8 +39,8 @@ module.exports.leave = function(request, response) {
             endResponseWithError(response, 401, "User registered with a different password");
           }
           else if (model.forceEndGame(game, nick)) {
-            update.update(game);
             endResponse(response, 200, {});
+            update.update(game);
           }
           else {
             endResponseWithError(response, 400, "Not a valid game");

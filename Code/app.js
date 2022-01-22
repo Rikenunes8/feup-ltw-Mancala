@@ -71,13 +71,19 @@ class App {
     }
   }
   endGame(winner) {
-    const win = this.game.endGame(winner);
-    if (this.game.hasBot) {
-      this.localRanking.update(this.game.players[1].getLevel(), win==1);
-      builidRankingTable(this.localRanking.ranks, true);
+    console.log(this.game)
+    if (this.game !== null) {
+      const win = this.game.endGame(winner);
+      if (this.game.hasBot) {
+        this.localRanking.update(this.game.players[1].getLevel(), win==1);
+        builidRankingTable(this.localRanking.ranks, true);
+      }
+      else {
+        this.ranking();
+      }
     }
     else {
-      this.ranking();
+      setMessage("Please login, set your game and press START");
     }
     this.game = null;
 

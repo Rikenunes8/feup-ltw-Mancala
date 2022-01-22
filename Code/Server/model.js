@@ -203,6 +203,10 @@ function forceEndGame(hash, nick) {
   }
   else {
     let game = games[hash];
+    if (Object.keys(game.players).length == 1) {
+      game.game = {"winner": null}
+      return true;
+    }
     for (const name of game.players) {
       if (name !== nick) {
         game.game = {"winner": name}

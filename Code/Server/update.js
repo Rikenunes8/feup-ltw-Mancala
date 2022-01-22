@@ -1,4 +1,6 @@
 const model = require('./model.js');
+const ranking = require('./ranking.js');
+
 const {endResponse, endResponseWithError, setHeaders} = require('./utils.js');
 
 
@@ -31,6 +33,7 @@ module.exports.update = function(hash) {
   const gameState = model.getGame(hash);
   const game = gameState["game"];
   if (game === undefined) return;
+  if ("winner" in game) ranking.update(gameState);
   for(const response in resps) {
       resps[response].write('data: '+ JSON.stringify(game) +'\n\n');
   }

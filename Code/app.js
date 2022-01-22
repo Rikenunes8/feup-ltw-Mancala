@@ -71,7 +71,6 @@ class App {
     }
   }
   endGame(winner) {
-    console.log(this.game)
     if (this.game !== null) {
       const win = this.game.endGame(winner);
       if (this.game.hasBot) {

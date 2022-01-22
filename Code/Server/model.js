@@ -89,19 +89,16 @@ function play(hash, move) {
   console.log(board, player)
   const next = sow(board, player, move);
   console.log(board, next)
-  
+
+  let endGame = false;
   console.log(board, next, game.size)
   if (checkEndGame(board, next, game.size)) {
+    console.log("bef collected")
+    console.log(board)
     collectAllSeeds(board, game.size);
-    if (sides[p1].store > sides[p2].store) {
-      game.game["winner"] = p1;
-    }
-    else if (sides[p1].store < sides[p2].store) {
-      game.game["winner"] = p2;
-    }
-    else {
-      game.game["winner"] = null;
-    }
+    console.log("collected")
+    console.log(board)
+    endGame = true;
   }
 
   const arr = unmergeHoles(board, game.size);
@@ -112,6 +109,18 @@ function play(hash, move) {
   sides[p2].store = arr[3];
   game.game.pit = move;
   game.game.board.turn = game.players[next];
+
+  if (endGame) {
+    if (sides[p1].store > sides[p2].store) {
+      game.game["winner"] = p1;
+    }
+    else if (sides[p1].store < sides[p2].store) {
+      game.game["winner"] = p2;
+    }
+    else {
+      game.game["winner"] = null;
+    }
+  }
 
 
   return true;
@@ -186,8 +195,8 @@ function anyMove(board, player, side1) {
   return false;
 }
 
-function collectAllSeeds(side) {
-  const size = side+1;
+function collectAllSeeds(board, side) {
+  const size = parseInt(side)+1;
   for (let p = 0; p < 2; p++) {
     const storeIndex = (p+1)*size - 1;
     for (let i = 0; i < side; i++) {

@@ -30,11 +30,13 @@ class PlayerHuman extends Player {
 
 class PlayerAI extends Player {
   #level;
-  constructor(board, level, name="Bot") {
+  #depth;
+  constructor(board, level, depth, name="Bot") {
     super(name);
     this.board = board
     this.fakeBoard;
     this.#level = level;
+    this.#depth = level == 3? depth : 0;
   }
   getLevel() {return this.#level;}
 
@@ -50,7 +52,7 @@ class PlayerAI extends Player {
           choice = this.currentBestMove();
         }
         else if (this.#level == 3) {
-          choice = this.maximin(5, this.fakeBoard, game.turn, (game.turn+1)%2)[0];
+          choice = this.maximin(this.#depth, this.fakeBoard, game.turn, (game.turn+1)%2)[0];
         }
       }
       game.play(game.turn, choice);
@@ -61,10 +63,10 @@ class PlayerAI extends Player {
   currentBestMove() {
     let turn = 1;
     let lres = [];
-    for(let i = 0; i < this.board.nPits; i++) {
-      let boardFake = new BoardFake(this.board);
-      let nextTurn = boardFake.sow(1, i);
-      lres.push({'score': boardFake.store2.nSeeds, 'nextTurn': nextTurn});
+    for(let i = 0; i < this.fakeBoard.nPits; i++) {
+      let tryBoard = new BoardFake(this.fakeBoard);
+      let nextTurn = tryBoard.sow(1, i);
+      lres.push({'score': tryBoard.store2.nSeeds, 'nextTurn': nextTurn});
     }
 
     let max = -1; let nextTurn = 0; let choice;

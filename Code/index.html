@@ -89,33 +89,37 @@
               <td><label>Game mode</label></td>
               <td>
                 <span>Bot</span>
-                <input name="game-mode" type="radio">
+                <input name="game-mode" type="radio" value="bot" checked>
                 <span>Friend</span>
-                <input name="game-mode" type="radio" checked>
+                <input name="game-mode" type="radio" value="friend">
               </td>
             </tr>
-            <tr class="field" id="ai_level">
-              <td><label>AI Level</label></td>
+            <tr class="field" id="bot_level">
+              <td><label>Difficulty</label></td>
               <td>
                 <span>1</span>
-                <input name="ai-level" type="radio" checked>
+                <input name="bot-level" type="radio" value=1 checked>
                 <span>2</span>
-                <input name="ai-level" type="radio">
+                <input name="bot-level" type="radio" value=2>
                 <span>3</span>
-                <input name="ai-level" type="radio">
+                <input name="bot-level" type="radio" value=3>
               </td>
             </tr>
-            <tr class="field" id="n_p">
-              <td><label>Pits per player</label></td>
-              <td><input type="number" value=3 min=2 max=10></td>
-            </tr>
-            <tr class="field" id="n_s">
-              <td><label>Seeds per pit</label></td>
-              <td><input type="number" value=2 min=1 max=10></td>
+            <tr class="field d-none" id="ai_level">
+              <td><label>AI Level</label></td>
+              <td><input type="number" value="1" min="1" max="8"></td>
             </tr>
             <tr class="field" id="play_first">
               <td><label>Play first</label></td>
               <td><input type="checkbox" checked></td>
+            </tr>
+            <tr class="field" id="n_p">
+              <td><label>Pits per player</label></td>
+              <td><input type="number" value="3" min="2" max="10"></td>
+            </tr>
+            <tr class="field" id="n_s">
+              <td><label>Seeds per pit</label></td>
+              <td><input type="number" value="2" min="1" max="10"></td>
             </tr>
           </table>  
         </div>

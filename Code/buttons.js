@@ -8,6 +8,7 @@ function initButtons(app) {
   const switch_rank = document.querySelector("#switch-ranking");
   const start = document.querySelector("#btn-start");
   const stop = document.querySelector("#btn-stop");
+  const servers = document.querySelectorAll(".server-option input");
   lockButton(stop);
 
   start.addEventListener("click", function() {openCloseGame(true); app.initGame();});
@@ -20,6 +21,13 @@ function initButtons(app) {
   help.addEventListener("click", function() {buttonPressed("#btn-help", "#help-window");});
   settings.addEventListener("click", function() {buttonPressed("#btn-settings", "#settings-window");});
   ranking.addEventListener("click", function() {buttonPressed("#btn-ranking", "#ranking-window");});
+
+  servers.forEach(server => {
+    server.addEventListener("click", function() {
+      app.setServer(this.value);
+      logout.click();
+    })
+  });
 }
 
 function makeLogin(app) {

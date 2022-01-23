@@ -68,6 +68,17 @@ class Board {
       }
     }
   }
+
+  validMoves(player) {
+    let valids = []
+    for (let i = 0; i < this.nPits; i++) {
+      const sideSize = parseInt(this.nPits)+1;
+      if (this.holes[player*sideSize + i].nSeeds != 0) {
+        valids.push(i);
+      }
+    }
+    return valids;
+  }
 }
 
 class BoardReal extends Board {

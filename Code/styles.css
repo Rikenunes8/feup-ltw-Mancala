@@ -43,9 +43,7 @@ h1 {
 
 section {
   margin-top: 2em;
-}
-.column {
-  float: left;
+  display: flex;
 }
 .btns {
   margin: 0 1% 0 1%;
@@ -345,6 +343,11 @@ table tr td:nth-child(2) {
 
 .header-item {
   text-transform: uppercase;
+}
+
+.server-option {
+  margin-left: 2em;
+  margin-bottom: 2em;
 }
 
 

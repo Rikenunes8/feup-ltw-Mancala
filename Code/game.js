@@ -1,53 +1,41 @@
 class Game {
-  constructor(board, p1, p2, playFirst, hasBot) {
+  constructor(board, p1, p2, playFirst, hasBot, app) {
     this.board = board;
     this.players = [p1, p2];
     this.turn = playFirst ? 0 : 1;
     this.running = true;
     this.hasBot = hasBot;
+    this.app = app;
 
     setMessage("Turn of " + this.getPlayerName(this.turn));
     updateBoardInfo(this.players);
-    if (!playFirst && this.hasBot)
-      setTimeout(()=> {while (this.play(1));updateBoardInfo(this.players);}, 100);
+    this.ask_to_play();
   }
 
-  playRound(player) {
-    this.play(player++);
-    if (this.hasBot) {
-      setTimeout(()=> {
-        while (this.play(player%2));
-        this.updatePlayersScores();
-        updateBoardInfo(this.players);
-      }, 2000);
-    }
-    this.updatePlayersScores();
+  ask_to_play() {
     updateBoardInfo(this.players);
+    setMessage("Turn of " + this.getPlayerName(this.turn));
+    const valid_moves = this.board.validMoves(this.turn);
+    this.players[this.turn].chooseMove(this, valid_moves);
   }
 
-  play(player) {
-    const oldTurn = this.turn;
+  play(player, choice) {
     if (!this.running || this.turn != player) {
-      return false;
-    }
-    
-
-    const choice = this.players[this.turn].play();
-    
-    if (choice == -1 || this.board.isEmpty(player, choice)) {
-      return true;
+      return;
     }
 
     this.turn = this.board.sow(this.turn, choice);
-
+    this.updatePlayersScores();
+    updateBoardInfo(this.players);
+    
     if (this.checkEndGame()) {
       this.running = false;
-      return false;
+      this.updatePlayersScores();
+      updateBoardInfo(this.players);
+      this.app.endGame();
+      return;
     }
-    else {
-      setMessage("Turn of " + this.getPlayerName(this.turn));
-      return this.turn == oldTurn;
-    }
+    this.ask_to_play();
   }
 
   checkEndGame() {

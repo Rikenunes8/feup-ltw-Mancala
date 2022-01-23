@@ -38,7 +38,7 @@ class Game {
 
   checkEndGame() {
     let endGame = false;
-    if(!this.anyMove(this.turn)) {
+    if(!this.anyMove(0) || !this.anyMove(1)) {
       this.board.collectAllSeeds();
       endGame = true;
     }

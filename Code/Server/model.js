@@ -89,7 +89,7 @@ function play(hash, move) {
   const next = sow(board, player, move);
 
   let endGame = false;
-  if (checkEndGame(board, next, game.size)) {
+  if (checkEndGame(board, game.size)) {
     collectAllSeeds(board, game.size);
     endGame = true;
   }
@@ -171,9 +171,9 @@ function sow(board, player, pit) {
   return (player+1) % 2;
 }
 
-function checkEndGame(board, next, side) {
+function checkEndGame(board, side) {
   let endGame = false;
-  if(!anyMove(board, next, side)) {
+  if(!anyMove(board, 0, side) || !anyMove(board, 1, side)) {
     endGame = true;
   }
   return endGame;

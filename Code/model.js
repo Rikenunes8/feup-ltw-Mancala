@@ -223,4 +223,4 @@ function getGame(hash) {
   return games[hash];
 }
 
-module.exports = {joinGame, removeGame, hasGame, isTurn, inSide, play, forceEndGame, get, getGame};
+module.exports = {joinGame, removeGame, hasGame, isTurn, inSide, play, forceEndGame, getGame};

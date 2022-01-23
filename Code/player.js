@@ -50,7 +50,7 @@ class PlayerAI extends Player {
           choice = this.currentBestMove();
         }
         else if (this.#level == 3) {
-          choice = this.maxmin(5, this.fakeBoard, game.turn, (game.turn+1)%2)[0];
+          choice = this.maximin(5, this.fakeBoard, game.turn, (game.turn+1)%2)[0];
         }
       }
       game.play(game.turn, choice);
@@ -80,7 +80,7 @@ class PlayerAI extends Player {
     return choice;
   }
 
-  maxmin(depth, board, player, playerToMax) {
+  maximin(depth, board, player, playerToMax) {
     if (depth == -1 || this.isGameOver(board, player)) {
       board.collectAllSeeds();
       let score = board.getStoreSeeds(playerToMax)-board.getStoreSeeds((playerToMax+1)%2);
@@ -96,7 +96,7 @@ class PlayerAI extends Player {
       let tryBoard = new BoardFake(board);
       const nextToPlay = tryBoard.sow(player, move);
 
-      const [_, score] = this.maxmin(depth-1, tryBoard, nextToPlay, playerToMax);
+      const [_, score] = this.maximin(depth-1, tryBoard, nextToPlay, playerToMax);
       
       const setNewMax = maximise && score >= bestMove[1];
       const setNewMin = (!maximise) && score <= bestMove[1];

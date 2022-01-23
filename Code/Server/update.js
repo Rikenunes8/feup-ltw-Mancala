@@ -7,11 +7,12 @@ const {endResponse, endResponseWithError, setHeaders} = require('./utils.js');
 let responses = {};
 
 module.exports.remember = function(response, hash, nick) {
-  if (!model.hasGame(hash)) {
-    endResponseWithError(response, 400, "Invalid game reference")
-  }
   setHeaders(response, 'sse');
-  response.writeHead(200);
+  if (!model.hasGame(hash)) {
+    console.log("not hash game")
+    endResponseWithError(response, 400, "Invalid game reference")
+    return;
+  }
   if (hash in responses) {
     responses[hash][nick] = response;
   }

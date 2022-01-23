@@ -1,5 +1,6 @@
-const fs = require('fs');
+const fs    = require('fs');
 const model = require('./model.js');
+
 const {endResponse, endResponseWithError, setHeaders} = require('./utils.js');
 
 const registerFile = "register.json";
@@ -25,6 +26,11 @@ module.exports.join = function(request, response) {
 
       const nick = json['nick'];
       const pass = json['password'];
+
+      if (typeof nick !== 'string') {
+        endResponseWithError(response, 401, "nick is not a valid string");
+        return;
+      }
 
       fs.readFile(registerFile, encoding, (err, data) => {
         if (!err) {
@@ -53,11 +59,11 @@ module.exports.join = function(request, response) {
       });
     }
     catch(err) {
-      endResponseWithError(response, 400, "Error parsing JSON request: " + err.message);
+      endResponseWithError(response, 400, "Error parsing JSON request: " + err);
     }
   });
-  request.on('error', () => {
-    endResponseWithError(response, 400, "Error parsing JSON request: " + err.message);
+  request.on('error', (err) => {
+    endResponseWithError(response, 400, "Error parsing JSON request: " + err);
   });
 }
 

@@ -1,15 +1,13 @@
-const http    = require('http');
-const path    = require('path');
-const url     = require('url');
-const fs      = require('fs');
-const conf    = require('./conf.js');
-const ranking = require('./ranking.js');
-const register = require('./register.js');
-const join    = require('./join.js'); 
-const leave   = require('./leave.js');
-const notify  = require('./notify.js');
-const model   = require('./model.js');
-const update  = require('./update.js');
+const http      = require('http');
+const url       = require('url');
+const conf      = require('./conf.js');
+const ranking   = require('./ranking.js');
+const register  = require('./register.js');
+const join      = require('./join.js'); 
+const leave     = require('./leave.js');
+const notify    = require('./notify.js');
+const update    = require('./update.js');
+const model     = require('./model.js');
 
 const {endResponse, endResponseWithError, setHeaders} = require('./utils.js');
 
@@ -19,7 +17,7 @@ function doPostRequest(request, response) {
 
   switch(pathname) {
     case '/ranking':
-      ranking.get(request, response);
+      ranking.getTop10(request, response);
       break;
     case '/register':
       register.login(request, response);

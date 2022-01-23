@@ -24,6 +24,15 @@ module.exports.login = function(request, response) {
 
       const nick = json['nick'];
       const pass = json['password'];
+      
+      if (typeof nick !== 'string') {
+        endResponseWithError(response, 400, "nick is not a valid string");
+        return;
+      }
+      if (typeof pass !== 'string') {
+        endResponseWithError(response, 400, "password is not a valid string");
+        return;
+      }
 
       fs.readFile(file, encoding, (err, data) => {
         if (!err) {
@@ -52,11 +61,11 @@ module.exports.login = function(request, response) {
       });
     }
     catch(err) {
-      endResponseWithError(response, 400, "Error parsing JSON request: " + err.message);
+      endResponseWithError(response, 400, "Error parsing JSON request: " + err);
     }
   });
   request.on('error', () => {
-    endResponseWithError(response, 400, "Error parsing JSON request: " + err.message);
+    endResponseWithError(response, 400, "Error parsing JSON request: " + err);
   });
 }
 

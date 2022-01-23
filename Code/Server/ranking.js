@@ -44,11 +44,11 @@ function addGame(nick1, nick2, winner) {
     });
   }
   catch(err) {
-    console.log(err.message);
+    console.log(err);
   }
 }
 
-module.exports.get = function(request, response) {
+module.exports.getTop10 = function(request, response) {
   setHeaders(response, 'plain');
   let data = '';
 
@@ -68,11 +68,11 @@ module.exports.get = function(request, response) {
       });
     }
     catch(err) {
-      endResponseWithError(response, 400, "Error parsing JSON request: " + err.message);
+      endResponseWithError(response, 400, "Error parsing JSON request: " + err);
     }
   });
-  request.on('error', () => {
-    endResponseWithError(response, 400, "Error parsing JSON request: " + err.message);
+  request.on('error', (err) => {
+    endResponseWithError(response, 400, "Error parsing JSON request: " + err);
   });
 }
 

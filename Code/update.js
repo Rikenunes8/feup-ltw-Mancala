@@ -36,7 +36,3 @@ module.exports.update = function(hash) {
     model.removeGame(hash);
   }
 }
-
-module.exports.get = function () {
-  return responses;
-}

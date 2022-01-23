@@ -41,14 +41,6 @@ function doGetRequest(request, response) {
   const query = url.parse(request.url, true).query;
   
   switch(pathname) {
-    case '/state':
-      console.log(model.get());
-      endResponse(response, 200, {});
-      break;
-    case '/responses':
-      console.log(update.get());
-      endResponse(response, 200, {});
-      break;
     case '/update':
       update.remember(response, query.game, query.nick);
       request.on('close', () => update.forget(query.game, query.nick));

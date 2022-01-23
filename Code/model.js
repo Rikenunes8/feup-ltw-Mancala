@@ -219,17 +219,6 @@ function forceEndGame(hash, nick) {
   }
 }
 
-
-function get() {
-  for (const game in games) {
-    console.log(games[game].game.board)
-    for (const name in games[game].game.board.sides) {
-      console.log(games[game].game.board.sides[name].pits);
-    }
-  }
-  return games;
-}
-
 function getGame(hash) {
   return games[hash];
 }

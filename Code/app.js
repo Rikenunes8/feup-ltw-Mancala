@@ -236,8 +236,7 @@ class App {
         this.makePlayable(p1);
       }
       else if ('pit' in data) {
-        this.game.players[this.game.turn].setNextMove(data.pit);
-        this.game.playRound(this.game.turn);
+        this.game.play(this.game.turn, data.pit);
       }
       
     }

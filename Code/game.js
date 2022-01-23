@@ -20,8 +20,6 @@ class Game {
   }
 
   play(player, choice) {
-    console.log("game play", player, choice);
-    console.log(this.running, this.turn);
     if (!this.running || this.turn != player) {
       return;
     }

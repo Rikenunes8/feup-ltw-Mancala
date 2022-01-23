@@ -12,19 +12,17 @@ class Player {
 }
 
 class PlayerHuman extends Player {
-  call;
-  validMoves;
-  number;
   constructor(name="Unknown") {
     super(name);
   }
   chooseMove(game, validMoves) {
     this.game = game;
     this.validMoves = validMoves;
+    this.myTurn = true;
   }
   play(choice) {
-    if (this.validMoves.includes(choice)) {
-      console.log("inside")
+    if (this.myTurn && this.validMoves.includes(choice)) {
+      this.myTurn = false;
       this.game.play(this.game.turn, choice);
     }
   }

@@ -1,7 +1,7 @@
 class Board {
   constructor(nSeeds, nPits) {
-    this.nSeeds = nSeeds;
-    this.nPits = nPits;
+    this.nSeeds = parseInt(nSeeds);
+    this.nPits = parseInt(nPits);
     this.store1;
     this.store2;
     this.pits1 = [];
@@ -56,7 +56,7 @@ class Board {
   }
 
   collectAllSeeds() {
-    const side = parseInt(this.nPits)+1;
+    const side = this.nPits+1;
     for (let p = 0; p < 2; p++) {
       const storeIndex = (p+1)*side - 1;
       for (let i = 0; i < this.nPits; i++) {
@@ -78,6 +78,11 @@ class Board {
       }
     }
     return valids;
+  }
+
+  getStoreSeeds(player) {
+    const storeIndex = (player+1)*(this.nPits+1) - 1;
+    return this.holes[storeIndex].nSeeds;
   }
 }
 

@@ -27,9 +27,13 @@ class Game {
     }
 
     this.turn = this.board.sow(this.turn, choice);
-
+    this.updatePlayersScores();
+    updateBoardInfo(this.players);
+    
     if (this.checkEndGame()) {
       this.running = false;
+      this.updatePlayersScores();
+      updateBoardInfo(this.players);
       this.app.endGame();
       return;
     }

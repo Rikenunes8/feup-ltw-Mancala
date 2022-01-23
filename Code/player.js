@@ -23,8 +23,6 @@ class PlayerHuman extends Player {
     this.validMoves = validMoves;
   }
   play(choice) {
-    console.log("play")
-    console.log(this.validMoves)
     if (this.validMoves.includes(choice)) {
       console.log("inside")
       this.game.play(this.game.turn, choice);
@@ -43,18 +41,20 @@ class PlayerAI extends Player {
 
   chooseMove(game, validMoves) {
     let choice = -1;
-    while (!validMoves.includes(choice)) {
-      if (this.#level == 1) {
-        choice = Math.floor(Math.random() * this.board.nPits);
+    setTimeout(()=> {
+      while (!validMoves.includes(choice)) {
+        if (this.#level == 1) {
+          choice = Math.floor(Math.random() * this.board.nPits);
+        }
+        else if (this.#level == 2) {
+          choice = this.currentBestMove();
+        }
+        else if (this.#level == 3) {
+          choice = this.bestMove();
+        }
       }
-      else if (this.#level == 2) {
-        choice = this.currentBestMove();
-      }
-      else if (this.#level == 3) {
-        choice = this.bestMove();
-      }
-    }
-    game.play(game.turn, choice);
+      game.play(game.turn, choice);
+    }, 2000);
   }
 
 

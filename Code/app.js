@@ -55,7 +55,7 @@ class App {
       let board = new BoardReal(nSeeds, nPits);
       let p1 = new PlayerHuman(this.username);
       let p2 = new PlayerAI(board, aiLevel);
-      this.game = new Game(board, p1, p2, playFirst, true);
+      this.game = new Game(board, p1, p2, playFirst, true, this);
       this.makePlayable(p1);
     }
     else {
@@ -232,7 +232,7 @@ class App {
         let p2Name;
         for (const key in sides) if (key != this.username) p2Name = key;
         let p2 = new PlayerHuman(p2Name);
-        this.game = new Game(board, p1, p2, data.board.turn == this.username, false);
+        this.game = new Game(board, p1, p2, data.board.turn == this.username, false, this);
         this.makePlayable(p1);
       }
       else if ('pit' in data) {
@@ -253,9 +253,7 @@ class App {
     for(let i = 0; i < pits.length; i++)
       pits[i].addEventListener("click", function() {
         if (that.game.hasBot) {
-          player.setNextMove(i);
-          that.game.playRound(0);
-          setTimeout(()=> {if (that.isGameRunning() && !that.game.running) that.endGame();}, 2500);
+          player.play(i);
         }
         else {
           that.notify(that.username, that.password, that.gameHash, i);

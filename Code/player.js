@@ -12,16 +12,23 @@ class Player {
 }
 
 class PlayerHuman extends Player {
-  #nextMove;
+  call;
+  validMoves;
+  number;
   constructor(name="Unknown") {
     super(name);
-    this.#nextMove = -1;
   }
-  setNextMove(n) { this.#nextMove = n;}
-  play() {
-    const choice = this.#nextMove;
-    this.#nextMove = -1;
-    return choice;
+  chooseMove(game, validMoves) {
+    this.game = game;
+    this.validMoves = validMoves;
+  }
+  play(choice) {
+    console.log("play")
+    console.log(this.validMoves)
+    if (this.validMoves.includes(choice)) {
+      console.log("inside")
+      this.game.play(this.game.turn, choice);
+    }
   }
 }
 
@@ -34,16 +41,20 @@ class PlayerAI extends Player {
   }
   getLevel() {return this.#level;}
 
-  play() {
-    if (this.#level == 1) {
-      return Math.floor(Math.random() * this.board.nPits);
+  chooseMove(game, validMoves) {
+    let choice = -1;
+    while (!validMoves.includes(choice)) {
+      if (this.#level == 1) {
+        choice = Math.floor(Math.random() * this.board.nPits);
+      }
+      else if (this.#level == 2) {
+        choice = this.currentBestMove();
+      }
+      else if (this.#level == 3) {
+        choice = this.bestMove();
+      }
     }
-    else if (this.#level == 2) {
-      return this.currentBestMove();
-    }
-    else if (this.#level == 3) {
-      return this.bestMove();
-    }
+    game.play(game.turn, choice);
   }
 
 

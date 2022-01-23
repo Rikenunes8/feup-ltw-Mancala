@@ -4,8 +4,7 @@ class App {
       "8008": "http://twserver.alunos.dcc.fc.up.pt:8008/",
       "8915": "http://localhost:8915/"
     }
-    this.server = "http://twserver.alunos.dcc.fc.up.pt:8008/";
-    // this.server = "http://localhost:8915/";
+    this.server = this.servers["8008"];
     this.group = '15';
     this.localRanking = new RankingLocal();
 

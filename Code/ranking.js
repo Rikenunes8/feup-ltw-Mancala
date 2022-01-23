@@ -19,9 +19,9 @@ class RankingLocal extends Ranking {
   constructor() {
     super(localStorage.getItem('ranks'));
   }
-  update(aiLevel, win) { 
-    this.ranks.ranking[aiLevel-1].games += 1;
-    this.ranks["ranking"][aiLevel-1].victories += win? 1:0;
+  update(botLevel, win) { 
+    this.ranks.ranking[botLevel-1].games += 1;
+    this.ranks["ranking"][botLevel-1].victories += win? 1:0;
     localStorage.setItem('ranks', JSON.stringify(this.ranks));
   }
 }

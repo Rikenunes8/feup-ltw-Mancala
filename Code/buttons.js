@@ -8,6 +8,7 @@ function initButtons(app) {
   const switch_rank = document.querySelector("#switch-ranking");
   const start = document.querySelector("#btn-start");
   const stop = document.querySelector("#btn-stop");
+
   const servers = document.querySelectorAll(".server-option input");
   lockButton(stop);
 
@@ -28,6 +29,9 @@ function initButtons(app) {
       logout.click();
     })
   });
+
+  showHideSettingsFields();
+  showHideSettingsAILevel()
 }
 
 function makeLogin(app) {
@@ -153,4 +157,45 @@ function openCloseGame(openClose) {
     lockButton(stop); 
     unlockButton(start);
   }
+}
+
+function showHideSettingsFields() {
+  const modes = document.querySelectorAll("#game_mode input");
+  modes.forEach(mode => {
+    mode.addEventListener("click", function (){
+      const botLevel = document.querySelector("#bot_level");
+      const playFirst = document.querySelector("#play_first");
+      switch (this.value) {
+        case "bot":
+          botLevel.classList.remove('d-none');
+          playFirst.classList.remove('d-none');
+          break;
+        case "friend":
+          if (botLevel.classList.contains('d-none')) break;
+          botLevel.classList.add('d-none');
+          playFirst.classList.add('d-none');
+          botLevel.querySelector("input").click();
+          break;
+        default:
+          break;
+      }
+    })
+  });
+}
+
+function showHideSettingsAILevel() {
+  const bots = document.querySelectorAll("#bot_level input");
+  const aiLevel = document.querySelector("#ai_level");
+  bots.forEach(bot => {
+    bot.addEventListener("click", function (){
+      if (this.value == "3") {
+        aiLevel.classList.remove('d-none');
+      }
+      else {
+        if (aiLevel.classList.contains('d-none')) return;
+        aiLevel.classList.add('d-none');
+      }
+    })
+  });
+
 }

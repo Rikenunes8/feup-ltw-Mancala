@@ -36,8 +36,14 @@ class App {
     this.game = null;
     this.eventSource = null;
 
-    const nSeeds = document.querySelector("#n_s input").value;
-    const nPits = document.querySelector("#n_p input").value;
+    const nSeedsElem = document.querySelector("#n_s input");
+    const nSeeds = Math.max(nSeedsElem.min, Math.min(nSeedsElem.max, nSeedsElem.value));
+    nSeedsElem.value = nSeeds;
+
+    const nPitsElem = document.querySelector("#n_p input");
+    const nPits = Math.max(nPitsElem.min, Math.min(nPitsElem.max, nPitsElem.value));
+    nPitsElem.value = nPits;
+    
     const playFirst = document.querySelector("#play_first input").checked;
     const modes = document.querySelectorAll("#game_mode input");
     let gameMode;
@@ -47,19 +53,23 @@ class App {
         break;
       }
     }
-    const levels = document.querySelectorAll("#ai_level input");
-    let aiLevel;
+    const levels = document.querySelectorAll("#bot_level input");
+    let botLevel;
     for (let i = 0; i < levels.length; i++) {
       if (levels[i].checked) {
-        aiLevel = i+1;
+        botLevel = i+1;
         break;
       }
     }
+
+    const aiLevelElem = document.querySelector("#ai_level input");
+    const aiLevel = Math.max(aiLevelElem.min, Math.min(aiLevelElem.max, aiLevelElem.value));
+    aiLevelElem.value = aiLevel;
   
     if (gameMode == 0) {
       let board = new BoardReal(nSeeds, nPits);
       let p1 = new PlayerHuman(this.username);
-      let p2 = new PlayerAI(board, aiLevel);
+      let p2 = new PlayerAI(board, botLevel, aiLevel);
       this.game = new Game(board, p1, p2, playFirst, true, this);
       this.makePlayable(p1);
     }

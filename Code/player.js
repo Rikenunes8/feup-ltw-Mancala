@@ -30,14 +30,18 @@ class PlayerHuman extends Player {
 
 class PlayerAI extends Player {
   #level;
-  constructor(board, level, name="Bot") {
+  #depth;
+  constructor(board, level, depth, name="Bot") {
     super(name);
     this.board = board
+    this.fakeBoard;
     this.#level = level;
+    this.#depth = level == 3? depth : 0;
   }
   getLevel() {return this.#level;}
 
   chooseMove(game, validMoves) {
+    this.fakeBoard = new BoardFake(this.board);
     let choice = -1;
     setTimeout(()=> {
       while (!validMoves.includes(choice)) {
@@ -48,7 +52,7 @@ class PlayerAI extends Player {
           choice = this.currentBestMove();
         }
         else if (this.#level == 3) {
-          choice = this.bestMove();
+          choice = this.maximin(this.#depth, this.fakeBoard, game.turn, (game.turn+1)%2)[0];
         }
       }
       game.play(game.turn, choice);
@@ -59,10 +63,10 @@ class PlayerAI extends Player {
   currentBestMove() {
     let turn = 1;
     let lres = [];
-    for(let i = 0; i < this.board.nPits; i++) {
-      let boardFake = new BoardFake(this.board);
-      let nextTurn = boardFake.sow(1, i);
-      lres.push({'score': boardFake.store2.nSeeds, 'nextTurn': nextTurn});
+    for(let i = 0; i < this.fakeBoard.nPits; i++) {
+      let tryBoard = new BoardFake(this.fakeBoard);
+      let nextTurn = tryBoard.sow(1, i);
+      lres.push({'score': tryBoard.store2.nSeeds, 'nextTurn': nextTurn});
     }
 
     let max = -1; let nextTurn = 0; let choice;
@@ -78,121 +82,40 @@ class PlayerAI extends Player {
     return choice;
   }
 
-  minimax(depth) {
-    
-  }
-
-
-
-  bestMove()
-  {
-    let turn = 1;
-    let isMin = true;
-    let lresB = [];
-    for(let i = 0; i < this.board.nPits; i++)
-    {
-      let board1 = new BoardFake(this.board);
-      let nextTurn = board1.sow(1, i);
-      let children1 = this.childrenGen(board1, isMin);
-      children1.sort(this.compareChildDesc);
-      lresB.push([i, children1[0][1], children1[0][2], nextTurn]); //maintaining the children composition formula to facilitate sort methods ahead
-    }
-    
-    lresB.sort(this.compareChildrenAsc);
-
-    let move = lresB[0];
-    let nT = 0;
-    
-    console.log(move[3]);
-    console.log(turn);
-    console.log(move[2]);
-
-    if(move[3] == turn)
-    {
-      return this.currentBestMove();
+  maximin(depth, board, player, playerToMax) {
+    if (depth == -1 || this.isGameOver(board, player)) {
+      board.collectAllSeeds();
+      let score = board.getStoreSeeds(playerToMax)-board.getStoreSeeds((playerToMax+1)%2);
+      return [null, score];
     }
 
-    return lresB[0][0];
-  }
+    const validMoves = board.validMoves(player);
+    const maximise = playerToMax === player;
+    const worstScore = maximise ? -Infinity : Infinity;
+    let bestMove = [validMoves[0], worstScore];
 
-  //Functions of comparison to sort "children" array, by ascending or descending order, respectively.
+    for (let move of validMoves) {
+      let tryBoard = new BoardFake(board);
+      const nextToPlay = tryBoard.sow(player, move);
 
-  compareChildrenAsc(a, b)
-  {
-    return (a[2] - b[2]);
-  }
-
-  compareChildDesc(a, b)
-  {
-    return (a[2] - b[2])*(-1);
-  }
-
-  /**
-   * generates all possible boards coming from a previous board, depending who is playing.
-   * @param {*} b - The "parent" board.
-   * @param {*} isMin - Boolean. Is the AI or the Player the one who is playing.
-   * @returns - A list of possible plays, each containing a list with the hole played, the "child" board derived and its evaluation.
-   */
-  childrenGen(b, isMin)
-  {
-    let children = [];
-    let CTurn = 0;
-    let turn = 0;
-    for(let i = 0; i < b.nPits; i++)
-    {
-      let child = new BoardFake(b)
-      if(isMin)
-      {
-        CTurn = 1;
-        turn = child.sow(CTurn, i);
-      }
-      else
-      {
-        turn = child.sow(CTurn, i);
+      const [_, score] = this.maximin(depth-1, tryBoard, nextToPlay, playerToMax);
+      
+      const setNewMax = maximise && score >= bestMove[1];
+      const setNewMin = (!maximise) && score <= bestMove[1];
+      if (setNewMax || setNewMin) {
+        bestMove = [move, score];
       }
       
-      children.push([i, child, this.euristic(child, CTurn, turn)]);
     }
-    return children;
+    return bestMove;
   }
 
-  /**
-   * Functions that evaluates the value of a board derived from a play.
-   * @param {*} b - The board that is being evaluated.
-   * @param {*} prevTurn - The previous turn.
-   * @param {*} curTurn - The turn playing next.
-   * @returns An evaluation of said board. Negative favours the AI, positive favours the human player.
-   */
-  //TODO: game ending conditions to be included.
-  euristic(b, prevTurn, curTurn)
-  {
-    let evalB = 0;
-    
-    for(let i = 0; i < b.pits1.length; i++)
-    {
-      evalB += b.pits1[i].length * 0.01;
+  isGameOver(board, player) {
+    for (let i = 0; i < board.nPits; i++) {
+      if (!board.isEmpty(player, i))
+        return false;
     }
-
-    for(let i = 0; i < b.pits2.length; i++)
-    {
-      evalB -= b.pits2[i].length * 0.01;
-    }
-
-    //human player gets to repeat
-    if(prevTurn == 0 && curTurn == 0)
-    {
-      evalB += 1;
-    }
-
-    //AI gets to repeat
-    if(prevTurn == 1 && curTurn == 1)
-    {
-      evalB -= 1;
-    }
-
-    evalB += (b.store1.nSeeds * 100);
-    evalB -= (b.store2.nSeeds * 100);
-
-    return evalB;
+    return true;
   }
+
 }

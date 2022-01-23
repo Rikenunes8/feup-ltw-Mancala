@@ -100,8 +100,8 @@ function play(hash, move) {
   sides[p2].pits = arr[1];
   sides[p1].store = arr[2];
   sides[p2].store = arr[3];
-  game.game.store[p1] = sides[p1].store;
-  game.game.store[p2] = sides[p2].store;
+  game.game.stores[p1] = sides[p1].store;
+  game.game.stores[p2] = sides[p2].store;
   game.game.pit = move;
   game.game.board.turn = game.players[next];
 

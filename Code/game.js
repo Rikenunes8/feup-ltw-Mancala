@@ -3,7 +3,6 @@ class Game {
     this.board = board;
     this.players = [p1, p2];
     this.turn = playFirst ? 0 : 1;
-    this.running = true;
     this.hasBot = hasBot;
     this.app = app;
 
@@ -20,7 +19,7 @@ class Game {
   }
 
   play(player, choice) {
-    if (!this.running || this.turn != player) {
+    if (this.turn != player) {
       return;
     }
 
@@ -29,7 +28,6 @@ class Game {
     updateBoardInfo(this.players);
     
     if (this.checkEndGame()) {
-      this.running = false;
       this.updatePlayersScores();
       updateBoardInfo(this.players);
       this.app.endGame();
@@ -55,9 +53,7 @@ class Game {
     return false;
   }
 
-  endGame(winner) {
-    this.running = false;
-    
+  endGame(winner) {  
     if (winner !== undefined) {
       if (!winner) {
         setMessage("TIE");

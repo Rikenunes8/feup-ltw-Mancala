@@ -51,20 +51,35 @@ function doGetRequest(request, response) {
   else if (pathname === '/') {
     const home = path.join(__dirname, conf.home);
     fs.readFile(home, 'utf8', (err, data) => {
-      response.end(data);
+      if (!err) {
+        response.end(data);
+      }
+      else {
+        endResponseWithError(response, 404, "Unable to read file");
+      }
     });
   }
   else if (path.dirname(pathname) === '/images') {
     const file = path.join(__dirname, pathname);
     fs.readFile(file, (err, data) => {
-      response.writeHead(200, {'Content-Type': 'image/png'});
-      response.end(data);
+      if (!err) {
+        response.writeHead(200, {'Content-Type': 'image/png'});
+        response.end(data);
+      }
+      else {
+        endResponseWithError(response, 404, "Unable to read file");
+      }
     });
   }
   else {
     const file = path.join(__dirname, pathname);
     fs.readFile(file, 'utf8', (err, data) => {
-      response.end(data);
+      if (!err) {
+        response.end(data);
+      }
+      else {
+        endResponseWithError(response, 404, "Unable to read file");
+      }
     });
   }
 }
@@ -78,8 +93,8 @@ const server = http.createServer( (request, response) => {
       doGetRequest(request, response);
       break;
     default:
-      response.writeHead(500);
-      response.end();    
+      endResponseWithError(response, 404, "Unknown request method");
+  
   }
 });
 

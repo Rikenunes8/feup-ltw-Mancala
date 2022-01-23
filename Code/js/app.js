@@ -2,8 +2,8 @@ class App {
   constructor() {
     this.servers = {
       "8008": "http://twserver.alunos.dcc.fc.up.pt:8008/",
-      //"8915": "http://twserver.alunos.dcc.fc.up.pt:9015/"
-      "8915": "http://localhost:9015/"
+      "8915": "http://twserver.alunos.dcc.fc.up.pt:9015/"
+      // "8915": "http://localhost:9015/"
     }
     this.server = this.servers["8008"];
     this.group = '15';

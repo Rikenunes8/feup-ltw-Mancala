@@ -1,5 +1,7 @@
 const http      = require('http');
+const path      = require('path');
 const url       = require('url');
+const fs        = require('fs');
 const conf      = require('./conf.js');
 const ranking   = require('./ranking.js');
 const register  = require('./register.js');
@@ -10,6 +12,7 @@ const update    = require('./update.js');
 const model     = require('./model.js');
 
 const {endResponse, endResponseWithError, setHeaders} = require('./utils.js');
+
 
 
 function doPostRequest(request, response) {
@@ -40,15 +43,29 @@ function doGetRequest(request, response) {
   const pathname = url.parse(request.url).pathname;
   const query = url.parse(request.url, true).query;
   
-  switch(pathname) {
-    case '/update':
-      update.remember(response, query.game, query.nick);
-      request.on('close', () => update.forget(query.game, query.nick));
-      setImmediate(() => update.update(query.game));
-      break;
-    default:
-      endResponseWithError(response, 404, "Unknown GET request");
-    break;
+  if (pathname === '/update') {
+    update.remember(response, query.game, query.nick);
+    request.on('close', () => update.forget(query.game, query.nick));
+    setImmediate(() => update.update(query.game));
+  }
+  else if (pathname === '/') {
+    const home = path.join(__dirname, conf.home);
+    fs.readFile(home, 'utf8', (err, data) => {
+      response.end(data);
+    });
+  }
+  else if (path.dirname(pathname) === '/images') {
+    const file = path.join(__dirname, pathname);
+    fs.readFile(file, (err, data) => {
+      response.writeHead(200, {'Content-Type': 'image/png'});
+      response.end(data);
+    });
+  }
+  else {
+    const file = path.join(__dirname, pathname);
+    fs.readFile(file, 'utf8', (err, data) => {
+      response.end(data);
+    });
   }
 }
 
@@ -61,7 +78,7 @@ const server = http.createServer( (request, response) => {
       doGetRequest(request, response);
       break;
     default:
-      response.writeHead(500); // 501 Not Implemented
+      response.writeHead(500);
       response.end();    
   }
 });

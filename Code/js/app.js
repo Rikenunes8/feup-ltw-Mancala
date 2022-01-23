@@ -164,7 +164,6 @@ class App {
       else {
         this.gameHash = json.game;
         setMessage("Waitting to join game: "+ this.gameHash);
-        console.log("Waitting to join game: "+ this.gameHash);
         this.update(this.gameHash, this.username);
       }
     })
@@ -183,9 +182,6 @@ class App {
       if (json.error != null) {
         console.log(json.error);
       }
-      else {
-        console.log("Leaving the game");
-      }
     })
     .catch(console.log);
   }
@@ -202,19 +198,15 @@ class App {
       if (json.error != null) {
         console.log(json.error);
       }
-      else {
-        console.log("Notifying the game");
-      }
     })
     .catch(console.log);
   }
 
   update(game, nick) {
-    console.log(nick, game);
     const query = "?nick="+nick+"&game="+game;
     this.eventSource = new EventSource(this.server + "update" + query);
     this.eventSource.onopen = function() {
-      console.log("connetion established");
+      //
     }
     const that = this;
     this.eventSource.onmessage = function(event) {
@@ -228,7 +220,6 @@ class App {
     this.eventSource = null;
   }
   updateAction(data) {
-    console.log(data);
     if ('error' in data) {
       setMessage(data.error);
     }

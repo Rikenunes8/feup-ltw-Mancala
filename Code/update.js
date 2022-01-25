@@ -26,6 +26,7 @@ module.exports.forget = function(hash, nick) {
 module.exports.update = function(hash) {
   const resps = responses[hash];
   const gameState = model.getGame(hash);
+  if (gameState === undefined) return;
   const game = gameState["game"];
   if (game === undefined) return;
   for(const response in resps) {

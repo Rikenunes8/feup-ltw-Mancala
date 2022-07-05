@@ -2,8 +2,8 @@ class App {
   constructor() {
     this.servers = {
       "8008": "http://twserver.alunos.dcc.fc.up.pt:8008/",
-      "9015": "http://twserver.alunos.dcc.fc.up.pt:9015/"
-      // "9015": "http://localhost:9015/"
+      // "9015": "http://twserver.alunos.dcc.fc.up.pt:9015/"
+      "9015": "http://localhost:9015/"
     }
     this.server = this.servers["8008"];
     this.group = '15';
@@ -117,18 +117,18 @@ class App {
 
   register(nick, pass) {
     // Backdoor
-    // if (nick == '') {
-    //   setLoggedEnv(nick);
-    //   this.username = 'Unknown';
-    //   this.password = pass
-    //   return;
-    // } else if (nick == '1') {
-    //   nick = 'group15';
-    //   pass = '15';
-    // } else if (nick == '2') {
-    //   nick = 'group_15';
-    //   pass = '15';
-    // }
+    if (nick == '') {
+      setLoggedEnv(nick);
+      this.username = 'Unknown';
+      this.password = pass
+      return;
+    } else if (nick == '1') {
+      nick = 'group15';
+      pass = '15';
+    } else if (nick == '2') {
+      nick = 'group_15';
+      pass = '15';
+    }
     // --------------------
     const obj = {"nick": nick, "password": pass};
   

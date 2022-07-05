@@ -6,10 +6,10 @@ Project for the Web Languages and Technologies course @ FEUP - 2021/2022
 
 ## Contributors
 
-| Name               | Number    | E-Mail          | Contribution |
-| ------------------ | --------- | --------------- | ------------ |
-| Afonso Monteiro    | 201907284 | 201907284@up.pt | 5%           |
-| Henrique Nunes     | 201906852 | 201906852@up.pt | 95%          |
+| Name               | Number    | E-Mail            | Contribution |
+| ------------------ | --------- | ----------------- | :----------: |
+| Afonso Monteiro    | 201907284 | up201907284@up.pt | 5%           |
+| Henrique Nunes     | 201906852 | up201906852@up.pt | 95%          |
 
 ## Mancala
 

@@ -19,20 +19,20 @@ The project consists of making a Mancala board game to play offline against a bo
 
 Follows some examples of the application view:
 
-![Login](Images/Screenshot (116).png)
+![Login](/Images/Screenshot (116).png)
 
-![Empty](Images/Screenshot (117).png)
+![Empty](/Images/Screenshot (117).png)
 
-![Settings](Images/Screenshot (118).png)
+![Settings](/Images/Screenshot (118).png)
 
-![Remote Ranking](Images/Screenshot (119).png)
+![Remote Ranking](/Images/Screenshot (119).png)
 
-![Local Ranking](Images/Screenshot (124).png)
+![Local Ranking](/Images/Screenshot (124).png)
 
-![Help](Images/Screenshot (120).png)
+![Help](/Images/Screenshot (120).png)
 
-![Start](Images/Screenshot (121).png)
+![Start](/Images/Screenshot (121).png)
 
-![Playing](Images/Screenshot (122).png)
+![Playing](/Images/Screenshot (122).png)
 
-![End](Images/Screenshot (123).png)
+![End](/Images/Screenshot (123).png)
